@@ -1,0 +1,260 @@
+<!DOCTYPE html><html lang="zh-CN" data-theme="light"><head><meta charset="UTF-8"><meta http-equiv="X-UA-Compatible" content="IE=edge"><meta name="viewport" content="width=device-width, initial-scale=1.0,viewport-fit=cover"><title>我的第一个技术博客：从 0 到 1 搭建 Hexo + GitHub Pages 的踩坑记录 | Ted'sworld</title><meta name="author" content="Tedoverlearn"><meta name="copyright" content="Tedoverlearn"><meta name="format-detection" content="telephone=no"><meta name="theme-color" content="#ffffff"><meta name="description" content="写在前面过去的法律学习更多围绕法条、案例和理论展开，但随着 AI 工具进入法律检索、合同审查、法律服务等领域，我逐渐意识到，未来法律人才不仅需要具备法律思维，也需要具备一定的技术理解能力。 作为一个法学本科大三学生，我最近开始自学 AI 应用开发。为了记录学习过程、给简历增加一个可以展示的实体项目，我决定搭建一个个人技术博客。 然而，从选择方案到最终上线，我几乎把新手能踩的坑全踩了一遍。这篇文章不">
+<meta property="og:type" content="article">
+<meta property="og:title" content="我的第一个技术博客：从 0 到 1 搭建 Hexo + GitHub Pages 的踩坑记录">
+<meta property="og:url" content="http://example.com/2026/09/26/Windows%E4%B8%8BHexo-GitHub%E5%8D%9A%E5%AE%A2%E6%90%AD%E5%BB%BA%E8%B8%A9%E5%9D%91%E8%AE%B0/index.html">
+<meta property="og:site_name" content="Ted&#39;sworld">
+<meta property="og:description" content="写在前面过去的法律学习更多围绕法条、案例和理论展开，但随着 AI 工具进入法律检索、合同审查、法律服务等领域，我逐渐意识到，未来法律人才不仅需要具备法律思维，也需要具备一定的技术理解能力。 作为一个法学本科大三学生，我最近开始自学 AI 应用开发。为了记录学习过程、给简历增加一个可以展示的实体项目，我决定搭建一个个人技术博客。 然而，从选择方案到最终上线，我几乎把新手能踩的坑全踩了一遍。这篇文章不">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="http://example.com/img/butterfly-icon.png">
+<meta property="article:published_time" content="2026-09-26T12:00:00.000Z">
+<meta property="article:modified_time" content="2026-09-26T09:08:03.249Z">
+<meta property="article:author" content="Tedoverlearn">
+<meta property="article:tag" content="Hexo">
+<meta property="article:tag" content="GitHub Pages">
+<meta property="article:tag" content="个人博客搭建">
+<meta property="article:tag" content="Windows">
+<meta property="article:tag" content="Git">
+<meta property="article:tag" content="SSH">
+<meta property="article:tag" content="AI学习">
+<meta property="article:tag" content="法律科技">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="http://example.com/img/butterfly-icon.png"><script type="application/ld+json">{
+  "@context": "https://schema.org",
+  "@type": "BlogPosting",
+  "headline": "我的第一个技术博客：从 0 到 1 搭建 Hexo + GitHub Pages 的踩坑记录",
+  "url": "http://example.com/2026/09/26/Windows%E4%B8%8BHexo-GitHub%E5%8D%9A%E5%AE%A2%E6%90%AD%E5%BB%BA%E8%B8%A9%E5%9D%91%E8%AE%B0/",
+  "image": "http://example.com/img/butterfly-icon.png",
+  "datePublished": "2026-09-26T12:00:00.000Z",
+  "dateModified": "2026-09-26T09:08:03.249Z",
+  "author": [
+    {
+      "@type": "Person",
+      "name": "Tedoverlearn",
+      "url": "http://example.com"
+    }
+  ]
+}</script><link rel="shortcut icon" href="/img/favicon.png"><link rel="canonical" href="http://example.com/2026/09/26/Windows%E4%B8%8BHexo-GitHub%E5%8D%9A%E5%AE%A2%E6%90%AD%E5%BB%BA%E8%B8%A9%E5%9D%91%E8%AE%B0/index.html"><link rel="preconnect" href="//cdn.jsdelivr.net"/><link rel="preconnect" href="//busuanzi.ibruce.info"/><link rel="stylesheet" href="/css/index.css?v=5.7.0"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@7.3.1/css/all.min.css"><script>
+    (() => {
+      
+    const saveToLocal = {
+      set: (key, value, ttl) => {
+        const data = { value }
+
+        if (ttl != null) {
+          data.expiry = Date.now() + ttl * 86400000
+        }
+
+        localStorage.setItem(key, JSON.stringify(data))
+      },
+      get: key => {
+        const itemStr = localStorage.getItem(key)
+        if (!itemStr) return
+
+        try {
+          const data = JSON.parse(itemStr)
+
+          if (data.expiry && Date.now() > data.expiry) {
+            localStorage.removeItem(key)
+            return
+          }
+
+          return data.value
+        } catch {
+          localStorage.removeItem(key)
+        }
+      }
+    }
+
+    const scriptCache = new Map()
+    const cssCache = new Map()
+    window.btf = {
+      saveToLocal,
+      getScript: (url, attr = {}) => {
+        if (scriptCache.has(url)) {
+          return scriptCache.get(url)
+        }
+
+        const promise = new Promise((resolve, reject) => {
+          const script = document.createElement('script')
+
+          script.src = url
+          script.async = true
+
+          for (const key in attr) {
+            script.setAttribute(key, attr[key])
+          }
+
+          script.onload = resolve
+          script.onerror = reject
+
+          document.head.appendChild(script)
+        })
+
+        scriptCache.set(url, promise)
+
+        return promise
+      },
+      getCSS: (url, id) => {
+        if (cssCache.has(url)) {
+          return cssCache.get(url)
+        }
+
+        const promise = new Promise((resolve, reject) => {
+          const link = document.createElement('link')
+
+          link.rel = 'stylesheet'
+          link.href = url
+
+          if (id) {
+            link.id = id
+          }
+
+          link.onload = resolve
+          link.onerror = reject
+
+          document.head.appendChild(link)
+        })
+
+        cssCache.set(url, promise)
+
+        return promise
+      },
+      addGlobalFn: (key, fn, name = false, parent = window) => {
+        if (!false && key.startsWith('pjax')) return
+        const globalFn = parent.globalFn || {}
+        globalFn[key] = globalFn[key] || {}
+        globalFn[key][name || Object.keys(globalFn[key]).length] = fn
+        parent.globalFn = globalFn
+      }
+    }
+  
+      
+      const metaThemeColor = document.querySelector('meta[name="theme-color"]')
+      const activateDarkMode = () => {
+        document.documentElement.dataset.theme = 'dark'
+        if (metaThemeColor !== null) {
+          metaThemeColor.setAttribute('content', '#0d0d0d')
+        }
+      }
+      const activateLightMode = () => {
+        document.documentElement.dataset.theme = 'light'
+        if (metaThemeColor !== null) {
+          metaThemeColor.setAttribute('content', '#ffffff')
+        }
+      }
+
+      btf.activateDarkMode = activateDarkMode
+      btf.activateLightMode = activateLightMode
+
+      const theme = saveToLocal.get('theme')
+    
+          theme === 'dark' ? activateDarkMode() : theme === 'light' ? activateLightMode() : null
+        
+      
+      const asideStatus = saveToLocal.get('aside-status')
+      if (asideStatus !== undefined) {
+        document.documentElement.classList.toggle('hide-aside', asideStatus === 'hide')
+      }
+    
+      
+    const detectApple = () => {
+      if (/iPad|iPhone|iPod|Macintosh/.test(navigator.userAgent)) {
+        document.documentElement.classList.add('apple')
+      }
+    }
+    detectApple()
+  
+    })()
+  </script><script>const GLOBAL_CONFIG = {
+  root: '/',
+  algolia: undefined,
+  localSearch: undefined,
+  translate: undefined,
+  highlight: {"plugin":"highlight.js","highlightCopy":true,"highlightLang":true,"highlightHeightLimit":false,"highlightFullpage":false,"highlightMacStyle":false},
+  copy: {
+    success: '复制成功',
+    error: '复制失败',
+    noSupport: '浏览器不支持'
+  },
+  relativeDate: {
+    homepage: false,
+    post: false
+  },
+  runtime: '',
+  dateSuffix: {
+    just: '刚刚',
+    min: '分钟前',
+    hour: '小时前',
+    day: '天前',
+    month: '个月前'
+  },
+  copyright: undefined,
+  lightbox: 'null',
+  Snackbar: undefined,
+  infinitegrid: {
+    js: 'https://cdn.jsdelivr.net/npm/@egjs/infinitegrid@4.13.0/dist/infinitegrid.min.js',
+    buttonText: '加载更多'
+  },
+  isPhotoFigcaption: false,
+  islazyloadPlugin: false,
+  isAnchor: false,
+  percent: {
+    toc: true,
+    rightside: false,
+  },
+  autoDarkmode: false
+}</script><script id="config-diff">var GLOBAL_CONFIG_SITE = {
+  title: '我的第一个技术博客：从 0 到 1 搭建 Hexo + GitHub Pages 的踩坑记录',
+  isHighlightShrink: false,
+  isToc: true,
+  pageType: 'post'
+}</script><meta name="generator" content="Hexo 7.3.0"></head><body><div class="post" id="body-wrap"><header class="post-bg" id="page-header"><nav id="nav"><span id="blog-info"><a class="nav-site-title" href="/"><span class="site-name">Ted'sworld</span></a><a class="nav-page-title" href="/"><span class="site-name">我的第一个技术博客：从 0 到 1 搭建 Hexo + GitHub Pages 的踩坑记录</span><span class="site-name"><i class="fa-solid fa-circle-arrow-left"></i><span>  返回首页</span></span></a></span><div id="menus"></div></nav><div id="post-info"><h1 class="post-title">我的第一个技术博客：从 0 到 1 搭建 Hexo + GitHub Pages 的踩坑记录</h1><div id="post-meta"><div class="meta-firstline"><span class="post-meta-date"><i class="far fa-calendar-alt fa-fw post-meta-icon"></i><span class="post-meta-label">发表于</span><time class="post-meta-date-created" datetime="2026-09-26T12:00:00.000Z" title="发表于 2026-09-26 20:00:00">2026-09-26</time><span class="post-meta-separator">|</span><i class="fas fa-history fa-fw post-meta-icon"></i><span class="post-meta-label">更新于</span><time class="post-meta-date-updated" datetime="2026-09-26T09:08:03.249Z" title="更新于 2026-09-26 17:08:03">2026-09-26</time></span></div><div class="meta-secondline"><span class="post-meta-separator">|</span><span class="post-meta-pv-cv" id="" data-flag-title=""><i class="far fa-eye fa-fw post-meta-icon"></i><span class="post-meta-label">浏览量:</span><span id="busuanzi_value_page_pv"><i class="fa-solid fa-spinner fa-spin"></i></span></span></div></div></div></header><main class="layout" id="content-inner"><div id="post"><article class="container post-content" id="article-container"><h2 id="写在前面"><a href="#写在前面" class="headerlink" title="写在前面"></a>写在前面</h2><p>过去的法律学习更多围绕法条、案例和理论展开，但随着 AI 工具进入法律检索、合同审查、法律服务等领域，我逐渐意识到，未来法律人才不仅需要具备法律思维，也需要具备一定的技术理解能力。</p>
+<p>作为一个法学本科大三学生，我最近开始自学 AI 应用开发。为了记录学习过程、给简历增加一个可以展示的实体项目，我决定搭建一个个人技术博客。</p>
+<p>然而，从选择方案到最终上线，我几乎把新手能踩的坑全踩了一遍。这篇文章不是为了写一篇完美的教程，而是为了如实记录我作为<strong>纯小白</strong>，在 Windows 系统下从零搭建 Hexo 博客的真实过程与解决方案。</p>
+<p>如果你也是零基础，希望我的经历能帮你少走一点弯路。</p>
+<p>我的环境</p>
+<ul>
+<li>Windows 11</li>
+<li>Node.js xx</li>
+<li>npm xx</li>
+<li>Hexo xx</li>
+<li>Git xx</li>
+<li>PowerShell xx</li>
+<li>GitHub Pages</li>
+</ul>
+<h2 id="第一个坑：目录权限与路径空格"><a href="#第一个坑：目录权限与路径空格" class="headerlink" title="第一个坑：目录权限与路径空格"></a>第一个坑：目录权限与路径空格</h2><p>最初我把博客项目放在 <code>D:\ai playground</code> 目录下。结果第一步就惨遭 Windows 权限教育：<br>PS D:\ai playground2&gt; mkdir D:\ai playground<br>mkdir : 找不到接受实际参数“playground”的位置形式参数。</p>
+<p><strong>原因</strong>：路径名带空格，在 PowerShell 里被解析成了两个参数。<br><strong>加上引号后</strong>，又提示 <code>EPERM: operation not permitted</code>——当前用户对这个文件夹没有写权限。</p>
+<p><strong>解决</strong>：不要和 Windows 权限系统死磕。直接换到用户根目录 <code>C:\Users\你的用户名\aiblog</code> 下，问题迎刃而解。博客源码放在哪里，完全不影响以后的部署。</p>
+<p><strong>教训</strong>：不建议把项目放在路径复杂、包含特殊字符或权限管理复杂的位置。</p>
+<h2 id="第二个坑：PowerShell-的“古老”限制"><a href="#第二个坑：PowerShell-的“古老”限制" class="headerlink" title="第二个坑：PowerShell 的“古老”限制"></a>第二个坑：PowerShell 的“古老”限制</h2><p>在跟着教程走的时候，教程里经常用 <code>hexo clean &amp;&amp; hexo g &amp;&amp; hexo s</code>。<br>Windows PowerShell 5.x 不支持类似 Linux Shell 和新版 PowerShell 7 中的 &amp;&amp; 链式执行语法:<br>标记“&amp;&amp;”不是此版本中的有效语句分隔符。</p>
+<p><strong>解决</strong>：在旧版 PowerShell 里，用分号 <code>;</code> 代替 <code>&amp;&amp;</code>，或者逐条执行。如果非要使用 <code>&amp;&amp;</code>，需要安装 PowerShell 7。</p>
+<h2 id="第三个坑：终端命令-vs-文件内容"><a href="#第三个坑：终端命令-vs-文件内容" class="headerlink" title="第三个坑：终端命令 vs 文件内容"></a>第三个坑：终端命令 vs 文件内容</h2><p>作为一个新手，我一度把“写在配置文件里的内容”和“在终端里执行的命令”搞混了。</p>
+<p>比如我直接把 <code>theme: landscape</code> 敲进终端，导致：<br>theme: : 无法将“theme:”项识别为 cmdlet…</p>
+<p>同样，我甚至把 Markdown 格式的标题（<code>---</code> 和 <code>title:</code>）一起粘贴到终端里运行，PowerShell 也完全不给面子，直接报了一串奇怪的“一元运算符”错误。</p>
+<p><strong>教训</strong>：带冒号（<code>key: value</code>）的 YAML 配置，是写在 <code>.yml</code> 文件里的；<code>hexo g</code>、<code>npm install</code> 这类才是敲在终端里的。</p>
+<h2 id="第四个坑：YAML-语法的重复键"><a href="#第四个坑：YAML-语法的重复键" class="headerlink" title="第四个坑：YAML 语法的重复键"></a>第四个坑：YAML 语法的重复键</h2><p>在配置 Hexo 部署地址时，我按照教程添加了：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">yaml</span><br><span class="line">deploy:</span><br><span class="line">  type: git</span><br><span class="line">  repo: https://github.com/你的GitHub用户名/你的GitHub用户名.github.io.git</span><br><span class="line">  branch: main</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<p>但我没注意到文件底下原来就有一个默认的 type: ‘’，导致 YAML 解析器报错：</p>
+<p>YAMLException: duplicated mapping key (107:3)<br>解决：合并配置，删除旧的空 type，只保留一个 type: git。</p>
+<h2 id="第五个坑：GitHub-连不上与-SSH-救场"><a href="#第五个坑：GitHub-连不上与-SSH-救场" class="headerlink" title="第五个坑：GitHub 连不上与 SSH 救场"></a>第五个坑：GitHub 连不上与 SSH 救场</h2><p>这是整个过程中最折磨人的环节。由于本地网络环境限制，git clone 和 git push 经常在 HTTPS 协议下直接卡死，或者报 Connection was reset。</p>
+<p>我尝试了开启代理工具（假设本地端口为 你的代理端口，例如 7890）并配置 Git 代理：</p>
+<p>&lt;&#x2F;&gt;powershell<br>git config –global http.proxy <a href="http://127.0.0.1:你的代理端口">http://127.0.0.1:你的代理端口</a></p>
+<p>奇怪的是，浏览器能访问 GitHub，Test-NetConnection 也显示 443 端口通，但 Git 依然卡死。</p>
+<p>最终解法：彻底放弃 HTTPS 方式，转用 SSH 协议。</p>
+<p>生成 SSH 密钥：ssh-keygen -t ed25519 -C “你的邮箱@example.com”</p>
+<p>复制公钥 id_ed25519.pub 到 GitHub 的 SSH Keys 中。</p>
+<p>修改 Hexo 配置，把 repo 换成：<a href="mailto:&#103;&#x69;&#116;&#64;&#103;&#x69;&#x74;&#x68;&#117;&#98;&#x2e;&#x63;&#x6f;&#109;">&#103;&#x69;&#116;&#64;&#103;&#x69;&#x74;&#x68;&#117;&#98;&#x2e;&#x63;&#x6f;&#109;</a>:你的GitHub用户名&#x2F;你的GitHub用户名.github.io.git</p>
+<p>收获：SSH 方式走的是 22 端口，在我的网络环境下，SSH 方式比 HTTPS 推送更加稳定。如果遇到 HTTPS 连接异常，可以尝试切换 SSH 协议。</p>
+<h2 id="第六个坑：Git-不知道“我是谁”"><a href="#第六个坑：Git-不知道“我是谁”" class="headerlink" title="第六个坑：Git 不知道“我是谁”"></a>第六个坑：Git 不知道“我是谁”</h2><p>配好了 SSH，满心欢喜执行 hexo d，结果又报错：</p>
+<p>Author identity unknown<br>*** Please tell me who you are.<br>解决：部署前，务必告诉 Git 你的身份（换成你注册 GitHub 的邮箱）：</p>
+<p>powershell<br>git config –global user.name “你的GitHub用户名”<br>git config –global user.email “你的邮箱@example.com”<br>最后的成功与反思<br>当你看到终端最后出现：</p>
+<p>INFO Deploy done: git<br>并在浏览器里成功打开自己的博客时，那种成就感是非常真实的。</p>
+<p>作为一个法学背景、刚接触 AI 和代码的新手，这次经历让我学到的不仅仅是“怎么建一个网站”，更是一种工程化解决问题的思维:</p>
+<p>看报错信息：Git、PowerShell、Node.js 的报错其实非常清晰，里面会直接告诉你哪一行出了问题。</p>
+<p>分而治之：网络问题、权限问题、语法问题，虽然看起来都是一团乱麻，但要拆开，逐个击破。</p>
+<p>善用工具：遇到不懂的，我会直接问 Cursor 里的 AI 助手，或者把错误日志丢给 AI 帮我解读。</p>
+<p>这次经历也让我重新理解法律学习与技术学习的共同点。无论是分析一个法律案件，还是排查一个程序错误，本质上都是面对复杂问题，通过信息检索、规则理解和逻辑拆解寻找解决方案。</p>
+<p>下一步，这个博客会成为我记录法律 AI 项目（比如合同审查工具、民法典问答助手）的基地。技术之路才刚刚开始，与大家共勉。</p>
+<hr>
+</article><div class="post-copyright"><div class="post-copyright__author"><span class="post-copyright-meta"><i class="fas fa-circle-user fa-fw"></i>文章作者: </span><span class="post-copyright-info"><a href="http://example.com">Tedoverlearn</a></span></div><div class="post-copyright__type"><span class="post-copyright-meta"><i class="fas fa-square-arrow-up-right fa-fw"></i>文章链接: </span><span class="post-copyright-info"><a href="http://example.com/2026/09/26/Windows%E4%B8%8BHexo-GitHub%E5%8D%9A%E5%AE%A2%E6%90%AD%E5%BB%BA%E8%B8%A9%E5%9D%91%E8%AE%B0/">http://example.com/2026/09/26/Windows%E4%B8%8BHexo-GitHub%E5%8D%9A%E5%AE%A2%E6%90%AD%E5%BB%BA%E8%B8%A9%E5%9D%91%E8%AE%B0/</a></span></div><div class="post-copyright__notice"><span class="post-copyright-meta"><i class="fas fa-circle-exclamation fa-fw"></i>版权声明: </span><span class="post-copyright-info">本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" target="_blank">CC BY-NC-SA 4.0</a> 许可协议。转载请注明来源 <a href="http://example.com" target="_blank">Ted'sworld</a>！</span></div></div><div class="tag_share"><div class="post-meta__tag-list"><a class="post-meta__tags" href="/tags/Hexo/">Hexo</a><a class="post-meta__tags" href="/tags/GitHub-Pages/">GitHub Pages</a><a class="post-meta__tags" href="/tags/%E4%B8%AA%E4%BA%BA%E5%8D%9A%E5%AE%A2%E6%90%AD%E5%BB%BA/">个人博客搭建</a><a class="post-meta__tags" href="/tags/Windows/">Windows</a><a class="post-meta__tags" href="/tags/Git/">Git</a><a class="post-meta__tags" href="/tags/SSH/">SSH</a><a class="post-meta__tags" href="/tags/AI%E5%AD%A6%E4%B9%A0/">AI学习</a><a class="post-meta__tags" href="/tags/%E6%B3%95%E5%BE%8B%E7%A7%91%E6%8A%80/">法律科技</a></div><div class="post-share"><div class="social-share" data-image="/img/butterfly-icon.png" data-sites="facebook,x,wechat,weibo,qq"></div><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1.1.6/sharejs/dist/css/share.min.css" media="print" onload="this.media='all'"><script src="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1.1.6/sharejs/dist/js/social-share.min.js" defer></script></div></div><nav class="pagination-post" id="pagination"><a class="pagination-related full-width" href="/2026/09/24/%E6%88%91%E7%9A%84%E7%AC%AC%E4%B8%80%E7%AF%87%E6%96%87%E7%AB%A0/" title="为什么法学背景的我，开始学 AI"><div class="cover" style="background: var(--default-bg-color)"></div><div class="info text-right"><div class="info-1"><div class="info-item-1">下一篇</div><div class="info-item-2">为什么法学背景的我，开始学 AI</div></div><div class="info-2"><div class="info-item-1">写在前面我是一个浙江理工大学法学本科大三学生，目前正在自学 AI 应用开发。 这个博客用来记录我的学习过程、项目复盘和一些法律科技（Legal Tech）相关的思考。如果你是法学背景、也想了解 AI，或者你是技术背景、对法律场景感兴趣，希望这里的 content 对你有用。 为什么学 AI说实话，最开始是因为焦虑。 大三了，身边同学有的在准备法考，有的在律所实习，有的在准备考研。我也试过投实习、看招聘要求，发现一个越来越明显的趋势：很多法律相关岗位开始要求“会用 AI 工具”。 不是要求你会写代码，而是要求你：  能用 AI 快速检索和整理法规、案例 能用 AI 辅助起草、审查合同 能理解 AI 输出的局限性，知道它什么时候在“胡说”  这让我意识到，AI 不会取代法律人，但会用 AI 的法律人，可能会取代不会用的。 我目前做了什么目前还在很初级的阶段，但已经动手做了一些事：  配置了 Claude Code + DeepSeek API，用来辅助写代码和调试 搭建了这个博客（Hexo + Butterfly + GitHub Pages），用来记录学习过程 在规划几个法律 AI...</div></div></div></a></nav></div><div class="aside-content" id="aside-content"><div class="card-widget card-info text-center"><div class="avatar-img"><img src="/img/butterfly-icon.png" onerror="this.onerror=null;this.src='/img/friend_404.gif'" alt="avatar"/></div><div class="author-info-name">Tedoverlearn</div><div class="author-info-description"></div><div class="site-data"><a href="/archives/"><div class="headline">文章</div><div class="length-num">3</div></a><a href="/tags/"><div class="headline">标签</div><div class="length-num">11</div></a><a href="/categories/"><div class="headline">分类</div><div class="length-num">0</div></a></div><a id="card-info-btn" target="_blank" rel="noopener" href="https://github.com/xxxxxx"><i class="fab fa-github"></i><span>Follow Me</span></a></div><div class="card-widget card-announcement"><div class="item-headline"><i class="fas fa-bullhorn fa-shake"></i><span>公告</span></div><div class="announcement_content">This is my Blog</div></div><div class="sticky_layout"><div class="card-widget" id="card-toc"><div class="item-headline"><i class="fas fa-stream"></i><span>目录</span><span class="toc-percentage"></span></div><div class="toc-content"><ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%86%99%E5%9C%A8%E5%89%8D%E9%9D%A2"><span class="toc-number">1.</span> <span class="toc-text">写在前面</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E7%AC%AC%E4%B8%80%E4%B8%AA%E5%9D%91%EF%BC%9A%E7%9B%AE%E5%BD%95%E6%9D%83%E9%99%90%E4%B8%8E%E8%B7%AF%E5%BE%84%E7%A9%BA%E6%A0%BC"><span class="toc-number">2.</span> <span class="toc-text">第一个坑：目录权限与路径空格</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E7%AC%AC%E4%BA%8C%E4%B8%AA%E5%9D%91%EF%BC%9APowerShell-%E7%9A%84%E2%80%9C%E5%8F%A4%E8%80%81%E2%80%9D%E9%99%90%E5%88%B6"><span class="toc-number">3.</span> <span class="toc-text">第二个坑：PowerShell 的“古老”限制</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E7%AC%AC%E4%B8%89%E4%B8%AA%E5%9D%91%EF%BC%9A%E7%BB%88%E7%AB%AF%E5%91%BD%E4%BB%A4-vs-%E6%96%87%E4%BB%B6%E5%86%85%E5%AE%B9"><span class="toc-number">4.</span> <span class="toc-text">第三个坑：终端命令 vs 文件内容</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E7%AC%AC%E5%9B%9B%E4%B8%AA%E5%9D%91%EF%BC%9AYAML-%E8%AF%AD%E6%B3%95%E7%9A%84%E9%87%8D%E5%A4%8D%E9%94%AE"><span class="toc-number">5.</span> <span class="toc-text">第四个坑：YAML 语法的重复键</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E7%AC%AC%E4%BA%94%E4%B8%AA%E5%9D%91%EF%BC%9AGitHub-%E8%BF%9E%E4%B8%8D%E4%B8%8A%E4%B8%8E-SSH-%E6%95%91%E5%9C%BA"><span class="toc-number">6.</span> <span class="toc-text">第五个坑：GitHub 连不上与 SSH 救场</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E7%AC%AC%E5%85%AD%E4%B8%AA%E5%9D%91%EF%BC%9AGit-%E4%B8%8D%E7%9F%A5%E9%81%93%E2%80%9C%E6%88%91%E6%98%AF%E8%B0%81%E2%80%9D"><span class="toc-number">7.</span> <span class="toc-text">第六个坑：Git 不知道“我是谁”</span></a></li></ol></div></div><div class="card-widget card-recent-post"><div class="item-headline"><i class="fas fa-history"></i><span>最新文章</span></div><div class="aside-list"><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/2026/09/26/Windows%E4%B8%8BHexo-GitHub%E5%8D%9A%E5%AE%A2%E6%90%AD%E5%BB%BA%E8%B8%A9%E5%9D%91%E8%AE%B0/" title="我的第一个技术博客：从 0 到 1 搭建 Hexo + GitHub Pages 的踩坑记录">我的第一个技术博客：从 0 到 1 搭建 Hexo + GitHub Pages 的踩坑记录</a><time datetime="2026-09-26T12:00:00.000Z" title="发表于 2026-09-26 20:00:00">2026-09-26</time></div></div><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/2026/09/24/%E6%88%91%E7%9A%84%E7%AC%AC%E4%B8%80%E7%AF%87%E6%96%87%E7%AB%A0/" title="为什么法学背景的我，开始学 AI">为什么法学背景的我，开始学 AI</a><time datetime="2026-09-23T16:00:00.000Z" title="发表于 2026-09-24 00:00:00">2026-09-24</time></div></div><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/2026/09/23/hello-world/" title="Hello World">Hello World</a><time datetime="2026-09-23T15:48:49.601Z" title="发表于 2026-09-23 23:48:49">2026-09-23</time></div></div></div></div></div></div></main><footer id="footer"><div class="footer-other"><div class="footer-copyright"><span class="copyright">&copy;&nbsp;2025 - 2026 By Tedoverlearn</span><span class="framework-info"><span>框架 </span><a target="_blank" rel="noopener" href="https://hexo.io">Hexo 7.3.0</a><span class="footer-separator">|</span><span>主题 </span><a target="_blank" rel="noopener" href="https://github.com/jerryc127/hexo-theme-butterfly">Butterfly 5.7.0</a></span></div></div></footer></div><div id="rightside"><div id="rightside-config-hide"><button id="readmode" type="button" title="阅读模式"><i class="fas fa-book-open"></i></button><button id="darkmode" type="button" title="日间和夜间模式切换"><i class="fas fa-adjust"></i></button><button id="hide-aside-btn" type="button" title="单栏和双栏切换"><i class="fas fa-arrows-alt-h"></i></button></div><div id="rightside-config-show"><button id="rightside-config" type="button" title="设置"><i class="fas fa-cog fa-spin"></i></button><button class="close" id="mobile-toc-button" type="button" title="目录"><i class="fas fa-list-ul"></i></button><button id="go-up" type="button" title="回到顶部"><span class="scroll-percent"></span><i class="fas fa-arrow-up"></i></button></div></div><div><script src="/js/utils.js?v=5.7.0"></script><script src="/js/main.js?v=5.7.0"></script><div class="js-pjax"></div><script async data-pjax src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script></div></body></html>
