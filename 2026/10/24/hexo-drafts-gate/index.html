@@ -1,0 +1,283 @@
+<!DOCTYPE html><html lang="zh-CN" data-theme="light"><head><meta charset="UTF-8"><meta http-equiv="X-UA-Compatible" content="IE=edge"><meta name="viewport" content="width=device-width, initial-scale=1.0,viewport-fit=cover"><title>给博客加一道审核闸门：用 Hexo 的 _drafts 把「自动写」和「自动发」拆开 | Ted'sworld</title><meta name="author" content="Tedoverlearn"><meta name="copyright" content="Tedoverlearn"><meta name="format-detection" content="telephone=no"><meta name="theme-color" content="#ffffff"><meta name="description" content="让 AI 每天写一篇文章不难，难的是别让它直接发出去。这篇记录我怎么用 Hexo 原生的 _drafts 目录和 render_drafts 配置，把生成、审核、发布拆成三段。">
+<meta property="og:type" content="article">
+<meta property="og:title" content="给博客加一道审核闸门：用 Hexo 的 _drafts 把「自动写」和「自动发」拆开">
+<meta property="og:url" content="https://tedoverlearn.github.io/2026/10/24/hexo-drafts-gate/index.html">
+<meta property="og:site_name" content="Ted&#39;sworld">
+<meta property="og:description" content="让 AI 每天写一篇文章不难，难的是别让它直接发出去。这篇记录我怎么用 Hexo 原生的 _drafts 目录和 render_drafts 配置，把生成、审核、发布拆成三段。">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://tedoverlearn.github.io/img/butterfly-icon.png">
+<meta property="article:published_time" content="2026-10-24T14:55:00.000Z">
+<meta property="article:modified_time" content="2026-10-24T14:56:38.122Z">
+<meta property="article:author" content="Tedoverlearn">
+<meta property="article:tag" content="Hexo">
+<meta property="article:tag" content="博客">
+<meta property="article:tag" content="工作流">
+<meta property="article:tag" content="自动化">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://tedoverlearn.github.io/img/butterfly-icon.png"><script type="application/ld+json">{
+  "@context": "https://schema.org",
+  "@type": "BlogPosting",
+  "headline": "给博客加一道审核闸门：用 Hexo 的 _drafts 把「自动写」和「自动发」拆开",
+  "url": "https://tedoverlearn.github.io/2026/10/24/hexo-drafts-gate/",
+  "image": "https://tedoverlearn.github.io/img/butterfly-icon.png",
+  "datePublished": "2026-10-24T14:55:00.000Z",
+  "dateModified": "2026-10-24T14:56:38.122Z",
+  "author": [
+    {
+      "@type": "Person",
+      "name": "Tedoverlearn",
+      "url": "https://tedoverlearn.github.io"
+    }
+  ]
+}</script><link rel="shortcut icon" href="/img/favicon.png"><link rel="canonical" href="https://tedoverlearn.github.io/2026/10/24/hexo-drafts-gate/index.html"><link rel="preconnect" href="//cdn.jsdelivr.net"/><link rel="preconnect" href="//busuanzi.ibruce.info"/><link rel="stylesheet" href="/css/index.css?v=5.7.0"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@7.3.1/css/all.min.css"><script>
+    (() => {
+      
+    const saveToLocal = {
+      set: (key, value, ttl) => {
+        const data = { value }
+
+        if (ttl != null) {
+          data.expiry = Date.now() + ttl * 86400000
+        }
+
+        localStorage.setItem(key, JSON.stringify(data))
+      },
+      get: key => {
+        const itemStr = localStorage.getItem(key)
+        if (!itemStr) return
+
+        try {
+          const data = JSON.parse(itemStr)
+
+          if (data.expiry && Date.now() > data.expiry) {
+            localStorage.removeItem(key)
+            return
+          }
+
+          return data.value
+        } catch {
+          localStorage.removeItem(key)
+        }
+      }
+    }
+
+    const scriptCache = new Map()
+    const cssCache = new Map()
+    window.btf = {
+      saveToLocal,
+      getScript: (url, attr = {}) => {
+        if (scriptCache.has(url)) {
+          return scriptCache.get(url)
+        }
+
+        const promise = new Promise((resolve, reject) => {
+          const script = document.createElement('script')
+
+          script.src = url
+          script.async = true
+
+          for (const key in attr) {
+            script.setAttribute(key, attr[key])
+          }
+
+          script.onload = resolve
+          script.onerror = reject
+
+          document.head.appendChild(script)
+        })
+
+        scriptCache.set(url, promise)
+
+        return promise
+      },
+      getCSS: (url, id) => {
+        if (cssCache.has(url)) {
+          return cssCache.get(url)
+        }
+
+        const promise = new Promise((resolve, reject) => {
+          const link = document.createElement('link')
+
+          link.rel = 'stylesheet'
+          link.href = url
+
+          if (id) {
+            link.id = id
+          }
+
+          link.onload = resolve
+          link.onerror = reject
+
+          document.head.appendChild(link)
+        })
+
+        cssCache.set(url, promise)
+
+        return promise
+      },
+      addGlobalFn: (key, fn, name = false, parent = window) => {
+        if (!false && key.startsWith('pjax')) return
+        const globalFn = parent.globalFn || {}
+        globalFn[key] = globalFn[key] || {}
+        globalFn[key][name || Object.keys(globalFn[key]).length] = fn
+        parent.globalFn = globalFn
+      }
+    }
+  
+      
+      const metaThemeColor = document.querySelector('meta[name="theme-color"]')
+      const activateDarkMode = () => {
+        document.documentElement.dataset.theme = 'dark'
+        if (metaThemeColor !== null) {
+          metaThemeColor.setAttribute('content', '#0d0d0d')
+        }
+      }
+      const activateLightMode = () => {
+        document.documentElement.dataset.theme = 'light'
+        if (metaThemeColor !== null) {
+          metaThemeColor.setAttribute('content', '#ffffff')
+        }
+      }
+
+      btf.activateDarkMode = activateDarkMode
+      btf.activateLightMode = activateLightMode
+
+      const theme = saveToLocal.get('theme')
+    
+          theme === 'dark' ? activateDarkMode() : theme === 'light' ? activateLightMode() : null
+        
+      
+      const asideStatus = saveToLocal.get('aside-status')
+      if (asideStatus !== undefined) {
+        document.documentElement.classList.toggle('hide-aside', asideStatus === 'hide')
+      }
+    
+      
+    const detectApple = () => {
+      if (/iPad|iPhone|iPod|Macintosh/.test(navigator.userAgent)) {
+        document.documentElement.classList.add('apple')
+      }
+    }
+    detectApple()
+  
+    })()
+  </script><script>const GLOBAL_CONFIG = {
+  root: '/',
+  algolia: undefined,
+  localSearch: undefined,
+  translate: undefined,
+  highlight: {"plugin":"highlight.js","highlightCopy":true,"highlightLang":true,"highlightHeightLimit":false,"highlightFullpage":false,"highlightMacStyle":false},
+  copy: {
+    success: '复制成功',
+    error: '复制失败',
+    noSupport: '浏览器不支持'
+  },
+  relativeDate: {
+    homepage: false,
+    post: false
+  },
+  runtime: '',
+  dateSuffix: {
+    just: '刚刚',
+    min: '分钟前',
+    hour: '小时前',
+    day: '天前',
+    month: '个月前'
+  },
+  copyright: undefined,
+  lightbox: 'null',
+  Snackbar: undefined,
+  infinitegrid: {
+    js: 'https://cdn.jsdelivr.net/npm/@egjs/infinitegrid@4.13.0/dist/infinitegrid.min.js',
+    buttonText: '加载更多'
+  },
+  isPhotoFigcaption: false,
+  islazyloadPlugin: false,
+  isAnchor: false,
+  percent: {
+    toc: true,
+    rightside: false,
+  },
+  autoDarkmode: false
+}</script><script id="config-diff">var GLOBAL_CONFIG_SITE = {
+  title: '给博客加一道审核闸门：用 Hexo 的 _drafts 把「自动写」和「自动发」拆开',
+  isHighlightShrink: false,
+  isToc: true,
+  pageType: 'post'
+}</script><meta name="generator" content="Hexo 7.3.0"></head><body><div class="post" id="body-wrap"><header class="post-bg" id="page-header"><nav id="nav"><span id="blog-info"><a class="nav-site-title" href="/"><span class="site-name">Ted'sworld</span></a><a class="nav-page-title" href="/"><span class="site-name">给博客加一道审核闸门：用 Hexo 的 _drafts 把「自动写」和「自动发」拆开</span><span class="site-name"><i class="fa-solid fa-circle-arrow-left"></i><span>  返回首页</span></span></a></span><div id="menus"></div></nav><div id="post-info"><h1 class="post-title">给博客加一道审核闸门：用 Hexo 的 _drafts 把「自动写」和「自动发」拆开</h1><div id="post-meta"><div class="meta-firstline"><span class="post-meta-date"><i class="far fa-calendar-alt fa-fw post-meta-icon"></i><span class="post-meta-label">发表于</span><time class="post-meta-date-created" datetime="2026-10-24T14:55:00.000Z" title="发表于 2026-10-24 22:55:00">2026-10-24</time><span class="post-meta-separator">|</span><i class="fas fa-history fa-fw post-meta-icon"></i><span class="post-meta-label">更新于</span><time class="post-meta-date-updated" datetime="2026-10-24T14:56:38.122Z" title="更新于 2026-10-24 22:56:38">2026-10-24</time></span><span class="post-meta-categories"><span class="post-meta-separator">|</span><i class="fas fa-inbox fa-fw post-meta-icon"></i><a class="post-meta-categories" href="/categories/AI-%E5%AE%9E%E8%B7%B5/">AI 实践</a></span></div><div class="meta-secondline"><span class="post-meta-separator">|</span><span class="post-meta-pv-cv" id="" data-flag-title=""><i class="far fa-eye fa-fw post-meta-icon"></i><span class="post-meta-label">浏览量:</span><span id="busuanzi_value_page_pv"><i class="fa-solid fa-spinner fa-spin"></i></span></span></div></div></div></header><main class="layout" id="content-inner"><div id="post"><article class="container post-content" id="article-container"><h2 id="写在前面"><a href="#写在前面" class="headerlink" title="写在前面"></a>写在前面</h2><p>这个博客从搭好到现在，更新一直不稳定。不是因为没东西写，而是因为写东西这件事被”要写得好”卡住了：法条要核对、案例要查证、技术细节要自己跑过才敢写。结果就是想法攒了一堆，发布记录停在几个月前。</p>
+<p>后来我想换一个思路：把”写”这一步交给流程，把”发”这一步留给自己。每天机器固定产出一篇草稿，我只做审核。这样更新频率的问题解决了，内容准确性的责任也没有被交出去。</p>
+<p>这篇记录一下具体怎么做的，重点是<strong>为什么用 Hexo 自带的东西就够，而不是另搭一套系统</strong>。</p>
+<h2 id="问题不在”写”，在”发”"><a href="#问题不在”写”，在”发”" class="headerlink" title="问题不在”写”，在”发”"></a>问题不在”写”，在”发”</h2><p>一开始的想法很直接：写个脚本，接上模型 API，每天生成一篇文章，丢进 <code>source/_posts</code>，然后部署。</p>
+<p>想了两分钟就发现这条路走不通。问题不在模型能不能写出一千字，而在于<strong>它写出来的东西没人看过就直接上线了</strong>。对一个写法律内容的博客来说，这不是效率问题，是风险问题。一个条号写错、一个案例张冠李戴、”涉嫌”被写成”构成”，读者不会因为你更新勤快就原谅你。</p>
+<p>所以我真正要设计的不是”生成流程”，而是”<strong>谁敢按下发布按钮</strong>“。</p>
+<p>答案很简单：机器负责产出候选，人负责按下按钮。</p>
+<h2 id="Hexo-本来就留了这个位置"><a href="#Hexo-本来就留了这个位置" class="headerlink" title="Hexo 本来就留了这个位置"></a>Hexo 本来就留了这个位置</h2><p>这是我最开始没想到的：Hexo 里本来就有草稿这个概念，不需要自己造状态机，也不需要加数据库。</p>
+<p>按<a target="_blank" rel="noopener" href="https://hexo.io/docs/writing">官方文档</a>的说法，Hexo 有三种默认 layout：<code>post</code>、<code>page</code>、<code>draft</code>，它们分别写到不同的目录：</p>
+<table>
+<thead>
+<tr>
+<th>Layout</th>
+<th>路径</th>
+</tr>
+</thead>
+<tbody><tr>
+<td><code>post</code></td>
+<td><code>source/_posts</code></td>
+</tr>
+<tr>
+<td><code>page</code></td>
+<td><code>source</code></td>
+</tr>
+<tr>
+<td><code>draft</code></td>
+<td><code>source/_drafts</code></td>
+</tr>
+</tbody></table>
+<p>关键在下一句：草稿默认<strong>不会</strong>被渲染。要渲染草稿，得在命令里加 <code>--draft</code> 参数，或者在 <code>_config.yml</code> 里把 <code>render_drafts</code> 打开。</p>
+<p>我翻了一下自己的 <code>_config.yml</code>，第 42 行正好是：</p>
+<figure class="highlight yaml"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="attr">render_drafts:</span> <span class="literal">false</span></span><br></pre></td></tr></table></figure>
+
+<p>也就是说，<code>source/_drafts/</code> 天然就是一个”写了但不会上线”的隔离区。这正是我需要的闸门，而且是主题作者和 Hexo 社区已经在用的机制，不是我自己发明的约定。</p>
+<p>需要发布时，Hexo 也给了命令：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo publish [layout] &lt;title&gt;</span><br></pre></td></tr></table></figure>
+
+<p>它会把草稿从 <code>source/_drafts</code> 移到 <code>source/_posts</code>。手工发布时用这条命令，比手动剪切文件更不容易出错。</p>
+<h2 id="我的目录约定"><a href="#我的目录约定" class="headerlink" title="我的目录约定"></a>我的目录约定</h2><p>真正动起手来，我给自己定了两个约定。</p>
+<p><strong>第一个：所有跟自动更新有关的东西都放在 <code>_auto-blog/</code> 下。</strong></p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">_auto-blog/</span><br><span class="line">├── config.yml        # 窗口时间、选题比例、检索上限、预算上限</span><br><span class="line">├── daily-prompt.md   # 每天执行的完整流程说明</span><br><span class="line">├── state.yml         # 上次运行状态、下次计划时间、近期标题</span><br><span class="line">├── logs/2026-10.md   # 运行日志，一行一次</span><br><span class="line">└── publish.ps1       # 审核通过后的一键构建/发布</span><br></pre></td></tr></table></figure>
+
+<p>这个目录不在 <code>source/</code> 下面，Hexo 生成站点时不会碰它，所以配置和日志不会被打包进公开的静态文件。这一点值得单独说：把配置放在 <code>source/</code> 里，是很容易犯的错。</p>
+<p><strong>第二个：草稿文件名用 <code>YYYY-MM-DD-slug.md</code>。</strong></p>
+<p>日期是幂等键。每天任务开始的第一件事，就是看 <code>source/_drafts/</code> 里有没有今天日期的文件、<code>state.yml</code> 里今天的运行状态是不是已经成功。有就跳过。这样即使定时任务被触发两次，也不会在同一天产出两篇。</p>
+<h2 id="每天那一次是怎么跑的"><a href="#每天那一次是怎么跑的" class="headerlink" title="每天那一次是怎么跑的"></a>每天那一次是怎么跑的</h2><p>流程本身不复杂，写进 <code>daily-prompt.md</code> 之后大概是这样：</p>
+<ol>
+<li><strong>先做幂等和窗口检查</strong>。今天已经成功过就跳过；当前时间不在设定窗口内就跳过。深夜被唤醒绝不补发——这条是硬规则，人半夜写的稿子质量最差，机器也一样。</li>
+<li><strong>选题</strong>。AI 实践 50%、法律思考 25%、热点评论 25%，但比例是参考不是 KPI。当天没有可靠来源的热点，就不追，转去写技术或法律专题。</li>
+<li><strong>检索</strong>。搜索和抓取都有次数上限，宁可写短一点，也不无限查。</li>
+<li><strong>写</strong>。一千到两千字，文末列参考资料。</li>
+<li><strong>质检</strong>。九项清单，过不了就留在草稿里标记”需要人看”，不发布。</li>
+<li><strong>落盘 + 记日志</strong>。日志记计划时间、实际时间、标题、分类、来源数、质检结果、模型轮次、估算费用。</li>
+<li><strong>排明天的任务</strong>。这一条容易漏：如果每天的任务是靠”上一次任务给下一次排期”，那么今天失败了，明天就断了。</li>
+</ol>
+<p>第 7 条是我觉得最值得写下来的经验。定时任务不是配一次就完事，它需要自己续命，而且续命失败必须报警，不能静静断掉。</p>
+<h2 id="审核的时候我只看四件事"><a href="#审核的时候我只看四件事" class="headerlink" title="审核的时候我只看四件事"></a>审核的时候我只看四件事</h2><p>流程再复杂，人这一环最后就四个动作：</p>
+<ol>
+<li><strong>点开链接</strong>。每一条参考资料都是不是真的存在、内容是不是对得上。</li>
+<li><strong>核条号</strong>。法律文章里出现的每一个”第 X 条”都要回原文对一遍，包括是不是现行有效版本。</li>
+<li><strong>看措辞</strong>。有没有把”涉嫌”写成”构成”，有没有把个人观点写成司法结论。</li>
+<li><strong>查有没有编造我</strong>。有没有写我没做过的项目、没跑过的命令、没得到过的结果。</li>
+</ol>
+<p>第四条其实是最容易出问题、也最难自查的。模型很擅长把”这件事应该这样做”写成”我是这样做的”。所以我在流程里加了一条硬约束：<strong>没有实际运行验证过的方案，只能写成方案或设想</strong>。</p>
+<h2 id="还没解决的问题"><a href="#还没解决的问题" class="headerlink" title="还没解决的问题"></a>还没解决的问题</h2><p>这套东西不完美，有三件事我想清楚了但没解决：</p>
+<p><strong>第一，定时依赖客户端在运行。</strong> 定时任务是排在我这台机器的客户端里的，不是云上的 cron。机器关着、客户端没开，当天的任务就不会执行。我的选择是：错过就错过，记录失败，不补发。宁可少一篇，也不要为了”完成任务”在凌晨两点赶一篇低质量的稿子出来。</p>
+<p><strong>第二，构建和发布还没做到自动。</strong> 我当前的终端环境对这个博客目录没有写权限，跑不起 <code>hexo generate</code>，所以”草稿能不能正常构建”这一步暂时还得我手动验证。在权限问题解决之前，把自动发布打开是不负责任的——没构建过的站点推上去，坏的是线上。</p>
+<p><strong>第三，质检是清单不是证明。</strong> 九项清单能挡住大部分明显问题，但挡不住”看起来对、其实错”的法律分析。所以自动检查通过的稿子，我仍然会自己读一遍再发。自动化的价值是把”从零写一篇”变成”审一篇”，不是把责任转移出去。</p>
+<h2 id="小结"><a href="#小结" class="headerlink" title="小结"></a>小结</h2><p>做完这件事，我最大的收获不是学会配定时任务，而是想清楚了一个边界：<strong>自动化应该放在”生产”这一侧，”发布”这一侧要留给人。</strong></p>
+<p>生成可以快、可以多、可以试错；发布必须慢、必须少、必须有个人签字。这两件事拆开之后，每天更新的压力就变成了每天审一篇的十分钟，而不是每天从零写一篇的两小时。</p>
+<p>至于内容质量——那是另一个问题，流程解决不了，只能靠写和读。但至少现在，流程不会再挡住我开始写了。</p>
+<h2 id="参考资料"><a href="#参考资料" class="headerlink" title="参考资料"></a>参考资料</h2><ul>
+<li><a target="_blank" rel="noopener" href="https://hexo.io/docs/writing">Writing | Hexo 官方文档</a>（layout 与 <code>_drafts</code> 机制、<code>hexo publish</code> 命令）</li>
+<li><a target="_blank" rel="noopener" href="https://hexo.io/docs/front-matter">Front-matter | Hexo 官方文档</a>（文章头部字段说明）</li>
+<li><a target="_blank" rel="noopener" href="https://hexo.io/docs/configuration">Configuration | Hexo 官方文档</a>（<code>render_drafts</code> 等配置项）</li>
+</ul>
+</article><div class="post-copyright"><div class="post-copyright__author"><span class="post-copyright-meta"><i class="fas fa-circle-user fa-fw"></i>文章作者: </span><span class="post-copyright-info"><a href="https://tedoverlearn.github.io">Tedoverlearn</a></span></div><div class="post-copyright__type"><span class="post-copyright-meta"><i class="fas fa-square-arrow-up-right fa-fw"></i>文章链接: </span><span class="post-copyright-info"><a href="https://tedoverlearn.github.io/2026/10/24/hexo-drafts-gate/">https://tedoverlearn.github.io/2026/10/24/hexo-drafts-gate/</a></span></div><div class="post-copyright__notice"><span class="post-copyright-meta"><i class="fas fa-circle-exclamation fa-fw"></i>版权声明: </span><span class="post-copyright-info">本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" target="_blank">CC BY-NC-SA 4.0</a> 许可协议。转载请注明来源 <a href="https://tedoverlearn.github.io" target="_blank">Ted'sworld</a>！</span></div></div><div class="tag_share"><div class="post-meta__tag-list"><a class="post-meta__tags" href="/tags/Hexo/">Hexo</a><a class="post-meta__tags" href="/tags/%E5%8D%9A%E5%AE%A2/">博客</a><a class="post-meta__tags" href="/tags/%E5%B7%A5%E4%BD%9C%E6%B5%81/">工作流</a><a class="post-meta__tags" href="/tags/%E8%87%AA%E5%8A%A8%E5%8C%96/">自动化</a></div><div class="post-share"><div class="social-share" data-image="/img/butterfly-icon.png" data-sites="facebook,x,wechat,weibo,qq"></div><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1.1.6/sharejs/dist/css/share.min.css" media="print" onload="this.media='all'"><script src="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1.1.6/sharejs/dist/js/social-share.min.js" defer></script></div></div><nav class="pagination-post" id="pagination"><a class="pagination-related" href="/2026/10/25/hello-world/" title="Hello World"><div class="cover" style="background: var(--default-bg-color)"></div><div class="info"><div class="info-1"><div class="info-item-1">上一篇</div><div class="info-item-2">Hello World</div></div><div class="info-2"><div class="info-item-1">Welcome to Hexo! This is your very first post. Check documentation for more info. If you get any problems when using Hexo, you can find the answer in troubleshooting or you can ask me on GitHub. Quick StartCreate a new post1$ hexo new &quot;My New Post&quot;  More info: Writing Run server1$ hexo server  More info: Server Generate static files1$ hexo generate  More info: Generating Deploy to remote sites1$ hexo deploy  More info: Deployment </div></div></div></a><a class="pagination-related" href="/2026/09/26/Windows%E4%B8%8BHexo-GitHub%E5%8D%9A%E5%AE%A2%E6%90%AD%E5%BB%BA%E8%B8%A9%E5%9D%91%E8%AE%B0/" title="我的第一个技术博客：从 0 到 1 搭建 Hexo + GitHub Pages 的踩坑记录"><div class="cover" style="background: var(--default-bg-color)"></div><div class="info text-right"><div class="info-1"><div class="info-item-1">下一篇</div><div class="info-item-2">我的第一个技术博客：从 0 到 1 搭建 Hexo + GitHub Pages 的踩坑记录</div></div><div class="info-2"><div class="info-item-1">写在前面过去的法律学习更多围绕法条、案例和理论展开，但随着 AI 工具进入法律检索、合同审查、法律服务等领域，我逐渐意识到，未来法律人才不仅需要具备法律思维，也需要具备一定的技术理解能力。 作为一个法学本科大三学生，我最近开始自学 AI 应用开发。为了记录学习过程、给简历增加一个可以展示的实体项目，我决定搭建一个个人技术博客。 然而，从选择方案到最终上线，我几乎把新手能踩的坑全踩了一遍。这篇文章不是为了写一篇完美的教程，而是为了如实记录我作为纯小白，在 Windows 系统下从零搭建 Hexo 博客的真实过程与解决方案。 如果你也是零基础，希望我的经历能帮你少走一点弯路。 我的环境  Windows 11 Node.js xx npm xx Hexo xx Git xx PowerShell xx GitHub Pages  第一个坑：目录权限与路径空格最初我把博客项目放在 D:\ai playground 目录下。结果第一步就惨遭 Windows 权限教育：PS D:\ai playground2&gt; mkdir D:\ai playgroundmkdir : 找不到接受实...</div></div></div></a></nav><div class="relatedPosts"><div class="headline"><i class="fas fa-thumbs-up fa-fw"></i><span>相关推荐</span></div><div class="relatedPosts-list"><a class="pagination-related" href="/2026/09/26/Windows%E4%B8%8BHexo-GitHub%E5%8D%9A%E5%AE%A2%E6%90%AD%E5%BB%BA%E8%B8%A9%E5%9D%91%E8%AE%B0/" title="我的第一个技术博客：从 0 到 1 搭建 Hexo + GitHub Pages 的踩坑记录"><div class="cover" style="background: var(--default-bg-color)"></div><div class="info text-center"><div class="info-1"><div class="info-item-1"><i class="far fa-calendar-alt fa-fw"></i> 2026-09-26</div><div class="info-item-2">我的第一个技术博客：从 0 到 1 搭建 Hexo + GitHub Pages 的踩坑记录</div></div><div class="info-2"><div class="info-item-1">写在前面过去的法律学习更多围绕法条、案例和理论展开，但随着 AI 工具进入法律检索、合同审查、法律服务等领域，我逐渐意识到，未来法律人才不仅需要具备法律思维，也需要具备一定的技术理解能力。 作为一个法学本科大三学生，我最近开始自学 AI 应用开发。为了记录学习过程、给简历增加一个可以展示的实体项目，我决定搭建一个个人技术博客。 然而，从选择方案到最终上线，我几乎把新手能踩的坑全踩了一遍。这篇文章不是为了写一篇完美的教程，而是为了如实记录我作为纯小白，在 Windows 系统下从零搭建 Hexo 博客的真实过程与解决方案。 如果你也是零基础，希望我的经历能帮你少走一点弯路。 我的环境  Windows 11 Node.js xx npm xx Hexo xx Git xx PowerShell xx GitHub Pages  第一个坑：目录权限与路径空格最初我把博客项目放在 D:\ai playground 目录下。结果第一步就惨遭 Windows 权限教育：PS D:\ai playground2&gt; mkdir D:\ai playgroundmkdir : 找不到接受实...</div></div></div></a></div></div></div><div class="aside-content" id="aside-content"><div class="card-widget card-info text-center"><div class="avatar-img"><img src="/img/butterfly-icon.png" onerror="this.onerror=null;this.src='/img/friend_404.gif'" alt="avatar"/></div><div class="author-info-name">Tedoverlearn</div><div class="author-info-description"></div><div class="site-data"><a href="/archives/"><div class="headline">文章</div><div class="length-num">4</div></a><a href="/tags/"><div class="headline">标签</div><div class="length-num">14</div></a><a href="/categories/"><div class="headline">分类</div><div class="length-num">1</div></a></div><a id="card-info-btn" target="_blank" rel="noopener" href="https://github.com/xxxxxx"><i class="fab fa-github"></i><span>Follow Me</span></a></div><div class="card-widget card-announcement"><div class="item-headline"><i class="fas fa-bullhorn fa-shake"></i><span>公告</span></div><div class="announcement_content">This is my Blog</div></div><div class="sticky_layout"><div class="card-widget" id="card-toc"><div class="item-headline"><i class="fas fa-stream"></i><span>目录</span><span class="toc-percentage"></span></div><div class="toc-content"><ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%86%99%E5%9C%A8%E5%89%8D%E9%9D%A2"><span class="toc-number">1.</span> <span class="toc-text">写在前面</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E9%97%AE%E9%A2%98%E4%B8%8D%E5%9C%A8%E2%80%9D%E5%86%99%E2%80%9D%EF%BC%8C%E5%9C%A8%E2%80%9D%E5%8F%91%E2%80%9D"><span class="toc-number">2.</span> <span class="toc-text">问题不在”写”，在”发”</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Hexo-%E6%9C%AC%E6%9D%A5%E5%B0%B1%E7%95%99%E4%BA%86%E8%BF%99%E4%B8%AA%E4%BD%8D%E7%BD%AE"><span class="toc-number">3.</span> <span class="toc-text">Hexo 本来就留了这个位置</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%88%91%E7%9A%84%E7%9B%AE%E5%BD%95%E7%BA%A6%E5%AE%9A"><span class="toc-number">4.</span> <span class="toc-text">我的目录约定</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%AF%8F%E5%A4%A9%E9%82%A3%E4%B8%80%E6%AC%A1%E6%98%AF%E6%80%8E%E4%B9%88%E8%B7%91%E7%9A%84"><span class="toc-number">5.</span> <span class="toc-text">每天那一次是怎么跑的</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%AE%A1%E6%A0%B8%E7%9A%84%E6%97%B6%E5%80%99%E6%88%91%E5%8F%AA%E7%9C%8B%E5%9B%9B%E4%BB%B6%E4%BA%8B"><span class="toc-number">6.</span> <span class="toc-text">审核的时候我只看四件事</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E8%BF%98%E6%B2%A1%E8%A7%A3%E5%86%B3%E7%9A%84%E9%97%AE%E9%A2%98"><span class="toc-number">7.</span> <span class="toc-text">还没解决的问题</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%B0%8F%E7%BB%93"><span class="toc-number">8.</span> <span class="toc-text">小结</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%8F%82%E8%80%83%E8%B5%84%E6%96%99"><span class="toc-number">9.</span> <span class="toc-text">参考资料</span></a></li></ol></div></div><div class="card-widget card-recent-post"><div class="item-headline"><i class="fas fa-history"></i><span>最新文章</span></div><div class="aside-list"><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/2026/10/25/hello-world/" title="Hello World">Hello World</a><time datetime="2026-10-25T15:24:01.037Z" title="发表于 2026-10-25 23:24:01">2026-10-25</time></div></div><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/2026/10/24/hexo-drafts-gate/" title="给博客加一道审核闸门：用 Hexo 的 _drafts 把「自动写」和「自动发」拆开">给博客加一道审核闸门：用 Hexo 的 _drafts 把「自动写」和「自动发」拆开</a><time datetime="2026-10-24T14:55:00.000Z" title="发表于 2026-10-24 22:55:00">2026-10-24</time></div></div><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/2026/09/26/Windows%E4%B8%8BHexo-GitHub%E5%8D%9A%E5%AE%A2%E6%90%AD%E5%BB%BA%E8%B8%A9%E5%9D%91%E8%AE%B0/" title="我的第一个技术博客：从 0 到 1 搭建 Hexo + GitHub Pages 的踩坑记录">我的第一个技术博客：从 0 到 1 搭建 Hexo + GitHub Pages 的踩坑记录</a><time datetime="2026-09-26T12:00:00.000Z" title="发表于 2026-09-26 20:00:00">2026-09-26</time></div></div><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/2026/09/24/%E6%88%91%E7%9A%84%E7%AC%AC%E4%B8%80%E7%AF%87%E6%96%87%E7%AB%A0/" title="为什么法学背景的我，开始学 AI">为什么法学背景的我，开始学 AI</a><time datetime="2026-09-23T16:00:00.000Z" title="发表于 2026-09-24 00:00:00">2026-09-24</time></div></div></div></div></div></div></main><footer id="footer"><div class="footer-other"><div class="footer-copyright"><span class="copyright">&copy;&nbsp;2025 - 2026 By Tedoverlearn</span><span class="framework-info"><span>框架 </span><a target="_blank" rel="noopener" href="https://hexo.io">Hexo 7.3.0</a><span class="footer-separator">|</span><span>主题 </span><a target="_blank" rel="noopener" href="https://github.com/jerryc127/hexo-theme-butterfly">Butterfly 5.7.0</a></span></div></div></footer></div><div id="rightside"><div id="rightside-config-hide"><button id="readmode" type="button" title="阅读模式"><i class="fas fa-book-open"></i></button><button id="darkmode" type="button" title="日间和夜间模式切换"><i class="fas fa-adjust"></i></button><button id="hide-aside-btn" type="button" title="单栏和双栏切换"><i class="fas fa-arrows-alt-h"></i></button></div><div id="rightside-config-show"><button id="rightside-config" type="button" title="设置"><i class="fas fa-cog fa-spin"></i></button><button class="close" id="mobile-toc-button" type="button" title="目录"><i class="fas fa-list-ul"></i></button><button id="go-up" type="button" title="回到顶部"><span class="scroll-percent"></span><i class="fas fa-arrow-up"></i></button></div></div><div><script src="/js/utils.js?v=5.7.0"></script><script src="/js/main.js?v=5.7.0"></script><div class="js-pjax"></div><script async data-pjax src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script></div></body></html>
