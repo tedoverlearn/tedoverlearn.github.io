@@ -244,7 +244,7 @@
 <p>最终解法：彻底放弃 HTTPS 方式，转用 SSH 协议。</p>
 <p>生成 SSH 密钥：ssh-keygen -t ed25519 -C “你的邮箱@example.com”</p>
 <p>复制公钥 id_ed25519.pub 到 GitHub 的 SSH Keys 中。</p>
-<p>修改 Hexo 配置，把 repo 换成：<a href="mailto:&#103;&#x69;&#x74;&#64;&#103;&#105;&#x74;&#104;&#117;&#98;&#x2e;&#x63;&#x6f;&#109;">&#103;&#x69;&#x74;&#64;&#103;&#105;&#x74;&#104;&#117;&#98;&#x2e;&#x63;&#x6f;&#109;</a>:你的GitHub用户名&#x2F;你的GitHub用户名.github.io.git</p>
+<p>修改 Hexo 配置，把 repo 换成：<a href="mailto:&#x67;&#105;&#116;&#64;&#x67;&#105;&#x74;&#104;&#117;&#x62;&#x2e;&#99;&#111;&#x6d;">&#x67;&#105;&#116;&#64;&#x67;&#105;&#x74;&#104;&#117;&#x62;&#x2e;&#99;&#111;&#x6d;</a>:你的GitHub用户名&#x2F;你的GitHub用户名.github.io.git</p>
 <p>收获：SSH 方式走的是 22 端口，在我的网络环境下，SSH 方式比 HTTPS 推送更加稳定。如果遇到 HTTPS 连接异常，可以尝试切换 SSH 协议。</p>
 <h2 id="第六个坑：Git-不知道“我是谁”"><a href="#第六个坑：Git-不知道“我是谁”" class="headerlink" title="第六个坑：Git 不知道“我是谁”"></a>第六个坑：Git 不知道“我是谁”</h2><p>配好了 SSH，满心欢喜执行 hexo d，结果又报错：</p>
 <p>Author identity unknown<br>*** Please tell me who you are.<br>解决：部署前，务必告诉 Git 你的身份（换成你注册 GitHub 的邮箱）：</p>
