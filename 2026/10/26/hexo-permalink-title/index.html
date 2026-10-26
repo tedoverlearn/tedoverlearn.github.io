@@ -1,0 +1,259 @@
+<!DOCTYPE html><html lang="zh-CN" data-theme="light"><head><meta charset="UTF-8"><meta http-equiv="X-UA-Compatible" content="IE=edge"><meta name="viewport" content="width=device-width, initial-scale=1.0,viewport-fit=cover"><title>Hexo 网址里的 :title，不是你的文章标题 | Ted'sworld</title><meta name="author" content="Tedoverlearn"><meta name="copyright" content="Tedoverlearn"><meta name="format-detection" content="telephone=no"><meta name="theme-color" content="#ffffff"><meta name="description" content="给博客接自动写稿流程时，一篇草稿的网址会变成 &#x2F;2026&#x2F;10&#x2F;25&#x2F;2026-10-25-xxx&#x2F;。原因不在主题，在 permalink 的 :title —— 它取的是文件名，不是 front-matter 里那行标题。">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Hexo 网址里的 :title，不是你的文章标题">
+<meta property="og:url" content="https://tedoverlearn.github.io/2026/10/26/hexo-permalink-title/index.html">
+<meta property="og:site_name" content="Ted&#39;sworld">
+<meta property="og:description" content="给博客接自动写稿流程时，一篇草稿的网址会变成 &#x2F;2026&#x2F;10&#x2F;25&#x2F;2026-10-25-xxx&#x2F;。原因不在主题，在 permalink 的 :title —— 它取的是文件名，不是 front-matter 里那行标题。">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://tedoverlearn.github.io/img/butterfly-icon.png">
+<meta property="article:published_time" content="2026-10-26T14:31:00.000Z">
+<meta property="article:modified_time" content="2026-10-26T14:32:36.073Z">
+<meta property="article:author" content="Tedoverlearn">
+<meta property="article:tag" content="Hexo">
+<meta property="article:tag" content="自动化">
+<meta property="article:tag" content="静态博客">
+<meta property="article:tag" content="永久链接">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://tedoverlearn.github.io/img/butterfly-icon.png"><script type="application/ld+json">{
+  "@context": "https://schema.org",
+  "@type": "BlogPosting",
+  "headline": "Hexo 网址里的 :title，不是你的文章标题",
+  "url": "https://tedoverlearn.github.io/2026/10/26/hexo-permalink-title/",
+  "image": "https://tedoverlearn.github.io/img/butterfly-icon.png",
+  "datePublished": "2026-10-26T14:31:00.000Z",
+  "dateModified": "2026-10-26T14:32:36.073Z",
+  "author": [
+    {
+      "@type": "Person",
+      "name": "Tedoverlearn",
+      "url": "https://tedoverlearn.github.io"
+    }
+  ]
+}</script><link rel="shortcut icon" href="/img/favicon.png"><link rel="canonical" href="https://tedoverlearn.github.io/2026/10/26/hexo-permalink-title/index.html"><link rel="preconnect" href="//cdn.jsdelivr.net"/><link rel="preconnect" href="//busuanzi.ibruce.info"/><link rel="stylesheet" href="/css/index.css?v=5.7.0"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@7.3.1/css/all.min.css"><script>
+    (() => {
+      
+    const saveToLocal = {
+      set: (key, value, ttl) => {
+        const data = { value }
+
+        if (ttl != null) {
+          data.expiry = Date.now() + ttl * 86400000
+        }
+
+        localStorage.setItem(key, JSON.stringify(data))
+      },
+      get: key => {
+        const itemStr = localStorage.getItem(key)
+        if (!itemStr) return
+
+        try {
+          const data = JSON.parse(itemStr)
+
+          if (data.expiry && Date.now() > data.expiry) {
+            localStorage.removeItem(key)
+            return
+          }
+
+          return data.value
+        } catch {
+          localStorage.removeItem(key)
+        }
+      }
+    }
+
+    const scriptCache = new Map()
+    const cssCache = new Map()
+    window.btf = {
+      saveToLocal,
+      getScript: (url, attr = {}) => {
+        if (scriptCache.has(url)) {
+          return scriptCache.get(url)
+        }
+
+        const promise = new Promise((resolve, reject) => {
+          const script = document.createElement('script')
+
+          script.src = url
+          script.async = true
+
+          for (const key in attr) {
+            script.setAttribute(key, attr[key])
+          }
+
+          script.onload = resolve
+          script.onerror = reject
+
+          document.head.appendChild(script)
+        })
+
+        scriptCache.set(url, promise)
+
+        return promise
+      },
+      getCSS: (url, id) => {
+        if (cssCache.has(url)) {
+          return cssCache.get(url)
+        }
+
+        const promise = new Promise((resolve, reject) => {
+          const link = document.createElement('link')
+
+          link.rel = 'stylesheet'
+          link.href = url
+
+          if (id) {
+            link.id = id
+          }
+
+          link.onload = resolve
+          link.onerror = reject
+
+          document.head.appendChild(link)
+        })
+
+        cssCache.set(url, promise)
+
+        return promise
+      },
+      addGlobalFn: (key, fn, name = false, parent = window) => {
+        if (!false && key.startsWith('pjax')) return
+        const globalFn = parent.globalFn || {}
+        globalFn[key] = globalFn[key] || {}
+        globalFn[key][name || Object.keys(globalFn[key]).length] = fn
+        parent.globalFn = globalFn
+      }
+    }
+  
+      
+      const metaThemeColor = document.querySelector('meta[name="theme-color"]')
+      const activateDarkMode = () => {
+        document.documentElement.dataset.theme = 'dark'
+        if (metaThemeColor !== null) {
+          metaThemeColor.setAttribute('content', '#0d0d0d')
+        }
+      }
+      const activateLightMode = () => {
+        document.documentElement.dataset.theme = 'light'
+        if (metaThemeColor !== null) {
+          metaThemeColor.setAttribute('content', '#ffffff')
+        }
+      }
+
+      btf.activateDarkMode = activateDarkMode
+      btf.activateLightMode = activateLightMode
+
+      const theme = saveToLocal.get('theme')
+    
+          theme === 'dark' ? activateDarkMode() : theme === 'light' ? activateLightMode() : null
+        
+      
+      const asideStatus = saveToLocal.get('aside-status')
+      if (asideStatus !== undefined) {
+        document.documentElement.classList.toggle('hide-aside', asideStatus === 'hide')
+      }
+    
+      
+    const detectApple = () => {
+      if (/iPad|iPhone|iPod|Macintosh/.test(navigator.userAgent)) {
+        document.documentElement.classList.add('apple')
+      }
+    }
+    detectApple()
+  
+    })()
+  </script><script>const GLOBAL_CONFIG = {
+  root: '/',
+  algolia: undefined,
+  localSearch: undefined,
+  translate: undefined,
+  highlight: {"plugin":"highlight.js","highlightCopy":true,"highlightLang":true,"highlightHeightLimit":false,"highlightFullpage":false,"highlightMacStyle":false},
+  copy: {
+    success: '复制成功',
+    error: '复制失败',
+    noSupport: '浏览器不支持'
+  },
+  relativeDate: {
+    homepage: false,
+    post: false
+  },
+  runtime: '',
+  dateSuffix: {
+    just: '刚刚',
+    min: '分钟前',
+    hour: '小时前',
+    day: '天前',
+    month: '个月前'
+  },
+  copyright: undefined,
+  lightbox: 'null',
+  Snackbar: undefined,
+  infinitegrid: {
+    js: 'https://cdn.jsdelivr.net/npm/@egjs/infinitegrid@4.13.0/dist/infinitegrid.min.js',
+    buttonText: '加载更多'
+  },
+  isPhotoFigcaption: false,
+  islazyloadPlugin: false,
+  isAnchor: false,
+  percent: {
+    toc: true,
+    rightside: false,
+  },
+  autoDarkmode: false
+}</script><script id="config-diff">var GLOBAL_CONFIG_SITE = {
+  title: 'Hexo 网址里的 :title，不是你的文章标题',
+  isHighlightShrink: false,
+  isToc: true,
+  pageType: 'post'
+}</script><meta name="generator" content="Hexo 7.3.0"></head><body><div class="post" id="body-wrap"><header class="post-bg" id="page-header"><nav id="nav"><span id="blog-info"><a class="nav-site-title" href="/"><span class="site-name">Ted'sworld</span></a><a class="nav-page-title" href="/"><span class="site-name">Hexo 网址里的 :title，不是你的文章标题</span><span class="site-name"><i class="fa-solid fa-circle-arrow-left"></i><span>  返回首页</span></span></a></span><div id="menus"></div></nav><div id="post-info"><h1 class="post-title">Hexo 网址里的 :title，不是你的文章标题</h1><div id="post-meta"><div class="meta-firstline"><span class="post-meta-date"><i class="far fa-calendar-alt fa-fw post-meta-icon"></i><span class="post-meta-label">发表于</span><time class="post-meta-date-created" datetime="2026-10-26T14:31:00.000Z" title="发表于 2026-10-26 22:31:00">2026-10-26</time><span class="post-meta-separator">|</span><i class="fas fa-history fa-fw post-meta-icon"></i><span class="post-meta-label">更新于</span><time class="post-meta-date-updated" datetime="2026-10-26T14:32:36.073Z" title="更新于 2026-10-26 22:32:36">2026-10-26</time></span><span class="post-meta-categories"><span class="post-meta-separator">|</span><i class="fas fa-inbox fa-fw post-meta-icon"></i><a class="post-meta-categories" href="/categories/AI-%E5%AE%9E%E8%B7%B5/">AI 实践</a></span></div><div class="meta-secondline"><span class="post-meta-separator">|</span><span class="post-meta-pv-cv" id="" data-flag-title=""><i class="far fa-eye fa-fw post-meta-icon"></i><span class="post-meta-label">浏览量:</span><span id="busuanzi_value_page_pv"><i class="fa-solid fa-spinner fa-spin"></i></span></span></div></div></div></header><main class="layout" id="content-inner"><div id="post"><article class="container post-content" id="article-container"><p>给博客接每日自动写稿的流程时，第一个把我绊住的问题不是模型写得怎么样，而是一篇草稿放进去之后的网址。</p>
+<p>草稿的文件名是 <code>2026-10-25-ai-labeling-law.md</code>。那个日期前缀是我自己加的：流水线靠文件名判断”今天写过没有”，同一天只允许有一个，扫一眼目录就够了。可它一旦被挪进 <code>source/_posts/</code>，日期就跟着进了网址——<code>/2026/10/25/2026-10-25-ai-labeling-law/</code>，一个月日出现两遍。</p>
+<p>如果不看文档，很容易以为主题在拼装路径。实际上主题什么都没做，是 permalink 的默认模板把文件名当成了标识。</p>
+<h2 id="三个”名字”，分工不同"><a href="#三个”名字”，分工不同" class="headerlink" title="三个”名字”，分工不同"></a>三个”名字”，分工不同</h2><p>Hexo 里跟”标题”沾边的东西有三个，很容易当成一个：</p>
+<ul>
+<li>front-matter 里的 <code>title</code>：页面上显示的文章标题，可以是一句中文长句。</li>
+<li>permalink 里的 <code>:title</code>：<strong>文件名称</strong>（相对于 <code>source/_posts/</code>）。</li>
+<li>permalink 里的 <code>:post_title</code>：文章标题。</li>
+</ul>
+<p><a target="_blank" rel="noopener" href="https://hexo.io/zh-cn/docs/permalinks">永久链接的文档</a>把这张变量表列得很清楚：<code>:title</code> 的描述是”文件名称（相对于 source&#x2F;_posts&#x2F; 文件夹）”，<code>:name</code> 同样是文件名，只有 <code>:post_title</code> 才对应 front-matter 里那行标题。</p>
+<p>所以默认模板 <code>:year/:month/:day/:title/</code> 拆开是这样：</p>
+<ul>
+<li><code>:year/:month/:day</code> 来自 front-matter 的 <code>date</code>；</li>
+<li><code>:title</code> 来自文件名。</li>
+</ul>
+<p>跟 <code>title:</code> 那一行没有关系。</p>
+<p><a target="_blank" rel="noopener" href="https://hexo.io/zh-cn/docs/front-matter">Front-matter 文档</a>里还有一个默认值值得记一笔：<code>title</code> 不写时，默认值就是文件名。于是”文件名决定标题”在两种情况下都成立，只是一个是缺省，一个是显式。</p>
+<h2 id="建一次、看一次，比猜三次快"><a href="#建一次、看一次，比猜三次快" class="headerlink" title="建一次、看一次，比猜三次快"></a>建一次、看一次，比猜三次快</h2><p>为了确认这套机制，我在自己的仓库里跑了一遍：把一篇测试草稿放进 <code>source/_posts/</code>，文件名 <code>simtest-slug.md</code>，front-matter 的 <code>title</code> 写成那句不短的中文标题，<code>date</code> 写 2026-10-25，然后：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">npx hexo clean &amp;&amp; npx hexo generate</span><br></pre></td></tr></table></figure>
+
+<p>产物落在 <code>public/2026/10/25/simtest-slug/index.html</code>。打开它，<code>&lt;title&gt;</code> 里是那句中文标题，路径里却是 <code>simtest-slug</code>。</p>
+<p>三样东西各归各位：日期看 front-matter，路径片段看文件名，标题文本看 front-matter。这也解释了两件平时容易被忽略的事——改标题不动网址，改文件名会；而网址一变，外部链接和搜索引擎里已有的记录就都指向 404 了。</p>
+<h2 id="日期前缀该待在哪一层"><a href="#日期前缀该待在哪一层" class="headerlink" title="日期前缀该待在哪一层"></a>日期前缀该待在哪一层</h2><p>我需要日期前缀，但只需要它在仓库内部起作用。所以处理方式是把两件事拆开：</p>
+<ul>
+<li>文件名保留 <code>YYYY-MM-DD-slug.md</code>，作为幂等键，看目录就知道今天有没有跑过；</li>
+<li>移进 <code>_posts</code> 之前把前缀剥掉。</li>
+</ul>
+<figure class="highlight powershell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="variable">$postName</span> = <span class="variable">$Draft</span> <span class="operator">-replace</span> <span class="string">&#x27;^\d&#123;4&#125;-\d&#123;2&#125;-\d&#123;2&#125;-&#x27;</span>, <span class="string">&#x27;&#x27;</span></span><br></pre></td></tr></table></figure>
+
+<p>正则只锚定开头，<code>2026-10-25-simtest-slug.md</code> 变成 <code>simtest-slug.md</code>，网址就是 <code>/2026/10/25/simtest-slug/</code>，日期只出现一次，并且仍然由 front-matter 的 <code>date</code> 决定。</p>
+<p>反过来做也行：文件名不带日期，靠 front-matter 的 <code>date</code> 判重。代价是要读文件内容才知道哪天写过什么，多一次解析。每天只跑一次的小博客，两种都撑得住，我选前者主要是因为改动小。</p>
+<p>还有一种绕法——在单篇 front-matter 里写 <code>permalink</code> 覆盖全局规则。这能救急，但每篇各写各的，站内链接的规则就散了，将来想统一调整得逐篇改。真需要固定网址时再用，别当成常规手段。</p>
+<p>另外，我没有把全局模板改成 <code>:post_title</code>。中文标题进路径是否好看、编码上会不会有意外，我没测过，就不推荐了。</p>
+<h2 id="顺带一个同源的问题"><a href="#顺带一个同源的问题" class="headerlink" title="顺带一个同源的问题"></a>顺带一个同源的问题</h2><p>同一个脚本里还踩了另一个”写法”的坑，性质一样：检查器读不懂 YAML。</p>
+<p>官方文档给出的分类和标签写法是块状列表：</p>
+<figure class="highlight yaml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="attr">categories:</span></span><br><span class="line">  <span class="bullet">-</span> <span class="string">AI</span> <span class="string">实践</span></span><br><span class="line"><span class="attr">tags:</span></span><br><span class="line">  <span class="bullet">-</span> <span class="string">Hexo</span></span><br><span class="line">  <span class="bullet">-</span> <span class="string">自动化</span></span><br></pre></td></tr></table></figure>
+
+<p>我最初的校验只认 <code>键: 值</code> 这种写在同一行的形式，碰到换行列表就取到空串，于是每一篇格式完全正确的草稿都被判成”缺少 categories”。问题在检查器，不在文章。改法是取值时两种都认：块状列表，以及文档里同样支持的中括号行内数组（多层级分类会用到这种）。</p>
+<h2 id="结论"><a href="#结论" class="headerlink" title="结论"></a>结论</h2><p>几条可以直接搬走的判断：</p>
+<ul>
+<li>网址是 <code>permalink</code> 模板拼出来的。想让它跟随标题，模板得用 <code>:post_title</code>；默认的 <code>:title</code> 是文件名。</li>
+<li>文件名是能改网址的那一层。重命名等于换地址，等于断链。</li>
+<li>流水线自己的命名习惯（日期前缀、临时文件前缀）在发布前清洗掉，别带进 <code>_posts</code> 目录。</li>
+<li>拿不准时，<code>hexo clean &amp;&amp; hexo generate</code> 看 <code>public/</code> 下真实生成的路径，比继续猜快。</li>
+</ul>
+<p>还有一个在官方文档里没找到明文规则、只能靠实测确认的现象：文件名以 <code>_</code> 开头时，构建照常成功、日志照常显示生成的页数，但那篇文章不会出现在站点里。<code>_drafts</code>、<code>_posts</code> 本身就是这个约定的产物，可我一度拿 <code>__sim_test.md</code> 当临时文件试，得到的是一次成功的构建和一个不存在的页面。如果你也在写脚本，别用下划线前缀当”临时”。</p>
+<p>最后一句留给自己：URL 是长期契约，写进脚本里的那行正则，比写进正文里的解释更要紧。</p>
+<h2 id="参考资料"><a href="#参考资料" class="headerlink" title="参考资料"></a>参考资料</h2><ol>
+<li>Hexo 文档 · 永久链接（Permalinks）：<a target="_blank" rel="noopener" href="https://hexo.io/zh-cn/docs/permalinks">hexo.io&#x2F;zh-cn&#x2F;docs&#x2F;permalinks</a></li>
+<li>Hexo 文档 · Front-matter：<a target="_blank" rel="noopener" href="https://hexo.io/zh-cn/docs/front-matter">hexo.io&#x2F;zh-cn&#x2F;docs&#x2F;front-matter</a></li>
+<li>Hexo 文档 · 写作（Writing）：<a target="_blank" rel="noopener" href="https://hexo.io/zh-cn/docs/writing">hexo.io&#x2F;zh-cn&#x2F;docs&#x2F;writing</a></li>
+</ol>
+</article><div class="post-copyright"><div class="post-copyright__author"><span class="post-copyright-meta"><i class="fas fa-circle-user fa-fw"></i>文章作者: </span><span class="post-copyright-info"><a href="https://tedoverlearn.github.io">Tedoverlearn</a></span></div><div class="post-copyright__type"><span class="post-copyright-meta"><i class="fas fa-square-arrow-up-right fa-fw"></i>文章链接: </span><span class="post-copyright-info"><a href="https://tedoverlearn.github.io/2026/10/26/hexo-permalink-title/">https://tedoverlearn.github.io/2026/10/26/hexo-permalink-title/</a></span></div><div class="post-copyright__notice"><span class="post-copyright-meta"><i class="fas fa-circle-exclamation fa-fw"></i>版权声明: </span><span class="post-copyright-info">本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" target="_blank">CC BY-NC-SA 4.0</a> 许可协议。转载请注明来源 <a href="https://tedoverlearn.github.io" target="_blank">Ted'sworld</a>！</span></div></div><div class="tag_share"><div class="post-meta__tag-list"><a class="post-meta__tags" href="/tags/Hexo/">Hexo</a><a class="post-meta__tags" href="/tags/%E8%87%AA%E5%8A%A8%E5%8C%96/">自动化</a><a class="post-meta__tags" href="/tags/%E9%9D%99%E6%80%81%E5%8D%9A%E5%AE%A2/">静态博客</a><a class="post-meta__tags" href="/tags/%E6%B0%B8%E4%B9%85%E9%93%BE%E6%8E%A5/">永久链接</a></div><div class="post-share"><div class="social-share" data-image="/img/butterfly-icon.png" data-sites="facebook,x,wechat,weibo,qq"></div><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1.1.6/sharejs/dist/css/share.min.css" media="print" onload="this.media='all'"><script src="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1.1.6/sharejs/dist/js/social-share.min.js" defer></script></div></div><nav class="pagination-post" id="pagination"><a class="pagination-related full-width" href="/2026/10/25/hello-world/" title="Hello World"><div class="cover" style="background: var(--default-bg-color)"></div><div class="info text-right"><div class="info-1"><div class="info-item-1">下一篇</div><div class="info-item-2">Hello World</div></div><div class="info-2"><div class="info-item-1">Welcome to Hexo! This is your very first post. Check documentation for more info. If you get any problems when using Hexo, you can find the answer in troubleshooting or you can ask me on GitHub. Quick StartCreate a new post1$ hexo new &quot;My New Post&quot;  More info: Writing Run server1$ hexo server  More info: Server Generate static files1$ hexo generate  More info: Generating Deploy to remote sites1$ hexo deploy  More info: Deployment </div></div></div></a></nav><div class="relatedPosts"><div class="headline"><i class="fas fa-thumbs-up fa-fw"></i><span>相关推荐</span></div><div class="relatedPosts-list"><a class="pagination-related" href="/2026/10/24/hexo-drafts-gate/" title="给博客加一道审核闸门：用 Hexo 的 _drafts 把「自动写」和「自动发」拆开"><div class="cover" style="background: var(--default-bg-color)"></div><div class="info text-center"><div class="info-1"><div class="info-item-1"><i class="far fa-calendar-alt fa-fw"></i> 2026-10-24</div><div class="info-item-2">给博客加一道审核闸门：用 Hexo 的 _drafts 把「自动写」和「自动发」拆开</div></div><div class="info-2"><div class="info-item-1">写在前面这个博客从搭好到现在，更新一直不稳定。不是因为没东西写，而是因为写东西这件事被”要写得好”卡住了：法条要核对、案例要查证、技术细节要自己跑过才敢写。结果就是想法攒了一堆，发布记录停在几个月前。 后来我想换一个思路：把”写”这一步交给流程，把”发”这一步留给自己。每天机器固定产出一篇草稿，我只做审核。这样更新频率的问题解决了，内容准确性的责任也没有被交出去。 这篇记录一下具体怎么做的，重点是为什么用 Hexo 自带的东西就够，而不是另搭一套系统。 问题不在”写”，在”发”一开始的想法很直接：写个脚本，接上模型 API，每天生成一篇文章，丢进 source/_posts，然后部署。 想了两分钟就发现这条路走不通。问题不在模型能不能写出一千字，而在于它写出来的东西没人看过就直接上线了。对一个写法律内容的博客来说，这不是效率问题，是风险问题。一个条号写错、一个案例张冠李戴、”涉嫌”被写成”构成”，读者不会因为你更新勤快就原谅你。 所以我真正要设计的不是”生成流程”，而是”谁敢按下发布按钮“。 答案很简单：机器负责产出候选，人负责按下按钮。 Hexo 本来就留了这个位置这是我最开始...</div></div></div></a><a class="pagination-related" href="/2026/09/26/Windows%E4%B8%8BHexo-GitHub%E5%8D%9A%E5%AE%A2%E6%90%AD%E5%BB%BA%E8%B8%A9%E5%9D%91%E8%AE%B0/" title="我的第一个技术博客：从 0 到 1 搭建 Hexo + GitHub Pages 的踩坑记录"><div class="cover" style="background: var(--default-bg-color)"></div><div class="info text-center"><div class="info-1"><div class="info-item-1"><i class="far fa-calendar-alt fa-fw"></i> 2026-09-26</div><div class="info-item-2">我的第一个技术博客：从 0 到 1 搭建 Hexo + GitHub Pages 的踩坑记录</div></div><div class="info-2"><div class="info-item-1">写在前面过去的法律学习更多围绕法条、案例和理论展开，但随着 AI 工具进入法律检索、合同审查、法律服务等领域，我逐渐意识到，未来法律人才不仅需要具备法律思维，也需要具备一定的技术理解能力。 作为一个法学本科大三学生，我最近开始自学 AI 应用开发。为了记录学习过程、给简历增加一个可以展示的实体项目，我决定搭建一个个人技术博客。 然而，从选择方案到最终上线，我几乎把新手能踩的坑全踩了一遍。这篇文章不是为了写一篇完美的教程，而是为了如实记录我作为纯小白，在 Windows 系统下从零搭建 Hexo 博客的真实过程与解决方案。 如果你也是零基础，希望我的经历能帮你少走一点弯路。 我的环境  Windows 11 Node.js xx npm xx Hexo xx Git xx PowerShell xx GitHub Pages  第一个坑：目录权限与路径空格最初我把博客项目放在 D:\ai playground 目录下。结果第一步就惨遭 Windows 权限教育：PS D:\ai playground2&gt; mkdir D:\ai playgroundmkdir : 找不到接受实...</div></div></div></a></div></div></div><div class="aside-content" id="aside-content"><div class="card-widget card-info text-center"><div class="avatar-img"><img src="/img/butterfly-icon.png" onerror="this.onerror=null;this.src='/img/friend_404.gif'" alt="avatar"/></div><div class="author-info-name">Tedoverlearn</div><div class="author-info-description"></div><div class="site-data"><a href="/archives/"><div class="headline">文章</div><div class="length-num">5</div></a><a href="/tags/"><div class="headline">标签</div><div class="length-num">16</div></a><a href="/categories/"><div class="headline">分类</div><div class="length-num">1</div></a></div><a id="card-info-btn" target="_blank" rel="noopener" href="https://github.com/xxxxxx"><i class="fab fa-github"></i><span>Follow Me</span></a></div><div class="card-widget card-announcement"><div class="item-headline"><i class="fas fa-bullhorn fa-shake"></i><span>公告</span></div><div class="announcement_content">This is my Blog</div></div><div class="sticky_layout"><div class="card-widget" id="card-toc"><div class="item-headline"><i class="fas fa-stream"></i><span>目录</span><span class="toc-percentage"></span></div><div class="toc-content"><ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%B8%89%E4%B8%AA%E2%80%9D%E5%90%8D%E5%AD%97%E2%80%9D%EF%BC%8C%E5%88%86%E5%B7%A5%E4%B8%8D%E5%90%8C"><span class="toc-number">1.</span> <span class="toc-text">三个”名字”，分工不同</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%BB%BA%E4%B8%80%E6%AC%A1%E3%80%81%E7%9C%8B%E4%B8%80%E6%AC%A1%EF%BC%8C%E6%AF%94%E7%8C%9C%E4%B8%89%E6%AC%A1%E5%BF%AB"><span class="toc-number">2.</span> <span class="toc-text">建一次、看一次，比猜三次快</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%97%A5%E6%9C%9F%E5%89%8D%E7%BC%80%E8%AF%A5%E5%BE%85%E5%9C%A8%E5%93%AA%E4%B8%80%E5%B1%82"><span class="toc-number">3.</span> <span class="toc-text">日期前缀该待在哪一层</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E9%A1%BA%E5%B8%A6%E4%B8%80%E4%B8%AA%E5%90%8C%E6%BA%90%E7%9A%84%E9%97%AE%E9%A2%98"><span class="toc-number">4.</span> <span class="toc-text">顺带一个同源的问题</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E7%BB%93%E8%AE%BA"><span class="toc-number">5.</span> <span class="toc-text">结论</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%8F%82%E8%80%83%E8%B5%84%E6%96%99"><span class="toc-number">6.</span> <span class="toc-text">参考资料</span></a></li></ol></div></div><div class="card-widget card-recent-post"><div class="item-headline"><i class="fas fa-history"></i><span>最新文章</span></div><div class="aside-list"><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/2026/10/26/hexo-permalink-title/" title="Hexo 网址里的 :title，不是你的文章标题">Hexo 网址里的 :title，不是你的文章标题</a><time datetime="2026-10-26T14:31:00.000Z" title="发表于 2026-10-26 22:31:00">2026-10-26</time></div></div><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/2026/10/25/hello-world/" title="Hello World">Hello World</a><time datetime="2026-10-25T15:24:01.037Z" title="发表于 2026-10-25 23:24:01">2026-10-25</time></div></div><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/2026/10/24/hexo-drafts-gate/" title="给博客加一道审核闸门：用 Hexo 的 _drafts 把「自动写」和「自动发」拆开">给博客加一道审核闸门：用 Hexo 的 _drafts 把「自动写」和「自动发」拆开</a><time datetime="2026-10-24T14:55:00.000Z" title="发表于 2026-10-24 22:55:00">2026-10-24</time></div></div><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/2026/09/26/Windows%E4%B8%8BHexo-GitHub%E5%8D%9A%E5%AE%A2%E6%90%AD%E5%BB%BA%E8%B8%A9%E5%9D%91%E8%AE%B0/" title="我的第一个技术博客：从 0 到 1 搭建 Hexo + GitHub Pages 的踩坑记录">我的第一个技术博客：从 0 到 1 搭建 Hexo + GitHub Pages 的踩坑记录</a><time datetime="2026-09-26T12:00:00.000Z" title="发表于 2026-09-26 20:00:00">2026-09-26</time></div></div><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/2026/09/24/%E6%88%91%E7%9A%84%E7%AC%AC%E4%B8%80%E7%AF%87%E6%96%87%E7%AB%A0/" title="为什么法学背景的我，开始学 AI">为什么法学背景的我，开始学 AI</a><time datetime="2026-09-23T16:00:00.000Z" title="发表于 2026-09-24 00:00:00">2026-09-24</time></div></div></div></div></div></div></main><footer id="footer"><div class="footer-other"><div class="footer-copyright"><span class="copyright">&copy;&nbsp;2025 - 2026 By Tedoverlearn</span><span class="framework-info"><span>框架 </span><a target="_blank" rel="noopener" href="https://hexo.io">Hexo 7.3.0</a><span class="footer-separator">|</span><span>主题 </span><a target="_blank" rel="noopener" href="https://github.com/jerryc127/hexo-theme-butterfly">Butterfly 5.7.0</a></span></div></div></footer></div><div id="rightside"><div id="rightside-config-hide"><button id="readmode" type="button" title="阅读模式"><i class="fas fa-book-open"></i></button><button id="darkmode" type="button" title="日间和夜间模式切换"><i class="fas fa-adjust"></i></button><button id="hide-aside-btn" type="button" title="单栏和双栏切换"><i class="fas fa-arrows-alt-h"></i></button></div><div id="rightside-config-show"><button id="rightside-config" type="button" title="设置"><i class="fas fa-cog fa-spin"></i></button><button class="close" id="mobile-toc-button" type="button" title="目录"><i class="fas fa-list-ul"></i></button><button id="go-up" type="button" title="回到顶部"><span class="scroll-percent"></span><i class="fas fa-arrow-up"></i></button></div></div><div><script src="/js/utils.js?v=5.7.0"></script><script src="/js/main.js?v=5.7.0"></script><div class="js-pjax"></div><script async data-pjax src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script></div></body></html>
