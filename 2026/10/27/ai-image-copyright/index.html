@@ -1,0 +1,246 @@
+<!DOCTYPE html><html lang="zh-CN" data-theme="light"><head><meta charset="UTF-8"><meta http-equiv="X-UA-Compatible" content="IE=edge"><meta name="viewport" content="width=device-width, initial-scale=1.0,viewport-fit=cover"><title>提示词算不算创作：从八份判决看 AI 生成图片的著作权边界 | Ted'sworld</title><meta name="author" content="Tedoverlearn"><meta name="copyright" content="Tedoverlearn"><meta name="format-detection" content="telephone=no"><meta name="theme-color" content="#ffffff"><meta name="description" content="2023 年北京互联网法院认定一张 AI 生成图片构成美术作品，2025 年以来多地法院却连续判&quot;不构成作品&quot;。差别不在用没用 AI，而在人的决定落在&quot;思想&quot;层还是&quot;表达&quot;层，以及拿不拿得出过程证据。">
+<meta property="og:type" content="article">
+<meta property="og:title" content="提示词算不算创作：从八份判决看 AI 生成图片的著作权边界">
+<meta property="og:url" content="https://tedoverlearn.github.io/2026/10/27/ai-image-copyright/index.html">
+<meta property="og:site_name" content="Ted&#39;sworld">
+<meta property="og:description" content="2023 年北京互联网法院认定一张 AI 生成图片构成美术作品，2025 年以来多地法院却连续判&quot;不构成作品&quot;。差别不在用没用 AI，而在人的决定落在&quot;思想&quot;层还是&quot;表达&quot;层，以及拿不拿得出过程证据。">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://tedoverlearn.github.io/img/butterfly-icon.png">
+<meta property="article:published_time" content="2026-10-27T14:27:00.000Z">
+<meta property="article:modified_time" content="2026-10-27T14:29:04.647Z">
+<meta property="article:author" content="Tedoverlearn">
+<meta property="article:tag" content="法律科技">
+<meta property="article:tag" content="著作权法">
+<meta property="article:tag" content="AI生成内容">
+<meta property="article:tag" content="独创性">
+<meta property="article:tag" content="案例评析">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://tedoverlearn.github.io/img/butterfly-icon.png"><script type="application/ld+json">{
+  "@context": "https://schema.org",
+  "@type": "BlogPosting",
+  "headline": "提示词算不算创作：从八份判决看 AI 生成图片的著作权边界",
+  "url": "https://tedoverlearn.github.io/2026/10/27/ai-image-copyright/",
+  "image": "https://tedoverlearn.github.io/img/butterfly-icon.png",
+  "datePublished": "2026-10-27T14:27:00.000Z",
+  "dateModified": "2026-10-27T14:29:04.647Z",
+  "author": [
+    {
+      "@type": "Person",
+      "name": "Tedoverlearn",
+      "url": "https://tedoverlearn.github.io"
+    }
+  ]
+}</script><link rel="shortcut icon" href="/img/favicon.png"><link rel="canonical" href="https://tedoverlearn.github.io/2026/10/27/ai-image-copyright/index.html"><link rel="preconnect" href="//cdn.jsdelivr.net"/><link rel="preconnect" href="//busuanzi.ibruce.info"/><link rel="stylesheet" href="/css/index.css?v=5.7.0"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@7.3.1/css/all.min.css"><script>
+    (() => {
+      
+    const saveToLocal = {
+      set: (key, value, ttl) => {
+        const data = { value }
+
+        if (ttl != null) {
+          data.expiry = Date.now() + ttl * 86400000
+        }
+
+        localStorage.setItem(key, JSON.stringify(data))
+      },
+      get: key => {
+        const itemStr = localStorage.getItem(key)
+        if (!itemStr) return
+
+        try {
+          const data = JSON.parse(itemStr)
+
+          if (data.expiry && Date.now() > data.expiry) {
+            localStorage.removeItem(key)
+            return
+          }
+
+          return data.value
+        } catch {
+          localStorage.removeItem(key)
+        }
+      }
+    }
+
+    const scriptCache = new Map()
+    const cssCache = new Map()
+    window.btf = {
+      saveToLocal,
+      getScript: (url, attr = {}) => {
+        if (scriptCache.has(url)) {
+          return scriptCache.get(url)
+        }
+
+        const promise = new Promise((resolve, reject) => {
+          const script = document.createElement('script')
+
+          script.src = url
+          script.async = true
+
+          for (const key in attr) {
+            script.setAttribute(key, attr[key])
+          }
+
+          script.onload = resolve
+          script.onerror = reject
+
+          document.head.appendChild(script)
+        })
+
+        scriptCache.set(url, promise)
+
+        return promise
+      },
+      getCSS: (url, id) => {
+        if (cssCache.has(url)) {
+          return cssCache.get(url)
+        }
+
+        const promise = new Promise((resolve, reject) => {
+          const link = document.createElement('link')
+
+          link.rel = 'stylesheet'
+          link.href = url
+
+          if (id) {
+            link.id = id
+          }
+
+          link.onload = resolve
+          link.onerror = reject
+
+          document.head.appendChild(link)
+        })
+
+        cssCache.set(url, promise)
+
+        return promise
+      },
+      addGlobalFn: (key, fn, name = false, parent = window) => {
+        if (!false && key.startsWith('pjax')) return
+        const globalFn = parent.globalFn || {}
+        globalFn[key] = globalFn[key] || {}
+        globalFn[key][name || Object.keys(globalFn[key]).length] = fn
+        parent.globalFn = globalFn
+      }
+    }
+  
+      
+      const metaThemeColor = document.querySelector('meta[name="theme-color"]')
+      const activateDarkMode = () => {
+        document.documentElement.dataset.theme = 'dark'
+        if (metaThemeColor !== null) {
+          metaThemeColor.setAttribute('content', '#0d0d0d')
+        }
+      }
+      const activateLightMode = () => {
+        document.documentElement.dataset.theme = 'light'
+        if (metaThemeColor !== null) {
+          metaThemeColor.setAttribute('content', '#ffffff')
+        }
+      }
+
+      btf.activateDarkMode = activateDarkMode
+      btf.activateLightMode = activateLightMode
+
+      const theme = saveToLocal.get('theme')
+    
+          theme === 'dark' ? activateDarkMode() : theme === 'light' ? activateLightMode() : null
+        
+      
+      const asideStatus = saveToLocal.get('aside-status')
+      if (asideStatus !== undefined) {
+        document.documentElement.classList.toggle('hide-aside', asideStatus === 'hide')
+      }
+    
+      
+    const detectApple = () => {
+      if (/iPad|iPhone|iPod|Macintosh/.test(navigator.userAgent)) {
+        document.documentElement.classList.add('apple')
+      }
+    }
+    detectApple()
+  
+    })()
+  </script><script>const GLOBAL_CONFIG = {
+  root: '/',
+  algolia: undefined,
+  localSearch: undefined,
+  translate: undefined,
+  highlight: {"plugin":"highlight.js","highlightCopy":true,"highlightLang":true,"highlightHeightLimit":false,"highlightFullpage":false,"highlightMacStyle":false},
+  copy: {
+    success: '复制成功',
+    error: '复制失败',
+    noSupport: '浏览器不支持'
+  },
+  relativeDate: {
+    homepage: false,
+    post: false
+  },
+  runtime: '',
+  dateSuffix: {
+    just: '刚刚',
+    min: '分钟前',
+    hour: '小时前',
+    day: '天前',
+    month: '个月前'
+  },
+  copyright: undefined,
+  lightbox: 'null',
+  Snackbar: undefined,
+  infinitegrid: {
+    js: 'https://cdn.jsdelivr.net/npm/@egjs/infinitegrid@4.13.0/dist/infinitegrid.min.js',
+    buttonText: '加载更多'
+  },
+  isPhotoFigcaption: false,
+  islazyloadPlugin: false,
+  isAnchor: false,
+  percent: {
+    toc: true,
+    rightside: false,
+  },
+  autoDarkmode: false
+}</script><script id="config-diff">var GLOBAL_CONFIG_SITE = {
+  title: '提示词算不算创作：从八份判决看 AI 生成图片的著作权边界',
+  isHighlightShrink: false,
+  isToc: true,
+  pageType: 'post'
+}</script><meta name="generator" content="Hexo 7.3.0"></head><body><div class="post" id="body-wrap"><header class="post-bg" id="page-header"><nav id="nav"><span id="blog-info"><a class="nav-site-title" href="/"><span class="site-name">Ted'sworld</span></a><a class="nav-page-title" href="/"><span class="site-name">提示词算不算创作：从八份判决看 AI 生成图片的著作权边界</span><span class="site-name"><i class="fa-solid fa-circle-arrow-left"></i><span>  返回首页</span></span></a></span><div id="menus"></div></nav><div id="post-info"><h1 class="post-title">提示词算不算创作：从八份判决看 AI 生成图片的著作权边界</h1><div id="post-meta"><div class="meta-firstline"><span class="post-meta-date"><i class="far fa-calendar-alt fa-fw post-meta-icon"></i><span class="post-meta-label">发表于</span><time class="post-meta-date-created" datetime="2026-10-27T14:27:00.000Z" title="发表于 2026-10-27 22:27:00">2026-10-27</time><span class="post-meta-separator">|</span><i class="fas fa-history fa-fw post-meta-icon"></i><span class="post-meta-label">更新于</span><time class="post-meta-date-updated" datetime="2026-10-27T14:29:04.647Z" title="更新于 2026-10-27 22:29:04">2026-10-27</time></span><span class="post-meta-categories"><span class="post-meta-separator">|</span><i class="fas fa-inbox fa-fw post-meta-icon"></i><a class="post-meta-categories" href="/categories/%E6%B3%95%E5%BE%8B%E6%80%9D%E8%80%83/">法律思考</a></span></div><div class="meta-secondline"><span class="post-meta-separator">|</span><span class="post-meta-pv-cv" id="" data-flag-title=""><i class="far fa-eye fa-fw post-meta-icon"></i><span class="post-meta-label">浏览量:</span><span id="busuanzi_value_page_pv"><i class="fa-solid fa-spinner fa-spin"></i></span></span></div></div></div></header><main class="layout" id="content-inner"><div id="post"><article class="container post-content" id="article-container"><h2 id="同一个问题，两种答案"><a href="#同一个问题，两种答案" class="headerlink" title="同一个问题，两种答案"></a>同一个问题，两种答案</h2><p>2023 年 11 月，北京互联网法院在「春风送来了温柔」案中认定：一幅用 Stable Diffusion 生成的图片构成美术作品，他人未经许可使用并去掉水印，侵害了署名权和信息网络传播权（(2023)京0491民初11279号，一审）。</p>
+<p>两年之后，结论反过来了。</p>
+<p>杭州互联网法院 2025 年 12 月的一审判决认为，原告用 AI 生成的图片”不符合著作权法所规定的独创性智力成果要求”，不属于著作权法保护的作品（(2025)浙0192民初17573号）。天津、桂林、贵阳、广州的几份判决给出了同样的落点：AI 生成的图不构成作品，据此主张侵权，不予支持。</p>
+<p>同一部著作权法，同一个”独创性”，答案为什么会翻转？把这几份判决放在一起读，会发现法院其实没有吵架，它们问的是同一组问题，只是当年那个案子的当事人答上来了，后来的没答上来。</p>
+<h2 id="法条其实没变"><a href="#法条其实没变" class="headerlink" title="法条其实没变"></a>法条其实没变</h2><p>《著作权法》（2020 年修正，2021 年 6 月 1 日施行）第三条：本法所称的作品，是指文学、艺术和科学领域内<strong>具有独创性</strong>并<strong>能以一定形式表现</strong>的<strong>智力成果</strong>，包括美术、建筑作品等九类。</p>
+<p>第十一条：著作权属于作者；<strong>创作作品的自然人是作者</strong>。</p>
+<p>《著作权法实施条例》第四条第（八）项：美术作品，是指绘画、书法、雕塑等以线条、色彩或者其他方式构成的有审美意义的平面或者立体的造型艺术作品。</p>
+<p>三个要件里，”属于艺术领域””能以一定形式表现”基本不争，真正卡住的是”独创性”——以及比它更前置的一问：这份独创性<strong>是谁的</strong>。</p>
+<h2 id="争点被拆成了三问"><a href="#争点被拆成了三问" class="headerlink" title="争点被拆成了三问"></a>争点被拆成了三问</h2><h3 id="一、你给的是思想，还是表达"><a href="#一、你给的是思想，还是表达" class="headerlink" title="一、你给的是思想，还是表达"></a>一、你给的是思想，还是表达</h3><p>天津自由贸易试验区人民法院 (2026)津0319民初8315号 说得最直白：著作权法保护的是”表达”，”创作”是直接产生或决定作品<strong>表达性要素</strong>的行为；使用者贡献的如果只是创作前拟定的题材、绘画创意，那属于”思想”范畴，不符合”以一定形式表现”。</p>
+<p>这一步绕开了”AI 有没有创造力”这种很难证伪的问题，直接问一件事：你决定的是主题，还是画面里那些具体的东西——构图、色彩、光影、物体的形态。</p>
+<h3 id="二、你有没有控制住输出"><a href="#二、你有没有控制住输出" class="headerlink" title="二、你有没有控制住输出"></a>二、你有没有控制住输出</h3><p>桂林市叠彩区人民法院 (2025)桂0303民初103号 做了一个很实的动作：当庭用手机下载同一个 App，输入同样的提示词反复生成，每次结果都不一样。法院据此认为，输出”具有高度随机性与算法依赖性”，使用者未对线条、色彩、构图、光影进行具体设计与控制，本质上是”启动 AI 模型的参数设定”，而不是亲自创作图像表达。</p>
+<p>杭州那个案子的表述是：涉案提示词”仅概括性描述主题氛围”，”未具体设计或控制图片中具有独创性的视觉要素”。</p>
+<p>随机性是双向的。它既支撑了”这张图主要是 AI 画的”这一事实判断，也让”我到底控制了什么”变成必须举证的事。</p>
+<h3 id="三、你拿得出过程证据吗"><a href="#三、你拿得出过程证据吗" class="headerlink" title="三、你拿得出过程证据吗"></a>三、你拿得出过程证据吗</h3><p>广州互联网法院连着几份判决都在打这一点。</p>
+<p>作品登记证书只是形式审查，不能单独作为权属依据，还要补强证据（(2025)粤0192民初21234号、(2025)粤0192民初19453号）。补强什么？创作过程。如果提交的 PSD 文件里图层拖不动、看不出线条勾画和色彩涂抹的痕迹，法院就不认它是创作底稿；图片里人物出现六根手指这类异常，还会反过来削弱”自然人独立创作”的可信度。</p>
+<p>(2026)粤0192民初24087号 那份判得更有分寸。被告提交了”AI 生成概率 99.65%”的检测报告，法院明确说检测平台的资质与标准不明、证明力有限——但没有就此放手，而是结合多张同主题 AI 生成图的相似性、手指缺失等瑕疵，加上原告无法举证创作过程，最终认定不构成作品。也就是说：<strong>检测报告没被当成鉴定结论用，它只是众多间接证据之一</strong>。</p>
+<h2 id="2023-年那案不同在哪"><a href="#2023-年那案不同在哪" class="headerlink" title="2023 年那案不同在哪"></a>2023 年那案不同在哪</h2><p>不是模型更先进，而是当事人能说明”人在表达层做了哪些决定”：具体的提示词、参数设置、多轮调整与筛选。北京互联网法院的落点是”人的智力投入”——生成式模型没有自由意志，不是法律上的主体，所以不存在”两个主体争作者”的问题，本质仍然是人利用工具创作。</p>
+<p>注意这个说理的形状：法院没有说”AI 生成的都不算作品”，也没有说”AI 生成的一律算作品”，它说的是”能体现人的独创性智力投入的，应当认定为作品”。这是一句条件句，条件是开放的，举证责任在使用者身上。</p>
+<h2 id="这条线对实际做事的人意味着什么"><a href="#这条线对实际做事的人意味着什么" class="headerlink" title="这条线对实际做事的人意味着什么"></a>这条线对实际做事的人意味着什么</h2><p><strong>如果你想让 AI 生成的图被当作品保护。</strong> 留痕。提示词怎么迭代、参数怎么改、局部重绘改在哪里、从几张候选里挑了哪张、为什么挑它。只写”唯美、高清、国风”这类概括描述，在现有判决下几乎等于自己承认只提供了思想。</p>
+<p><strong>如果你是被诉的一方。</strong> 抗辩路径其实很清楚：先要求对方说明创作过程、提供源文件、比对在先是同类作品。举证责任在主张权利的一方，这大概是最省力的抗辩，上面几份判决都是这么判的。</p>
+<p><strong>别把作品登记当权利凭证。</strong> 我国著作权登记采自愿原则，登记机关只作形式审查。三份广州判决都强调，登记证书是初步证据，需要补强。</p>
+<h2 id="我的一点判断"><a href="#我的一点判断" class="headerlink" title="我的一点判断"></a>我的一点判断</h2><p>这几份判决守的是一条很朴素的线：著作权保护的是人的表达，不是随机性的产物。如果”输入一句话、点一下生成”就能取得著作权，那保护范围实际上扩张到了运气本身，这与著作权法”保护人类智力劳动成果、激励创作”的立法目的不符。</p>
+<p>但也别把它读成”AI 生成的东西一律没有著作权”。判决给的是条件式结论：表达层的控制足够具体、过程证据足够完整，仍然可能构成作品——2023 年那案就是被认定构成作品的例子。真正的分水岭不是”用没用 AI”，而是”人在表达上做了多少决定，以及能不能证明”。</p>
+<p>需要保留的怀疑：除北京那案外，上面引的多是基层法院一审判决，部分可能还在上诉程序中，裁判尺度并未统一；”人机协作到什么程度算创作”仍是逐案判断，判决说理没给出可量化的标准。另外，本文只讨论著作权路径——即便不构成作品，使用行为仍可能涉及反不正当竞争或平台服务条款，这些不在本文展开。</p>
+<p>所以这篇的写法是：只写”某法院认为”，不写”法律已经确定”。</p>
+<h2 id="参考资料"><a href="#参考资料" class="headerlink" title="参考资料"></a>参考资料</h2><ol>
+<li>《中华人民共和国著作权法》（2020 年修正）第三条、第十一条，国家法律法规数据库：<a target="_blank" rel="noopener" href="https://flk.npc.gov.cn/">https://flk.npc.gov.cn/</a></li>
+<li>《中华人民共和国著作权法实施条例》第四条第（八）项：现行版本以国家法律法规数据库为准；参考文本见最高人民法院知识产权法庭公布页 <a target="_blank" rel="noopener" href="https://ipc.court.gov.cn/zh-cn/news/view-406.html">https://ipc.court.gov.cn/zh-cn/news/view-406.html</a></li>
+<li>李某与刘某侵害作品署名权、信息网络传播权纠纷，(2023)京0491民初11279号，北京互联网法院，2023 年 11 月 27 日。</li>
+<li>孙某与杭州某公司侵害作品信息网络传播权纠纷，(2025)浙0192民初17573号，杭州互联网法院，2025 年 12 月 9 日。</li>
+<li>祝某与某协会侵害作品信息网络传播权纠纷，(2026)津0319民初8315号，天津自由贸易试验区人民法院，2026 年 5 月 29 日。</li>
+<li>曹某与某局侵害作品信息网络传播权纠纷，(2025)桂0303民初103号，桂林市叠彩区人民法院，2025 年 7 月 4 日。</li>
+<li>王某与广州某公司侵害作品信息网络传播权纠纷，(2025)粤0192民初21234号，广州互联网法院，2025 年 12 月 9 日。</li>
+<li>史某与某学院侵害作品信息网络传播权纠纷，(2026)粤0192民初24087号，广州互联网法院，2026 年 3 月 9 日。</li>
+</ol>
+<blockquote>
+<p>说明：法条原文经法规数据库核对，为现行有效版本；案例信息取自公开裁判文书，均为一审判决，案号可在中国裁判文书网核验。文中对判决理由的引用为转述，关键表述保留原文，不对未公开的裁判文书内容作推测。</p>
+</blockquote>
+</article><div class="post-copyright"><div class="post-copyright__author"><span class="post-copyright-meta"><i class="fas fa-circle-user fa-fw"></i>文章作者: </span><span class="post-copyright-info"><a href="https://tedoverlearn.github.io">Tedoverlearn</a></span></div><div class="post-copyright__type"><span class="post-copyright-meta"><i class="fas fa-square-arrow-up-right fa-fw"></i>文章链接: </span><span class="post-copyright-info"><a href="https://tedoverlearn.github.io/2026/10/27/ai-image-copyright/">https://tedoverlearn.github.io/2026/10/27/ai-image-copyright/</a></span></div><div class="post-copyright__notice"><span class="post-copyright-meta"><i class="fas fa-circle-exclamation fa-fw"></i>版权声明: </span><span class="post-copyright-info">本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" target="_blank">CC BY-NC-SA 4.0</a> 许可协议。转载请注明来源 <a href="https://tedoverlearn.github.io" target="_blank">Ted'sworld</a>！</span></div></div><div class="tag_share"><div class="post-meta__tag-list"><a class="post-meta__tags" href="/tags/%E6%B3%95%E5%BE%8B%E7%A7%91%E6%8A%80/">法律科技</a><a class="post-meta__tags" href="/tags/%E8%91%97%E4%BD%9C%E6%9D%83%E6%B3%95/">著作权法</a><a class="post-meta__tags" href="/tags/AI%E7%94%9F%E6%88%90%E5%86%85%E5%AE%B9/">AI生成内容</a><a class="post-meta__tags" href="/tags/%E7%8B%AC%E5%88%9B%E6%80%A7/">独创性</a><a class="post-meta__tags" href="/tags/%E6%A1%88%E4%BE%8B%E8%AF%84%E6%9E%90/">案例评析</a></div><div class="post-share"><div class="social-share" data-image="/img/butterfly-icon.png" data-sites="facebook,x,wechat,weibo,qq"></div><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1.1.6/sharejs/dist/css/share.min.css" media="print" onload="this.media='all'"><script src="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1.1.6/sharejs/dist/js/social-share.min.js" defer></script></div></div><nav class="pagination-post" id="pagination"><a class="pagination-related full-width" href="/2026/10/26/hexo-permalink-title/" title="Hexo 网址里的 :title，不是你的文章标题"><div class="cover" style="background: var(--default-bg-color)"></div><div class="info text-right"><div class="info-1"><div class="info-item-1">下一篇</div><div class="info-item-2">Hexo 网址里的 :title，不是你的文章标题</div></div><div class="info-2"><div class="info-item-1">给博客接每日自动写稿的流程时，第一个把我绊住的问题不是模型写得怎么样，而是一篇草稿放进去之后的网址。 草稿的文件名是 2026-10-25-ai-labeling-law.md。那个日期前缀是我自己加的：流水线靠文件名判断”今天写过没有”，同一天只允许有一个，扫一眼目录就够了。可它一旦被挪进 source/_posts/，日期就跟着进了网址——/2026/10/25/2026-10-25-ai-labeling-law/，一个月日出现两遍。 如果不看文档，很容易以为主题在拼装路径。实际上主题什么都没做，是 permalink 的默认模板把文件名当成了标识。 三个”名字”，分工不同Hexo 里跟”标题”沾边的东西有三个，很容易当成一个：  front-matter 里的 title：页面上显示的文章标题，可以是一句中文长句。 permalink 里的 :title：文件名称（相对于 source/_posts/）。 permalink 里的 :post_title：文章标题。  永久链接的文档把这张变量表列得很清楚：:title 的描述是”文件名称（相对于 source&#x2F;...</div></div></div></a></nav><div class="relatedPosts"><div class="headline"><i class="fas fa-thumbs-up fa-fw"></i><span>相关推荐</span></div><div class="relatedPosts-list"><a class="pagination-related" href="/2026/09/26/Windows%E4%B8%8BHexo-GitHub%E5%8D%9A%E5%AE%A2%E6%90%AD%E5%BB%BA%E8%B8%A9%E5%9D%91%E8%AE%B0/" title="我的第一个技术博客：从 0 到 1 搭建 Hexo + GitHub Pages 的踩坑记录"><div class="cover" style="background: var(--default-bg-color)"></div><div class="info text-center"><div class="info-1"><div class="info-item-1"><i class="far fa-calendar-alt fa-fw"></i> 2026-09-26</div><div class="info-item-2">我的第一个技术博客：从 0 到 1 搭建 Hexo + GitHub Pages 的踩坑记录</div></div><div class="info-2"><div class="info-item-1">写在前面过去的法律学习更多围绕法条、案例和理论展开，但随着 AI 工具进入法律检索、合同审查、法律服务等领域，我逐渐意识到，未来法律人才不仅需要具备法律思维，也需要具备一定的技术理解能力。 作为一个法学本科大三学生，我最近开始自学 AI 应用开发。为了记录学习过程、给简历增加一个可以展示的实体项目，我决定搭建一个个人技术博客。 然而，从选择方案到最终上线，我几乎把新手能踩的坑全踩了一遍。这篇文章不是为了写一篇完美的教程，而是为了如实记录我作为纯小白，在 Windows 系统下从零搭建 Hexo 博客的真实过程与解决方案。 如果你也是零基础，希望我的经历能帮你少走一点弯路。 我的环境  Windows 11 Node.js xx npm xx Hexo xx Git xx PowerShell xx GitHub Pages  第一个坑：目录权限与路径空格最初我把博客项目放在 D:\ai playground 目录下。结果第一步就惨遭 Windows 权限教育：PS D:\ai playground2&gt; mkdir D:\ai playgroundmkdir : 找不到接受实...</div></div></div></a></div></div></div><div class="aside-content" id="aside-content"><div class="card-widget card-info text-center"><div class="avatar-img"><img src="/img/butterfly-icon.png" onerror="this.onerror=null;this.src='/img/friend_404.gif'" alt="avatar"/></div><div class="author-info-name">Tedoverlearn</div><div class="author-info-description"></div><div class="site-data"><a href="/archives/"><div class="headline">文章</div><div class="length-num">5</div></a><a href="/tags/"><div class="headline">标签</div><div class="length-num">20</div></a><a href="/categories/"><div class="headline">分类</div><div class="length-num">2</div></a></div><a id="card-info-btn" target="_blank" rel="noopener" href="https://github.com/xxxxxx"><i class="fab fa-github"></i><span>Follow Me</span></a></div><div class="card-widget card-announcement"><div class="item-headline"><i class="fas fa-bullhorn fa-shake"></i><span>公告</span></div><div class="announcement_content">This is my Blog</div></div><div class="sticky_layout"><div class="card-widget" id="card-toc"><div class="item-headline"><i class="fas fa-stream"></i><span>目录</span><span class="toc-percentage"></span></div><div class="toc-content"><ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%90%8C%E4%B8%80%E4%B8%AA%E9%97%AE%E9%A2%98%EF%BC%8C%E4%B8%A4%E7%A7%8D%E7%AD%94%E6%A1%88"><span class="toc-number">1.</span> <span class="toc-text">同一个问题，两种答案</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%B3%95%E6%9D%A1%E5%85%B6%E5%AE%9E%E6%B2%A1%E5%8F%98"><span class="toc-number">2.</span> <span class="toc-text">法条其实没变</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%BA%89%E7%82%B9%E8%A2%AB%E6%8B%86%E6%88%90%E4%BA%86%E4%B8%89%E9%97%AE"><span class="toc-number">3.</span> <span class="toc-text">争点被拆成了三问</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E4%B8%80%E3%80%81%E4%BD%A0%E7%BB%99%E7%9A%84%E6%98%AF%E6%80%9D%E6%83%B3%EF%BC%8C%E8%BF%98%E6%98%AF%E8%A1%A8%E8%BE%BE"><span class="toc-number">3.1.</span> <span class="toc-text">一、你给的是思想，还是表达</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E4%BA%8C%E3%80%81%E4%BD%A0%E6%9C%89%E6%B2%A1%E6%9C%89%E6%8E%A7%E5%88%B6%E4%BD%8F%E8%BE%93%E5%87%BA"><span class="toc-number">3.2.</span> <span class="toc-text">二、你有没有控制住输出</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E4%B8%89%E3%80%81%E4%BD%A0%E6%8B%BF%E5%BE%97%E5%87%BA%E8%BF%87%E7%A8%8B%E8%AF%81%E6%8D%AE%E5%90%97"><span class="toc-number">3.3.</span> <span class="toc-text">三、你拿得出过程证据吗</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#2023-%E5%B9%B4%E9%82%A3%E6%A1%88%E4%B8%8D%E5%90%8C%E5%9C%A8%E5%93%AA"><span class="toc-number">4.</span> <span class="toc-text">2023 年那案不同在哪</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E8%BF%99%E6%9D%A1%E7%BA%BF%E5%AF%B9%E5%AE%9E%E9%99%85%E5%81%9A%E4%BA%8B%E7%9A%84%E4%BA%BA%E6%84%8F%E5%91%B3%E7%9D%80%E4%BB%80%E4%B9%88"><span class="toc-number">5.</span> <span class="toc-text">这条线对实际做事的人意味着什么</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%88%91%E7%9A%84%E4%B8%80%E7%82%B9%E5%88%A4%E6%96%AD"><span class="toc-number">6.</span> <span class="toc-text">我的一点判断</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%8F%82%E8%80%83%E8%B5%84%E6%96%99"><span class="toc-number">7.</span> <span class="toc-text">参考资料</span></a></li></ol></div></div><div class="card-widget card-recent-post"><div class="item-headline"><i class="fas fa-history"></i><span>最新文章</span></div><div class="aside-list"><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/2026/10/27/ai-image-copyright/" title="提示词算不算创作：从八份判决看 AI 生成图片的著作权边界">提示词算不算创作：从八份判决看 AI 生成图片的著作权边界</a><time datetime="2026-10-27T14:27:00.000Z" title="发表于 2026-10-27 22:27:00">2026-10-27</time></div></div><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/2026/10/26/hexo-permalink-title/" title="Hexo 网址里的 :title，不是你的文章标题">Hexo 网址里的 :title，不是你的文章标题</a><time datetime="2026-10-26T14:31:00.000Z" title="发表于 2026-10-26 22:31:00">2026-10-26</time></div></div><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/2026/10/24/hexo-drafts-gate/" title="给博客加一道审核闸门：用 Hexo 的 _drafts 把「自动写」和「自动发」拆开">给博客加一道审核闸门：用 Hexo 的 _drafts 把「自动写」和「自动发」拆开</a><time datetime="2026-10-24T14:55:00.000Z" title="发表于 2026-10-24 22:55:00">2026-10-24</time></div></div><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/2026/09/26/Windows%E4%B8%8BHexo-GitHub%E5%8D%9A%E5%AE%A2%E6%90%AD%E5%BB%BA%E8%B8%A9%E5%9D%91%E8%AE%B0/" title="我的第一个技术博客：从 0 到 1 搭建 Hexo + GitHub Pages 的踩坑记录">我的第一个技术博客：从 0 到 1 搭建 Hexo + GitHub Pages 的踩坑记录</a><time datetime="2026-09-26T12:00:00.000Z" title="发表于 2026-09-26 20:00:00">2026-09-26</time></div></div><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/2026/09/24/%E6%88%91%E7%9A%84%E7%AC%AC%E4%B8%80%E7%AF%87%E6%96%87%E7%AB%A0/" title="为什么法学背景的我，开始学 AI">为什么法学背景的我，开始学 AI</a><time datetime="2026-09-23T16:00:00.000Z" title="发表于 2026-09-24 00:00:00">2026-09-24</time></div></div></div></div></div></div></main><footer id="footer"><div class="footer-other"><div class="footer-copyright"><span class="copyright">&copy;&nbsp;2025 - 2026 By Tedoverlearn</span><span class="framework-info"><span>框架 </span><a target="_blank" rel="noopener" href="https://hexo.io">Hexo 7.3.0</a><span class="footer-separator">|</span><span>主题 </span><a target="_blank" rel="noopener" href="https://github.com/jerryc127/hexo-theme-butterfly">Butterfly 5.7.0</a></span></div></div></footer></div><div id="rightside"><div id="rightside-config-hide"><button id="readmode" type="button" title="阅读模式"><i class="fas fa-book-open"></i></button><button id="darkmode" type="button" title="日间和夜间模式切换"><i class="fas fa-adjust"></i></button><button id="hide-aside-btn" type="button" title="单栏和双栏切换"><i class="fas fa-arrows-alt-h"></i></button></div><div id="rightside-config-show"><button id="rightside-config" type="button" title="设置"><i class="fas fa-cog fa-spin"></i></button><button class="close" id="mobile-toc-button" type="button" title="目录"><i class="fas fa-list-ul"></i></button><button id="go-up" type="button" title="回到顶部"><span class="scroll-percent"></span><i class="fas fa-arrow-up"></i></button></div></div><div><script src="/js/utils.js?v=5.7.0"></script><script src="/js/main.js?v=5.7.0"></script><div class="js-pjax"></div><script async data-pjax src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script></div></body></html>
