@@ -1,0 +1,257 @@
+<!DOCTYPE html><html lang="zh-CN" data-theme="light"><head><meta charset="UTF-8"><meta http-equiv="X-UA-Compatible" content="IE=edge"><meta name="viewport" content="width=device-width, initial-scale=1.0,viewport-fit=cover"><title>每天 23:00 自动部署：一个批处理脚本里被改掉的五处 | Ted'sworld</title><meta name="author" content="Tedoverlearn"><meta name="copyright" content="Tedoverlearn"><meta name="format-detection" content="telephone=no"><meta name="theme-color" content="#ffffff"><meta name="description" content="计划任务里跑 Hexo 部署，最初只有三行，现在变成了一个带判错的批处理。改掉的五处——shim 丢参、退出码不可靠、代码页、括号块、CRLF——没有一处是 Hexo 的问题，都是&quot;谁在调用它&quot;的问题。">
+<meta property="og:type" content="article">
+<meta property="og:title" content="每天 23:00 自动部署：一个批处理脚本里被改掉的五处">
+<meta property="og:url" content="https://tedoverlearn.github.io/2026/10/28/deploy-bat-five-fixes/index.html">
+<meta property="og:site_name" content="Ted&#39;sworld">
+<meta property="og:description" content="计划任务里跑 Hexo 部署，最初只有三行，现在变成了一个带判错的批处理。改掉的五处——shim 丢参、退出码不可靠、代码页、括号块、CRLF——没有一处是 Hexo 的问题，都是&quot;谁在调用它&quot;的问题。">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://tedoverlearn.github.io/img/butterfly-icon.png">
+<meta property="article:published_time" content="2026-10-28T14:04:00.000Z">
+<meta property="article:modified_time" content="2026-10-28T14:05:24.979Z">
+<meta property="article:author" content="Tedoverlearn">
+<meta property="article:tag" content="Hexo">
+<meta property="article:tag" content="Windows">
+<meta property="article:tag" content="自动化">
+<meta property="article:tag" content="工作流">
+<meta property="article:tag" content="GitHub-Pages">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://tedoverlearn.github.io/img/butterfly-icon.png"><script type="application/ld+json">{
+  "@context": "https://schema.org",
+  "@type": "BlogPosting",
+  "headline": "每天 23:00 自动部署：一个批处理脚本里被改掉的五处",
+  "url": "https://tedoverlearn.github.io/2026/10/28/deploy-bat-five-fixes/",
+  "image": "https://tedoverlearn.github.io/img/butterfly-icon.png",
+  "datePublished": "2026-10-28T14:04:00.000Z",
+  "dateModified": "2026-10-28T14:05:24.979Z",
+  "author": [
+    {
+      "@type": "Person",
+      "name": "Tedoverlearn",
+      "url": "https://tedoverlearn.github.io"
+    }
+  ]
+}</script><link rel="shortcut icon" href="/img/favicon.png"><link rel="canonical" href="https://tedoverlearn.github.io/2026/10/28/deploy-bat-five-fixes/index.html"><link rel="preconnect" href="//cdn.jsdelivr.net"/><link rel="preconnect" href="//busuanzi.ibruce.info"/><link rel="stylesheet" href="/css/index.css?v=5.7.0"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@7.3.1/css/all.min.css"><script>
+    (() => {
+      
+    const saveToLocal = {
+      set: (key, value, ttl) => {
+        const data = { value }
+
+        if (ttl != null) {
+          data.expiry = Date.now() + ttl * 86400000
+        }
+
+        localStorage.setItem(key, JSON.stringify(data))
+      },
+      get: key => {
+        const itemStr = localStorage.getItem(key)
+        if (!itemStr) return
+
+        try {
+          const data = JSON.parse(itemStr)
+
+          if (data.expiry && Date.now() > data.expiry) {
+            localStorage.removeItem(key)
+            return
+          }
+
+          return data.value
+        } catch {
+          localStorage.removeItem(key)
+        }
+      }
+    }
+
+    const scriptCache = new Map()
+    const cssCache = new Map()
+    window.btf = {
+      saveToLocal,
+      getScript: (url, attr = {}) => {
+        if (scriptCache.has(url)) {
+          return scriptCache.get(url)
+        }
+
+        const promise = new Promise((resolve, reject) => {
+          const script = document.createElement('script')
+
+          script.src = url
+          script.async = true
+
+          for (const key in attr) {
+            script.setAttribute(key, attr[key])
+          }
+
+          script.onload = resolve
+          script.onerror = reject
+
+          document.head.appendChild(script)
+        })
+
+        scriptCache.set(url, promise)
+
+        return promise
+      },
+      getCSS: (url, id) => {
+        if (cssCache.has(url)) {
+          return cssCache.get(url)
+        }
+
+        const promise = new Promise((resolve, reject) => {
+          const link = document.createElement('link')
+
+          link.rel = 'stylesheet'
+          link.href = url
+
+          if (id) {
+            link.id = id
+          }
+
+          link.onload = resolve
+          link.onerror = reject
+
+          document.head.appendChild(link)
+        })
+
+        cssCache.set(url, promise)
+
+        return promise
+      },
+      addGlobalFn: (key, fn, name = false, parent = window) => {
+        if (!false && key.startsWith('pjax')) return
+        const globalFn = parent.globalFn || {}
+        globalFn[key] = globalFn[key] || {}
+        globalFn[key][name || Object.keys(globalFn[key]).length] = fn
+        parent.globalFn = globalFn
+      }
+    }
+  
+      
+      const metaThemeColor = document.querySelector('meta[name="theme-color"]')
+      const activateDarkMode = () => {
+        document.documentElement.dataset.theme = 'dark'
+        if (metaThemeColor !== null) {
+          metaThemeColor.setAttribute('content', '#0d0d0d')
+        }
+      }
+      const activateLightMode = () => {
+        document.documentElement.dataset.theme = 'light'
+        if (metaThemeColor !== null) {
+          metaThemeColor.setAttribute('content', '#ffffff')
+        }
+      }
+
+      btf.activateDarkMode = activateDarkMode
+      btf.activateLightMode = activateLightMode
+
+      const theme = saveToLocal.get('theme')
+    
+          theme === 'dark' ? activateDarkMode() : theme === 'light' ? activateLightMode() : null
+        
+      
+      const asideStatus = saveToLocal.get('aside-status')
+      if (asideStatus !== undefined) {
+        document.documentElement.classList.toggle('hide-aside', asideStatus === 'hide')
+      }
+    
+      
+    const detectApple = () => {
+      if (/iPad|iPhone|iPod|Macintosh/.test(navigator.userAgent)) {
+        document.documentElement.classList.add('apple')
+      }
+    }
+    detectApple()
+  
+    })()
+  </script><script>const GLOBAL_CONFIG = {
+  root: '/',
+  algolia: undefined,
+  localSearch: undefined,
+  translate: undefined,
+  highlight: {"plugin":"highlight.js","highlightCopy":true,"highlightLang":true,"highlightHeightLimit":false,"highlightFullpage":false,"highlightMacStyle":false},
+  copy: {
+    success: '复制成功',
+    error: '复制失败',
+    noSupport: '浏览器不支持'
+  },
+  relativeDate: {
+    homepage: false,
+    post: false
+  },
+  runtime: '',
+  dateSuffix: {
+    just: '刚刚',
+    min: '分钟前',
+    hour: '小时前',
+    day: '天前',
+    month: '个月前'
+  },
+  copyright: undefined,
+  lightbox: 'null',
+  Snackbar: undefined,
+  infinitegrid: {
+    js: 'https://cdn.jsdelivr.net/npm/@egjs/infinitegrid@4.13.0/dist/infinitegrid.min.js',
+    buttonText: '加载更多'
+  },
+  isPhotoFigcaption: false,
+  islazyloadPlugin: false,
+  isAnchor: false,
+  percent: {
+    toc: true,
+    rightside: false,
+  },
+  autoDarkmode: false
+}</script><script id="config-diff">var GLOBAL_CONFIG_SITE = {
+  title: '每天 23:00 自动部署：一个批处理脚本里被改掉的五处',
+  isHighlightShrink: false,
+  isToc: true,
+  pageType: 'post'
+}</script><meta name="generator" content="Hexo 7.3.0"></head><body><div class="post" id="body-wrap"><header class="post-bg" id="page-header"><nav id="nav"><span id="blog-info"><a class="nav-site-title" href="/"><span class="site-name">Ted'sworld</span></a><a class="nav-page-title" href="/"><span class="site-name">每天 23:00 自动部署：一个批处理脚本里被改掉的五处</span><span class="site-name"><i class="fa-solid fa-circle-arrow-left"></i><span>  返回首页</span></span></a></span><div id="menus"></div></nav><div id="post-info"><h1 class="post-title">每天 23:00 自动部署：一个批处理脚本里被改掉的五处</h1><div id="post-meta"><div class="meta-firstline"><span class="post-meta-date"><i class="far fa-calendar-alt fa-fw post-meta-icon"></i><span class="post-meta-label">发表于</span><time class="post-meta-date-created" datetime="2026-10-28T14:04:00.000Z" title="发表于 2026-10-28 22:04:00">2026-10-28</time><span class="post-meta-separator">|</span><i class="fas fa-history fa-fw post-meta-icon"></i><span class="post-meta-label">更新于</span><time class="post-meta-date-updated" datetime="2026-10-28T14:05:24.979Z" title="更新于 2026-10-28 22:05:24">2026-10-28</time></span><span class="post-meta-categories"><span class="post-meta-separator">|</span><i class="fas fa-inbox fa-fw post-meta-icon"></i><a class="post-meta-categories" href="/categories/AI-%E5%AE%9E%E8%B7%B5/">AI 实践</a></span></div><div class="meta-secondline"><span class="post-meta-separator">|</span><span class="post-meta-pv-cv" id="" data-flag-title=""><i class="far fa-eye fa-fw post-meta-icon"></i><span class="post-meta-label">浏览量:</span><span id="busuanzi_value_page_pv"><i class="fa-solid fa-spinner fa-spin"></i></span></span></div></div></div></header><main class="layout" id="content-inner"><div id="post"><article class="container post-content" id="article-container"><h2 id="一条链，两段"><a href="#一条链，两段" class="headerlink" title="一条链，两段"></a>一条链，两段</h2><p>博客现在的更新链路分成两段：22:00–23:00 之间生成文章并落进 <code>source/_posts</code>、本地 <code>hexo g</code> 构建；23:00 由 Windows 计划任务跑 <code>deploy.bat</code>，把 <code>public</code> 推到 GitHub Pages。生成那段依赖会话在线，推送那段不依赖——人不用守着。</p>
+<p><code>deploy.bat</code> 最初只有三行：</p>
+<figure class="highlight bat"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">@<span class="built_in">echo</span> off</span><br><span class="line"><span class="built_in">cd</span> /d C:\Users\zxc\my-blog</span><br><span class="line">hexo clean &amp;&amp; hexo g &amp;&amp; hexo d</span><br></pre></td></tr></table></figure>
+
+<p>前台跑没问题。丢进计划任务，第一次只打印了几行 <code>Usage: hexo &lt;command&gt;</code>，构建和推送都没发生，而任务的 Last Result 是 0。</p>
+<h2 id="一、npm-装的-hexo，在计划任务里会丢参数"><a href="#一、npm-装的-hexo，在计划任务里会丢参数" class="headerlink" title="一、npm 装的 hexo，在计划任务里会丢参数"></a>一、npm 装的 hexo，在计划任务里会丢参数</h2><p><code>hexo</code> 不是 exe，是 npm 装的命令行包。cmd 里敲 <code>hexo</code>，命中的是 npm 生成的 <code>hexo.cmd</code> 包装脚本，最后一行大概长这样：</p>
+<figure class="highlight bat"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">&quot;%~dp0\node.exe&quot; &quot;%~dp0\node_modules\hexo-cli\bin\hexo&quot; %*</span><br></pre></td></tr></table></figure>
+
+<p>交互式 cmd 里 <code>%*</code> 能正常展开，<code>hexo g</code> 会变成 <code>... bin\hexo g</code>。可到了计划任务环境，这一层传到 node 时参数没了，hexo 于是认为自己在无参调用——打印用法，退出码 0。整个过程看起来”成功”，实际什么都没做。</p>
+<p>修法是绕过包装脚本，用 node 直接调入口文件：</p>
+<figure class="highlight bat"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">set</span> &quot;NODE_EXE=node&quot;</span><br><span class="line"><span class="keyword">if</span> <span class="keyword">exist</span> &quot;D:\node.exe&quot; <span class="built_in">set</span> &quot;NODE_EXE=D:\node.exe&quot;</span><br><span class="line"><span class="built_in">set</span> &quot;HEXO_BIN=C:\Users\zxc\AppData\Roaming\npm\node_modules\hexo-cli\bin\hexo&quot;</span><br><span class="line"></span><br><span class="line">&quot;<span class="variable">%NODE_EXE%</span>&quot; &quot;<span class="variable">%HEXO_BIN%</span>&quot; clean</span><br><span class="line">&quot;<span class="variable">%NODE_EXE%</span>&quot; &quot;<span class="variable">%HEXO_BIN%</span>&quot; generate</span><br><span class="line">&quot;<span class="variable">%NODE_EXE%</span>&quot; &quot;<span class="variable">%HEXO_BIN%</span>&quot; deploy</span><br></pre></td></tr></table></figure>
+
+<p>注意入口文件是 <code>hexo-cli\bin\hexo</code>，没有扩展名。路径写错时症状是 node 报 <code>Cannot find module</code>，跟”丢参数”长得完全不一样，一眼能分开。</p>
+<h2 id="二、退出码不能当成功判据"><a href="#二、退出码不能当成功判据" class="headerlink" title="二、退出码不能当成功判据"></a>二、退出码不能当成功判据</h2><p>第二版加上了判错：<code>if errorlevel 1 goto :fail</code>。结果第一次就报”部署失败”，可 GitHub 上明明多了一次提交。</p>
+<p>原因不止一个。<code>hexo deploy</code> 内部调 <code>git push</code>，推送成功之后仍可能返回非 0；另外，git 的传输子进程在受限环境里会被拦，报 <code>cannot create standard input pipe for ssh</code>，这也是非 0。两个方向都不准：成功不保证返回 0，返回 0 也不保证推上去了。</p>
+<p>最后的判据换成了字符串：把第三步的输出重定向到临时文件，再找 <code>Deploy done</code>。</p>
+<figure class="highlight bat"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">&quot;<span class="variable">%NODE_EXE%</span>&quot; &quot;<span class="variable">%HEXO_BIN%</span>&quot; deploy &gt; &quot;<span class="variable">%OUT%</span>&quot; <span class="number">2</span>&gt;&amp;<span class="number">1</span></span><br><span class="line"><span class="built_in">type</span> &quot;<span class="variable">%OUT%</span>&quot;</span><br><span class="line"><span class="built_in">findstr</span> /C:&quot;Deploy done&quot; &quot;<span class="variable">%OUT%</span>&quot; &gt;<span class="built_in">nul</span></span><br><span class="line"><span class="keyword">if</span> <span class="keyword">errorlevel</span> <span class="number">1</span> <span class="keyword">goto</span> :fail_deploy</span><br></pre></td></tr></table></figure>
+
+<p><code>findstr</code> 找到返回 0，找不到返回 1，这个是可靠的。听起来很土，但它把”到底推上去没有”绑到了 hexo 自己打印的成功标记上，比一个语义含糊的退出码可信。</p>
+<h2 id="三、cmd-读-bat-用的是-OEM-代码页"><a href="#三、cmd-读-bat-用的是-OEM-代码页" class="headerlink" title="三、cmd 读 .bat 用的是 OEM 代码页"></a>三、cmd 读 .bat 用的是 OEM 代码页</h2><p>有一版往脚本里写了中文注释和中文 <code>echo</code>。前台跑没事，计划任务跑出来的日志里全是乱码。中文 Windows 的控制台代码页默认是 936，<code>chcp</code> 的文档里 936 对应”Chinese”。文件按 UTF-8 存，cmd 按 GBK 读，中文部分就被错误解释，注释里的字节甚至可能吃掉后面的引号或括号，导致整段语法失效。</p>
+<p>没有动系统代码页——那会影响别的程序。改法是把 <code>.bat</code> 写成纯 ASCII：注释用英文，错误提示用英文，中文只出现在文章和日志里。代价是脚本不好读，收益是它在任何代码页下行为一致。</p>
+<h2 id="四、if-errorlevel-的括号块会被-截断"><a href="#四、if-errorlevel-的括号块会被-截断" class="headerlink" title="四、if errorlevel 的括号块会被 ) 截断"></a>四、<code>if errorlevel</code> 的括号块会被 <code>)</code> 截断</h2><p>这条最阴。本来写成这样：</p>
+<figure class="highlight bat"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">if</span> <span class="keyword">errorlevel</span> <span class="number">1</span> (</span><br><span class="line">    <span class="built_in">echo</span> [deploy] FAILED <span class="built_in">at</span> hexo deploy (git push)</span><br><span class="line">    <span class="keyword">exit</span> /b <span class="number">2</span></span><br><span class="line">)</span><br></pre></td></tr></table></figure>
+
+<p>括号块里那个 <code>(git push)</code> 的右括号，会让 cmd 认为块到此结束，后面的 <code>exit /b 2</code> 掉到块外。实测结果是失败分支根本没执行，脚本继续往下走。</p>
+<p>改成 goto 标签：</p>
+<figure class="highlight bat"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">if</span> <span class="keyword">errorlevel</span> <span class="number">1</span> <span class="keyword">goto</span> :fail_deploy</span><br><span class="line"><span class="keyword">goto</span> :ok</span><br><span class="line"></span><br><span class="line">:fail_deploy</span><br><span class="line"><span class="built_in">echo</span> [deploy] FAILED <span class="built_in">at</span> hexo deploy - git push did <span class="keyword">not</span> complete</span><br><span class="line"><span class="keyword">exit</span> /b <span class="number">2</span></span><br></pre></td></tr></table></figure>
+
+<p>批处理没有函数，goto 标签是最笨也最不容易出错的跳转方式。</p>
+<h2 id="五、没改动的部署，也会产生一次提交"><a href="#五、没改动的部署，也会产生一次提交" class="headerlink" title="五、没改动的部署，也会产生一次提交"></a>五、没改动的部署，也会产生一次提交</h2><p>前一晚 23:00 那次运行，当天的文章在 22:50 已经推过了，理论上这次应该无事可做。日志里是：</p>
+<figure class="highlight text"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">[master ea6d3dc] Site updated: 2026-10-27 23:00:07</span><br><span class="line"> 28 files changed, 55 insertions(+), 55 deletions(-)</span><br></pre></td></tr></table></figure>
+
+<p>28 个文件”变了”，但内容一个字没改。上面还有一行提示：<code>warning: in the working copy of &#39;tags/Git/index.html&#39;, LF will be replaced by CRLF the next time Git touches it</code>。</p>
+<p>这是 <code>core.autocrlf</code> 的老问题：检出时把 LF 换成 CRLF 写进工作区，提交时再换回 LF。Hexo 每次 generate 都会重写这些 HTML，写出来是 LF，而工作区里那份被 Git 记成了 CRLF，于是每次都被算成修改。</p>
+<p>三种改法：</p>
+<ol>
+<li>在 <code>.deploy_git</code> 里把 <code>core.autocrlf</code> 设成 <code>false</code>；</li>
+<li>仓库根放一个 <code>.gitattributes</code>，写 <code>* text=auto eol=lf</code>；</li>
+<li>部署前先 <code>git -C .deploy_git checkout -- .</code> 把工作区归位。</li>
+</ol>
+<p>这条暂时没改，只当噪声处理——不影响上线。但如果以后要按提交记录回溯”哪天发了哪一篇”，这些空提交会让历史变脏，早晚要收拾。</p>
+<h2 id="收尾"><a href="#收尾" class="headerlink" title="收尾"></a>收尾</h2><p>这五处里没有一处是 Hexo 的 bug。shim 丢参是 npm 包装脚本和环境的事，退出码不可靠是子进程语义的事，代码页和括号块是 cmd 的事，CRLF 是 Git 的事。它们共同的形状是：<strong>脚本在”谁调用它、环境长什么样”这件事上假设了太多</strong>。</p>
+<p>所以现在 <code>deploy.bat</code> 里每一段只做一件事，出错就 goto 一个标签，退出码 0&#x2F;1&#x2F;2&#x2F;3 分别对应 clean、generate、deploy 三个阶段失败；而判断成功的依据是一个写在日志里的字符串，不是那个谁都不太信得过的返回值。</p>
+<p>写脚本的时候容易被”它能跑”骗过去。真正要问的是：它能不能区分”成功””失败””什么都没发生”这三种情况。第三种的坑最深，因为它的返回码和成功长得一模一样。</p>
+<h2 id="参考资料"><a href="#参考资料" class="headerlink" title="参考资料"></a>参考资料</h2><ol>
+<li>chcp 命令（Microsoft Learn）：<a target="_blank" rel="noopener" href="https://learn.microsoft.com/zh-cn/windows-server/administration/windows-commands/chcp">https://learn.microsoft.com/zh-cn/windows-server/administration/windows-commands/chcp</a></li>
+<li>自定义 Git · Git 配置（Pro Git，core.autocrlf）：<a target="_blank" rel="noopener" href="https://git-scm.com/book/en/v2/Customizing-Git-Git-Configuration">https://git-scm.com/book/en/v2/Customizing-Git-Git-Configuration</a></li>
+<li>git-config 参考手册：<a target="_blank" rel="noopener" href="https://git-scm.com/docs/git-config">https://git-scm.com/docs/git-config</a></li>
+</ol>
+</article><div class="post-copyright"><div class="post-copyright__author"><span class="post-copyright-meta"><i class="fas fa-circle-user fa-fw"></i>文章作者: </span><span class="post-copyright-info"><a href="https://tedoverlearn.github.io">Tedoverlearn</a></span></div><div class="post-copyright__type"><span class="post-copyright-meta"><i class="fas fa-square-arrow-up-right fa-fw"></i>文章链接: </span><span class="post-copyright-info"><a href="https://tedoverlearn.github.io/2026/10/28/deploy-bat-five-fixes/">https://tedoverlearn.github.io/2026/10/28/deploy-bat-five-fixes/</a></span></div><div class="post-copyright__notice"><span class="post-copyright-meta"><i class="fas fa-circle-exclamation fa-fw"></i>版权声明: </span><span class="post-copyright-info">本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" target="_blank">CC BY-NC-SA 4.0</a> 许可协议。转载请注明来源 <a href="https://tedoverlearn.github.io" target="_blank">Ted'sworld</a>！</span></div></div><div class="tag_share"><div class="post-meta__tag-list"><a class="post-meta__tags" href="/tags/Hexo/">Hexo</a><a class="post-meta__tags" href="/tags/Windows/">Windows</a><a class="post-meta__tags" href="/tags/%E8%87%AA%E5%8A%A8%E5%8C%96/">自动化</a><a class="post-meta__tags" href="/tags/%E5%B7%A5%E4%BD%9C%E6%B5%81/">工作流</a><a class="post-meta__tags" href="/tags/GitHub-Pages/">GitHub-Pages</a></div><div class="post-share"><div class="social-share" data-image="/img/butterfly-icon.png" data-sites="facebook,x,wechat,weibo,qq"></div><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1.1.6/sharejs/dist/css/share.min.css" media="print" onload="this.media='all'"><script src="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1.1.6/sharejs/dist/js/social-share.min.js" defer></script></div></div><nav class="pagination-post" id="pagination"><a class="pagination-related full-width" href="/2026/10/27/ai-image-copyright/" title="提示词算不算创作：从八份判决看 AI 生成图片的著作权边界"><div class="cover" style="background: var(--default-bg-color)"></div><div class="info text-right"><div class="info-1"><div class="info-item-1">下一篇</div><div class="info-item-2">提示词算不算创作：从八份判决看 AI 生成图片的著作权边界</div></div><div class="info-2"><div class="info-item-1">同一个问题，两种答案2023 年 11 月，北京互联网法院在「春风送来了温柔」案中认定：一幅用 Stable Diffusion 生成的图片构成美术作品，他人未经许可使用并去掉水印，侵害了署名权和信息网络传播权（(2023)京0491民初11279号，一审）。 两年之后，结论反过来了。 杭州互联网法院 2025 年 12 月的一审判决认为，原告用 AI 生成的图片”不符合著作权法所规定的独创性智力成果要求”，不属于著作权法保护的作品（(2025)浙0192民初17573号）。天津、桂林、贵阳、广州的几份判决给出了同样的落点：AI 生成的图不构成作品，据此主张侵权，不予支持。 同一部著作权法，同一个”独创性”，答案为什么会翻转？把这几份判决放在一起读，会发现法院其实没有吵架，它们问的是同一组问题，只是当年那个案子的当事人答上来了，后来的没答上来。 法条其实没变《著作权法》（2020 年修正，2021 年 6 月 1 日施行）第三条：本法所称的作品，是指文学、艺术和科学领域内具有独创性并能以一定形式表现的智力成果，包括美术、建筑作品等九类。 第十一条：著作权属于作者；创作作品的自然人...</div></div></div></a></nav><div class="relatedPosts"><div class="headline"><i class="fas fa-thumbs-up fa-fw"></i><span>相关推荐</span></div><div class="relatedPosts-list"><a class="pagination-related" href="/2026/10/24/hexo-drafts-gate/" title="给博客加一道审核闸门：用 Hexo 的 _drafts 把「自动写」和「自动发」拆开"><div class="cover" style="background: var(--default-bg-color)"></div><div class="info text-center"><div class="info-1"><div class="info-item-1"><i class="far fa-calendar-alt fa-fw"></i> 2026-10-24</div><div class="info-item-2">给博客加一道审核闸门：用 Hexo 的 _drafts 把「自动写」和「自动发」拆开</div></div><div class="info-2"><div class="info-item-1">写在前面这个博客从搭好到现在，更新一直不稳定。不是因为没东西写，而是因为写东西这件事被”要写得好”卡住了：法条要核对、案例要查证、技术细节要自己跑过才敢写。结果就是想法攒了一堆，发布记录停在几个月前。 后来我想换一个思路：把”写”这一步交给流程，把”发”这一步留给自己。每天机器固定产出一篇草稿，我只做审核。这样更新频率的问题解决了，内容准确性的责任也没有被交出去。 这篇记录一下具体怎么做的，重点是为什么用 Hexo 自带的东西就够，而不是另搭一套系统。 问题不在”写”，在”发”一开始的想法很直接：写个脚本，接上模型 API，每天生成一篇文章，丢进 source/_posts，然后部署。 想了两分钟就发现这条路走不通。问题不在模型能不能写出一千字，而在于它写出来的东西没人看过就直接上线了。对一个写法律内容的博客来说，这不是效率问题，是风险问题。一个条号写错、一个案例张冠李戴、”涉嫌”被写成”构成”，读者不会因为你更新勤快就原谅你。 所以我真正要设计的不是”生成流程”，而是”谁敢按下发布按钮“。 答案很简单：机器负责产出候选，人负责按下按钮。 Hexo 本来就留了这个位置这是我最开始...</div></div></div></a><a class="pagination-related" href="/2026/10/26/hexo-permalink-title/" title="Hexo 网址里的 :title，不是你的文章标题"><div class="cover" style="background: var(--default-bg-color)"></div><div class="info text-center"><div class="info-1"><div class="info-item-1"><i class="far fa-calendar-alt fa-fw"></i> 2026-10-26</div><div class="info-item-2">Hexo 网址里的 :title，不是你的文章标题</div></div><div class="info-2"><div class="info-item-1">给博客接每日自动写稿的流程时，第一个把我绊住的问题不是模型写得怎么样，而是一篇草稿放进去之后的网址。 草稿的文件名是 2026-10-25-ai-labeling-law.md。那个日期前缀是我自己加的：流水线靠文件名判断”今天写过没有”，同一天只允许有一个，扫一眼目录就够了。可它一旦被挪进 source/_posts/，日期就跟着进了网址——/2026/10/25/2026-10-25-ai-labeling-law/，一个月日出现两遍。 如果不看文档，很容易以为主题在拼装路径。实际上主题什么都没做，是 permalink 的默认模板把文件名当成了标识。 三个”名字”，分工不同Hexo 里跟”标题”沾边的东西有三个，很容易当成一个：  front-matter 里的 title：页面上显示的文章标题，可以是一句中文长句。 permalink 里的 :title：文件名称（相对于 source/_posts/）。 permalink 里的 :post_title：文章标题。  永久链接的文档把这张变量表列得很清楚：:title 的描述是”文件名称（相对于 source&#x2F;...</div></div></div></a><a class="pagination-related" href="/2026/09/26/Windows%E4%B8%8BHexo-GitHub%E5%8D%9A%E5%AE%A2%E6%90%AD%E5%BB%BA%E8%B8%A9%E5%9D%91%E8%AE%B0/" title="我的第一个技术博客：从 0 到 1 搭建 Hexo + GitHub Pages 的踩坑记录"><div class="cover" style="background: var(--default-bg-color)"></div><div class="info text-center"><div class="info-1"><div class="info-item-1"><i class="far fa-calendar-alt fa-fw"></i> 2026-09-26</div><div class="info-item-2">我的第一个技术博客：从 0 到 1 搭建 Hexo + GitHub Pages 的踩坑记录</div></div><div class="info-2"><div class="info-item-1">写在前面过去的法律学习更多围绕法条、案例和理论展开，但随着 AI 工具进入法律检索、合同审查、法律服务等领域，我逐渐意识到，未来法律人才不仅需要具备法律思维，也需要具备一定的技术理解能力。 作为一个法学本科大三学生，我最近开始自学 AI 应用开发。为了记录学习过程、给简历增加一个可以展示的实体项目，我决定搭建一个个人技术博客。 然而，从选择方案到最终上线，我几乎把新手能踩的坑全踩了一遍。这篇文章不是为了写一篇完美的教程，而是为了如实记录我作为纯小白，在 Windows 系统下从零搭建 Hexo 博客的真实过程与解决方案。 如果你也是零基础，希望我的经历能帮你少走一点弯路。 我的环境  Windows 11 Node.js xx npm xx Hexo xx Git xx PowerShell xx GitHub Pages  第一个坑：目录权限与路径空格最初我把博客项目放在 D:\ai playground 目录下。结果第一步就惨遭 Windows 权限教育：PS D:\ai playground2&gt; mkdir D:\ai playgroundmkdir : 找不到接受实...</div></div></div></a></div></div></div><div class="aside-content" id="aside-content"><div class="card-widget card-info text-center"><div class="avatar-img"><img src="/img/butterfly-icon.png" onerror="this.onerror=null;this.src='/img/friend_404.gif'" alt="avatar"/></div><div class="author-info-name">Tedoverlearn</div><div class="author-info-description"></div><div class="site-data"><a href="/archives/"><div class="headline">文章</div><div class="length-num">6</div></a><a href="/tags/"><div class="headline">标签</div><div class="length-num">21</div></a><a href="/categories/"><div class="headline">分类</div><div class="length-num">2</div></a></div><a id="card-info-btn" target="_blank" rel="noopener" href="https://github.com/xxxxxx"><i class="fab fa-github"></i><span>Follow Me</span></a></div><div class="card-widget card-announcement"><div class="item-headline"><i class="fas fa-bullhorn fa-shake"></i><span>公告</span></div><div class="announcement_content">This is my Blog</div></div><div class="sticky_layout"><div class="card-widget" id="card-toc"><div class="item-headline"><i class="fas fa-stream"></i><span>目录</span><span class="toc-percentage"></span></div><div class="toc-content"><ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%B8%80%E6%9D%A1%E9%93%BE%EF%BC%8C%E4%B8%A4%E6%AE%B5"><span class="toc-number">1.</span> <span class="toc-text">一条链，两段</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%B8%80%E3%80%81npm-%E8%A3%85%E7%9A%84-hexo%EF%BC%8C%E5%9C%A8%E8%AE%A1%E5%88%92%E4%BB%BB%E5%8A%A1%E9%87%8C%E4%BC%9A%E4%B8%A2%E5%8F%82%E6%95%B0"><span class="toc-number">2.</span> <span class="toc-text">一、npm 装的 hexo，在计划任务里会丢参数</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%BA%8C%E3%80%81%E9%80%80%E5%87%BA%E7%A0%81%E4%B8%8D%E8%83%BD%E5%BD%93%E6%88%90%E5%8A%9F%E5%88%A4%E6%8D%AE"><span class="toc-number">3.</span> <span class="toc-text">二、退出码不能当成功判据</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%B8%89%E3%80%81cmd-%E8%AF%BB-bat-%E7%94%A8%E7%9A%84%E6%98%AF-OEM-%E4%BB%A3%E7%A0%81%E9%A1%B5"><span class="toc-number">4.</span> <span class="toc-text">三、cmd 读 .bat 用的是 OEM 代码页</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%9B%9B%E3%80%81if-errorlevel-%E7%9A%84%E6%8B%AC%E5%8F%B7%E5%9D%97%E4%BC%9A%E8%A2%AB-%E6%88%AA%E6%96%AD"><span class="toc-number">5.</span> <span class="toc-text">四、if errorlevel 的括号块会被 ) 截断</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%BA%94%E3%80%81%E6%B2%A1%E6%94%B9%E5%8A%A8%E7%9A%84%E9%83%A8%E7%BD%B2%EF%BC%8C%E4%B9%9F%E4%BC%9A%E4%BA%A7%E7%94%9F%E4%B8%80%E6%AC%A1%E6%8F%90%E4%BA%A4"><span class="toc-number">6.</span> <span class="toc-text">五、没改动的部署，也会产生一次提交</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%94%B6%E5%B0%BE"><span class="toc-number">7.</span> <span class="toc-text">收尾</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%8F%82%E8%80%83%E8%B5%84%E6%96%99"><span class="toc-number">8.</span> <span class="toc-text">参考资料</span></a></li></ol></div></div><div class="card-widget card-recent-post"><div class="item-headline"><i class="fas fa-history"></i><span>最新文章</span></div><div class="aside-list"><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/2026/10/28/deploy-bat-five-fixes/" title="每天 23:00 自动部署：一个批处理脚本里被改掉的五处">每天 23:00 自动部署：一个批处理脚本里被改掉的五处</a><time datetime="2026-10-28T14:04:00.000Z" title="发表于 2026-10-28 22:04:00">2026-10-28</time></div></div><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/2026/10/27/ai-image-copyright/" title="提示词算不算创作：从八份判决看 AI 生成图片的著作权边界">提示词算不算创作：从八份判决看 AI 生成图片的著作权边界</a><time datetime="2026-10-27T14:27:00.000Z" title="发表于 2026-10-27 22:27:00">2026-10-27</time></div></div><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/2026/10/26/hexo-permalink-title/" title="Hexo 网址里的 :title，不是你的文章标题">Hexo 网址里的 :title，不是你的文章标题</a><time datetime="2026-10-26T14:31:00.000Z" title="发表于 2026-10-26 22:31:00">2026-10-26</time></div></div><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/2026/10/24/hexo-drafts-gate/" title="给博客加一道审核闸门：用 Hexo 的 _drafts 把「自动写」和「自动发」拆开">给博客加一道审核闸门：用 Hexo 的 _drafts 把「自动写」和「自动发」拆开</a><time datetime="2026-10-24T14:55:00.000Z" title="发表于 2026-10-24 22:55:00">2026-10-24</time></div></div><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/2026/09/26/Windows%E4%B8%8BHexo-GitHub%E5%8D%9A%E5%AE%A2%E6%90%AD%E5%BB%BA%E8%B8%A9%E5%9D%91%E8%AE%B0/" title="我的第一个技术博客：从 0 到 1 搭建 Hexo + GitHub Pages 的踩坑记录">我的第一个技术博客：从 0 到 1 搭建 Hexo + GitHub Pages 的踩坑记录</a><time datetime="2026-09-26T12:00:00.000Z" title="发表于 2026-09-26 20:00:00">2026-09-26</time></div></div></div></div></div></div></main><footer id="footer"><div class="footer-other"><div class="footer-copyright"><span class="copyright">&copy;&nbsp;2025 - 2026 By Tedoverlearn</span><span class="framework-info"><span>框架 </span><a target="_blank" rel="noopener" href="https://hexo.io">Hexo 7.3.0</a><span class="footer-separator">|</span><span>主题 </span><a target="_blank" rel="noopener" href="https://github.com/jerryc127/hexo-theme-butterfly">Butterfly 5.7.0</a></span></div></div></footer></div><div id="rightside"><div id="rightside-config-hide"><button id="readmode" type="button" title="阅读模式"><i class="fas fa-book-open"></i></button><button id="darkmode" type="button" title="日间和夜间模式切换"><i class="fas fa-adjust"></i></button><button id="hide-aside-btn" type="button" title="单栏和双栏切换"><i class="fas fa-arrows-alt-h"></i></button></div><div id="rightside-config-show"><button id="rightside-config" type="button" title="设置"><i class="fas fa-cog fa-spin"></i></button><button class="close" id="mobile-toc-button" type="button" title="目录"><i class="fas fa-list-ul"></i></button><button id="go-up" type="button" title="回到顶部"><span class="scroll-percent"></span><i class="fas fa-arrow-up"></i></button></div></div><div><script src="/js/utils.js?v=5.7.0"></script><script src="/js/main.js?v=5.7.0"></script><div class="js-pjax"></div><script async data-pjax src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script></div></body></html>
