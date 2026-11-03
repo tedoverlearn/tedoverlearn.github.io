@@ -1,0 +1,6 @@
+User-agent: *
+Allow: /
+Disallow: /archives/page/
+Disallow: /page/
+
+Sitemap: https://tedoverlearn.github.io/sitemap.xml
