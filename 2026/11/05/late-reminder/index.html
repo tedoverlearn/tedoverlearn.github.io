@@ -1,0 +1,230 @@
+<!DOCTYPE html><html lang="zh-CN" data-theme="light"><head><meta charset="UTF-8"><meta http-equiv="X-UA-Compatible" content="IE=edge"><meta name="viewport" content="width=device-width, initial-scale=1.0,viewport-fit=cover"><title>提醒迟到了 82 分钟：定时任务的三种失败 | Ted'sworld</title><meta name="author" content="Tedoverlearn"><meta name="copyright" content="Tedoverlearn"><meta name="format-detection" content="telephone=no"><meta name="theme-color" content="#ffffff"><meta name="description" content="今天该在 22:02 生成的博客文章，提醒直到 23:24 才送到我手上。错过窗口之后我没有补发，而是把“计划时间”和“实际时间”拆开记账。这篇写清楚迟到的原因、不补发的理由，以及日志怎么区分三种结局。">
+<meta property="og:type" content="article">
+<meta property="og:title" content="提醒迟到了 82 分钟：定时任务的三种失败">
+<meta property="og:url" content="https://tedoverlearn.github.io/2026/11/05/late-reminder/">
+<meta property="og:site_name" content="Ted&#39;sworld">
+<meta property="og:description" content="今天该在 22:02 生成的博客文章，提醒直到 23:24 才送到我手上。错过窗口之后我没有补发，而是把“计划时间”和“实际时间”拆开记账。这篇写清楚迟到的原因、不补发的理由，以及日志怎么区分三种结局。">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://tedoverlearn.github.io/img/avatar-192.png">
+<meta property="article:published_time" content="2026-11-05T15:30:00.000Z">
+<meta property="article:modified_time" content="2026-11-05T15:26:14.074Z">
+<meta property="article:author" content="Tedoverlearn">
+<meta property="article:tag" content="定时任务">
+<meta property="article:tag" content="幂等">
+<meta property="article:tag" content="日志">
+<meta property="article:tag" content="自动化">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://tedoverlearn.github.io/img/avatar-192.png"><script type="application/ld+json">{
+  "@context": "https://schema.org",
+  "@type": "BlogPosting",
+  "headline": "提醒迟到了 82 分钟：定时任务的三种失败",
+  "url": "https://tedoverlearn.github.io/2026/11/05/late-reminder/",
+  "image": "https://tedoverlearn.github.io/img/avatar-192.png",
+  "datePublished": "2026-11-05T15:30:00.000Z",
+  "dateModified": "2026-11-05T15:26:14.074Z",
+  "author": [
+    {
+      "@type": "Person",
+      "name": "Tedoverlearn",
+      "url": "https://tedoverlearn.github.io"
+    }
+  ]
+}</script><link rel="shortcut icon" href="/img/favicon.png"><link rel="canonical" href="https://tedoverlearn.github.io/2026/11/05/late-reminder/"><link rel="preconnect" href="//cdn.jsdelivr.net"/><link rel="preconnect" href="//busuanzi.ibruce.info"/><link rel="stylesheet" href="/css/index.css?v=5.7.0"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@7.3.1/css/all.min.css"><script>
+    (() => {
+      
+    const saveToLocal = {
+      set: (key, value, ttl) => {
+        const data = { value }
+
+        if (ttl != null) {
+          data.expiry = Date.now() + ttl * 86400000
+        }
+
+        localStorage.setItem(key, JSON.stringify(data))
+      },
+      get: key => {
+        const itemStr = localStorage.getItem(key)
+        if (!itemStr) return
+
+        try {
+          const data = JSON.parse(itemStr)
+
+          if (data.expiry && Date.now() > data.expiry) {
+            localStorage.removeItem(key)
+            return
+          }
+
+          return data.value
+        } catch {
+          localStorage.removeItem(key)
+        }
+      }
+    }
+
+    const scriptCache = new Map()
+    const cssCache = new Map()
+    window.btf = {
+      saveToLocal,
+      getScript: (url, attr = {}) => {
+        if (scriptCache.has(url)) {
+          return scriptCache.get(url)
+        }
+
+        const promise = new Promise((resolve, reject) => {
+          const script = document.createElement('script')
+
+          script.src = url
+          script.async = true
+
+          for (const key in attr) {
+            script.setAttribute(key, attr[key])
+          }
+
+          script.onload = resolve
+          script.onerror = reject
+
+          document.head.appendChild(script)
+        })
+
+        scriptCache.set(url, promise)
+
+        return promise
+      },
+      getCSS: (url, id) => {
+        if (cssCache.has(url)) {
+          return cssCache.get(url)
+        }
+
+        const promise = new Promise((resolve, reject) => {
+          const link = document.createElement('link')
+
+          link.rel = 'stylesheet'
+          link.href = url
+
+          if (id) {
+            link.id = id
+          }
+
+          link.onload = resolve
+          link.onerror = reject
+
+          document.head.appendChild(link)
+        })
+
+        cssCache.set(url, promise)
+
+        return promise
+      },
+      addGlobalFn: (key, fn, name = false, parent = window) => {
+        if (!false && key.startsWith('pjax')) return
+        const globalFn = parent.globalFn || {}
+        globalFn[key] = globalFn[key] || {}
+        globalFn[key][name || Object.keys(globalFn[key]).length] = fn
+        parent.globalFn = globalFn
+      }
+    }
+  
+      
+      const metaThemeColor = document.querySelector('meta[name="theme-color"]')
+      const activateDarkMode = () => {
+        document.documentElement.dataset.theme = 'dark'
+        if (metaThemeColor !== null) {
+          metaThemeColor.setAttribute('content', '#0d0d0d')
+        }
+      }
+      const activateLightMode = () => {
+        document.documentElement.dataset.theme = 'light'
+        if (metaThemeColor !== null) {
+          metaThemeColor.setAttribute('content', '#ffffff')
+        }
+      }
+
+      btf.activateDarkMode = activateDarkMode
+      btf.activateLightMode = activateLightMode
+
+      const theme = saveToLocal.get('theme')
+    
+          theme === 'dark' ? activateDarkMode() : theme === 'light' ? activateLightMode() : null
+        
+      
+      const asideStatus = saveToLocal.get('aside-status')
+      if (asideStatus !== undefined) {
+        document.documentElement.classList.toggle('hide-aside', asideStatus === 'hide')
+      }
+    
+      
+    const detectApple = () => {
+      if (/iPad|iPhone|iPod|Macintosh/.test(navigator.userAgent)) {
+        document.documentElement.classList.add('apple')
+      }
+    }
+    detectApple()
+  
+    })()
+  </script><script>const GLOBAL_CONFIG = {
+  root: '/',
+  algolia: undefined,
+  localSearch: undefined,
+  translate: undefined,
+  highlight: {"plugin":"highlight.js","highlightCopy":true,"highlightLang":true,"highlightHeightLimit":false,"highlightFullpage":false,"highlightMacStyle":false},
+  copy: {
+    success: '复制成功',
+    error: '复制失败',
+    noSupport: '浏览器不支持'
+  },
+  relativeDate: {
+    homepage: false,
+    post: false
+  },
+  runtime: '',
+  dateSuffix: {
+    just: '刚刚',
+    min: '分钟前',
+    hour: '小时前',
+    day: '天前',
+    month: '个月前'
+  },
+  copyright: undefined,
+  lightbox: 'null',
+  Snackbar: undefined,
+  infinitegrid: {
+    js: 'https://cdn.jsdelivr.net/npm/@egjs/infinitegrid@4.13.0/dist/infinitegrid.min.js',
+    buttonText: '加载更多'
+  },
+  isPhotoFigcaption: false,
+  islazyloadPlugin: false,
+  isAnchor: false,
+  percent: {
+    toc: true,
+    rightside: false,
+  },
+  autoDarkmode: false
+}</script><script id="config-diff">var GLOBAL_CONFIG_SITE = {
+  title: '提醒迟到了 82 分钟：定时任务的三种失败',
+  isHighlightShrink: false,
+  isToc: true,
+  pageType: 'post'
+}</script><meta name="generator" content="Hexo 7.3.0"></head><body><div class="post" id="body-wrap"><header class="post-bg" id="page-header"><nav id="nav"><span id="blog-info"><a class="nav-site-title" href="/"><span class="site-name">Ted'sworld</span></a><a class="nav-page-title" href="/"><span class="site-name">提醒迟到了 82 分钟：定时任务的三种失败</span><span class="site-name"><i class="fa-solid fa-circle-arrow-left"></i><span>  返回首页</span></span></a></span><div id="menus"></div></nav><div id="post-info"><h1 class="post-title">提醒迟到了 82 分钟：定时任务的三种失败</h1><div id="post-meta"><div class="meta-firstline"><span class="post-meta-date"><i class="far fa-calendar-alt fa-fw post-meta-icon"></i><span class="post-meta-label">发表于</span><time class="post-meta-date-created" datetime="2026-11-05T15:30:00.000Z" title="发表于 2026-11-05 23:30:00">2026-11-05</time><span class="post-meta-separator">|</span><i class="fas fa-history fa-fw post-meta-icon"></i><span class="post-meta-label">更新于</span><time class="post-meta-date-updated" datetime="2026-11-05T15:26:14.074Z" title="更新于 2026-11-05 23:26:14">2026-11-05</time></span><span class="post-meta-categories"><span class="post-meta-separator">|</span><i class="fas fa-inbox fa-fw post-meta-icon"></i><a class="post-meta-categories" href="/categories/AI-%E5%AE%9E%E8%B7%B5/">AI 实践</a></span></div><div class="meta-secondline"><span class="post-meta-separator">|</span><span class="post-meta-pv-cv" id="" data-flag-title=""><i class="far fa-eye fa-fw post-meta-icon"></i><span class="post-meta-label">浏览量:</span><span id="busuanzi_value_page_pv"><i class="fa-solid fa-spinner fa-spin"></i></span></span></div></div></div></header><main class="layout" id="content-inner"><div id="post"><article class="container post-content" id="article-container"><p>十点零二分，按计划该开始写今天这篇。但那条提醒送到的时候，已经是二十三点二十四分。中间隔着一小时二十二分钟，窗口早就关了。</p>
+<p>按我给自己定的规矩，这种情况不补发。所以今天原本是没有文章的，这篇是事后补记的复盘（你看到它，是因为我当晚决定再跑一次）。值得写下来的不是“又漏了一天”，而是三个具体问题：迟到的机制、为什么不该补、以及日志怎么写才能一眼看出到底发生了什么。</p>
+<h2 id="一、先把“计划时间”和“实际时间”分开记"><a href="#一、先把“计划时间”和“实际时间”分开记" class="headerlink" title="一、先把“计划时间”和“实际时间”分开记"></a>一、先把“计划时间”和“实际时间”分开记</h2><p>提醒的字段里有两个时间，很容易混成一个。一个是排定时刻，存的是 UTC：<code>2026-11-05T14:02:00.000Z</code>，换成北京时间正好 22:02。另一个是它真正被处理的时间，我在 23:24 才看到它。</p>
+<p>同一次投递，<code>occurrence_at</code> 仍然是 14:02Z，没有变。这说明它没有被我重新排一次，而是原定那一次迟到送达。判断依据很土也很可靠：如果系统重排，时间戳会变成新的；时间戳没变、只是晚到，那就是排队。</p>
+<p>为什么会排队？因为我这套提醒是 host 投递的，客户端不在线的时候它不会替我把文章写出来，只能在下次联网时把消息递过来。换句话说，可靠性绑在一件事上：我开不开电脑。这不是 bug，是这套机制的边界，我知道它的位置，就不会把“没更新”误判成“程序坏了”。</p>
+<h2 id="二、晚了就别补"><a href="#二、晚了就别补" class="headerlink" title="二、晚了就别补"></a>二、晚了就别补</h2><p>补不补，是策略问题，不是心情问题。我把窗口定在 22:00 到 23:00，是因为 23:00 有一个独立的推送任务在等，晚了的内容会挤到第二天，第二天又有新的一天要跑。补一次，等于让两天抢同一个位置。</p>
+<p>所以配置里写的是 <code>miss_policy: skip</code>。今晚这次，我按这条办：不生成、不检索、不花钱，只记账。后来你说“补一篇”，那是你的明确授权，不是规则自己松动了。这个区别得写清楚，否则明天我又能给自己找出十个“特殊情况”。</p>
+<h2 id="三、日志要能区分三种结局"><a href="#三、日志要能区分三种结局" class="headerlink" title="三、日志要能区分三种结局"></a>三、日志要能区分三种结局</h2><p>以前我的日志只有“成功”和“失败”两栏，这不够用。今天这种情况既不是成功也不是失败，是“没发生”。所以我让这一行落在第三种状态上：</p>
+<figure class="highlight text"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">| 2026-11-05 | 22:02 | 未执行（提醒 23:24 才送达） | … | missed_window | 0 | 0 | 0 |</span><br></pre></td></tr></table></figure>
+
+<p>同一天里现在会有三种状态：<code>published</code> 是真的发出去了，<code>skipped_duplicate</code> 是当天已经生成过所以主动跳过，<code>missed_window</code> 是压根没到执行条件。三者在账上必须长得不一样，因为处理方式完全不同：第一种看线上，第二种要防的是重复扣费，第三种要查的是投递链路。</p>
+<p>检索 0、抓取 0、费用 0 这三个零也是故意的。跳过就要跳得干净，账上留痕、钱上一分不花，否则“跳过”会变成一句空话。</p>
+<h2 id="四、这次没有改代码，改的是记账"><a href="#四、这次没有改代码，改的是记账" class="headerlink" title="四、这次没有改代码，改的是记账"></a>四、这次没有改代码，改的是记账</h2><p>代码一行没动，只在状态文件里加了一段：</p>
+<figure class="highlight yaml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="attr">last_skipped:</span></span><br><span class="line">  <span class="attr">date:</span> <span class="number">2026-11-05</span></span><br><span class="line">  <span class="attr">planned:</span> <span class="number">2026-11-05 </span><span class="number">22</span><span class="string">:02</span></span><br><span class="line">  <span class="attr">actual_delivery:</span> <span class="number">2026-11-05 </span><span class="number">23</span><span class="string">:24</span></span><br><span class="line">  <span class="attr">reason:</span> <span class="string">missed_window</span></span><br></pre></td></tr></table></figure>
+
+<p>原来的 <code>last_run</code> 保留着上一次成功的那条，不覆盖。幂等判断看的是 <code>last_run.date</code>，如果我把跳过也写进 <code>last_run</code>，第二天可能被自己误判成“今天已经跑过”，那就成了用一个 bug 换另一个 bug。</p>
+<p>下一轮已经排到 22:48。分钟数是随机的，不是固定值，免得每天都卡在同一秒撞上同一个高峰。</p>
+<h2 id="五、还剩两个更粗的问题"><a href="#五、还剩两个更粗的问题" class="headerlink" title="五、还剩两个更粗的问题"></a>五、还剩两个更粗的问题</h2><p>第一个，提醒依赖客户端在线。这条路要么接受，要么换成系统级任务（我推送用的那套 Windows 计划任务就可以），但生成文章需要模型，搬过去要另想办法。暂时接受，因为我知道它会迟到，也知道迟到之后怎么记账。</p>
+<p>第二个，23:00 的推送任务不检查“今天到底有没有新文章”。没内容它也照样跑一次构建和一次提交。之前就出现过一次纯换行的空提交，二十八个文件“被修改”，实际只是 CRLF 在来回抖。这个修起来不难，在部署脚本里加一句“没有新文件就退出”，但我还没动。</p>
+<h2 id="最后"><a href="#最后" class="headerlink" title="最后"></a>最后</h2><p>写这篇的时候我一直在想一件事：定时任务真正值钱的不是“按时跑”，是“跑没跑、跑到哪一步、为什么停”这三件事能查出来。按时跑靠的是环境稳定，这三件事靠的是设计。环境我控制不了，设计我可以。</p>
+<p>所以今天这一篇的内容，其实是把一次失败变成了一条能复读的记录。明天 22:48，它应该会自己开始。如果又迟到，账上还会多一行 <code>missed_window</code>，而不是一句“大概忘了吧”。</p>
+<hr>
+<p><strong>本文依据的是本机实际输出，没有引用外部资料。</strong> 涉及的文件：<code>_auto-blog/config.yml</code>（窗口与 <code>miss_policy</code>）、<code>_auto-blog/state.yml</code>（<code>last_run</code> &#x2F; <code>last_skipped</code>）、<code>_auto-blog/logs/2026-11.md</code>（三种状态的行）、<code>_auto-blog/publish.ps1</code>（发布与回滚）。</p>
+</article><div class="post-copyright"><div class="post-copyright__author"><span class="post-copyright-meta"><i class="fas fa-circle-user fa-fw"></i>文章作者: </span><span class="post-copyright-info"><a href="https://tedoverlearn.github.io">Tedoverlearn</a></span></div><div class="post-copyright__type"><span class="post-copyright-meta"><i class="fas fa-square-arrow-up-right fa-fw"></i>文章链接: </span><span class="post-copyright-info"><a href="https://tedoverlearn.github.io/2026/11/05/late-reminder/">https://tedoverlearn.github.io/2026/11/05/late-reminder/</a></span></div><div class="post-copyright__notice"><span class="post-copyright-meta"><i class="fas fa-circle-exclamation fa-fw"></i>版权声明: </span><span class="post-copyright-info">本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" target="_blank">CC BY-NC-SA 4.0</a> 许可协议。转载请注明来源 <a href="https://tedoverlearn.github.io" target="_blank">Ted'sworld</a>！</span></div></div><div class="tag_share"><div class="post-meta__tag-list"><a class="post-meta__tags" href="/tags/%E5%AE%9A%E6%97%B6%E4%BB%BB%E5%8A%A1/">定时任务</a><a class="post-meta__tags" href="/tags/%E5%B9%82%E7%AD%89/">幂等</a><a class="post-meta__tags" href="/tags/%E6%97%A5%E5%BF%97/">日志</a><a class="post-meta__tags" href="/tags/%E8%87%AA%E5%8A%A8%E5%8C%96/">自动化</a></div><div class="post-share"><div class="social-share" data-image="/img/avatar-192.png" data-sites="facebook,x,wechat,weibo,qq"></div><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1.1.6/sharejs/dist/css/share.min.css" media="print" onload="this.media='all'"><script src="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1.1.6/sharejs/dist/js/social-share.min.js" defer></script></div></div><nav class="pagination-post" id="pagination"><a class="pagination-related full-width" href="/2026/11/04/voluntary-social-insurance-waiver/" title="「自愿放弃社保」的承诺书，为什么写了也白写"><div class="cover" style="background: var(--default-bg-color)"></div><div class="info text-right"><div class="info-1"><div class="info-item-1">下一篇</div><div class="info-item-2">「自愿放弃社保」的承诺书，为什么写了也白写</div></div><div class="info-2"><div class="info-item-1">11 月有一个不起眼但影响面很大的变化：《全国税务行政处罚裁量基准（2026 年版）》2026 年 11 月 1 日起施行，用人单位逾期不缴或少缴社保费，第一次被并入全国统一的处罚裁量清单。而在此前一年多，最高人民法院的劳动争议司法解释（二）已经把「员工自愿放弃社保」这类约定判成了无效。 两件事放在一起看，回答的是同一个问题：社保缴费能不能由用人单位和劳动者自己商量。 先把两件事摆清楚裁量基准把税务违法行为分成 9 类 66 项，按「轻微、较轻、一般、较重、严重」划五个阶次。社保费处罚落在第 30 项，归在「违反税（费）款征收管理类」，用的是「欠缴金额＋费额占比」双维度分档，和税款征收类算法一致。 税务总局的解读里有一句话很重要：裁量基准「未创设新的处罚事项，未改变法定处罚种类与幅度」。它没有给社保欠缴新造一个处罚，只是把原来各地尺度不一、可以自由裁量的部分，统一成了一把尺子。 另一件事是最高人民法院《关于审理劳动争议案件适用法律问题的解释（二）》，法释〔2025〕12 号，2025 年 9 月 1 日起施行。第十九条写得很直接：  用人单位与劳动者约定或者劳动者向用人单位承诺无...</div></div></div></a></nav><div class="relatedPosts"><div class="headline"><i class="fas fa-thumbs-up fa-fw"></i><span>相关推荐</span></div><div class="relatedPosts-list"><a class="pagination-related" href="/2026/10/28/deploy-bat-five-fixes/" title="每天 23:00 自动部署：一个批处理脚本里被改掉的五处"><div class="cover" style="background: var(--default-bg-color)"></div><div class="info text-center"><div class="info-1"><div class="info-item-1"><i class="far fa-calendar-alt fa-fw"></i> 2026-10-28</div><div class="info-item-2">每天 23:00 自动部署：一个批处理脚本里被改掉的五处</div></div><div class="info-2"><div class="info-item-1">一条链，两段博客现在的更新链路分成两段：22:00–23:00 之间生成文章并落进 source/_posts、本地 hexo g 构建；23:00 由 Windows 计划任务跑 deploy.bat，把 public 推到 GitHub Pages。生成那段依赖会话在线，推送那段不依赖——人不用守着。 deploy.bat 最初只有三行： 123@echo offcd /d C:\Users\zxc\my-bloghexo clean &amp;&amp; hexo g &amp;&amp; hexo d  前台跑没问题。丢进计划任务，第一次只打印了几行 Usage: hexo &lt;command&gt;，构建和推送都没发生，而任务的 Last Result 是 0。 一、npm 装的 hexo，在计划任务里会丢参数hexo 不是 exe，是 npm 装的命令行包。cmd 里敲 hexo，命中的是 npm 生成的 hexo.cmd 包装脚本，最后一行大概长这样： 1&quot;%~dp0\node.exe&quot; &quot;%~dp0\node_modules\he...</div></div></div></a><a class="pagination-related" href="/2026/10/26/hexo-permalink-title/" title="Hexo 网址里的 :title，不是你的文章标题"><div class="cover" style="background: var(--default-bg-color)"></div><div class="info text-center"><div class="info-1"><div class="info-item-1"><i class="far fa-calendar-alt fa-fw"></i> 2026-10-26</div><div class="info-item-2">Hexo 网址里的 :title，不是你的文章标题</div></div><div class="info-2"><div class="info-item-1">给博客接每日自动写稿的流程时，第一个把我绊住的问题不是模型写得怎么样，而是一篇草稿放进去之后的网址。 草稿的文件名是 2026-10-25-ai-labeling-law.md。那个日期前缀是我自己加的：流水线靠文件名判断”今天写过没有”，同一天只允许有一个，扫一眼目录就够了。可它一旦被挪进 source/_posts/，日期就跟着进了网址——/2026/10/25/2026-10-25-ai-labeling-law/，一个月日出现两遍。 如果不看文档，很容易以为主题在拼装路径。实际上主题什么都没做，是 permalink 的默认模板把文件名当成了标识。 三个”名字”，分工不同Hexo 里跟”标题”沾边的东西有三个，很容易当成一个：  front-matter 里的 title：页面上显示的文章标题，可以是一句中文长句。 permalink 里的 :title：文件名称（相对于 source/_posts/）。 permalink 里的 :post_title：文章标题。  永久链接的文档把这张变量表列得很清楚：:title 的描述是”文件名称（相对于 source&#x2F;...</div></div></div></a><a class="pagination-related" href="/2026/10/24/hexo-drafts-gate/" title="给博客加一道审核闸门：用 Hexo 的 _drafts 把「自动写」和「自动发」拆开"><div class="cover" style="background: var(--default-bg-color)"></div><div class="info text-center"><div class="info-1"><div class="info-item-1"><i class="far fa-calendar-alt fa-fw"></i> 2026-10-24</div><div class="info-item-2">给博客加一道审核闸门：用 Hexo 的 _drafts 把「自动写」和「自动发」拆开</div></div><div class="info-2"><div class="info-item-1">写在前面这个博客从搭好到现在，更新一直不稳定。不是因为没东西写，而是因为写东西这件事被”要写得好”卡住了：法条要核对、案例要查证、技术细节要自己跑过才敢写。结果就是想法攒了一堆，发布记录停在几个月前。 后来我想换一个思路：把”写”这一步交给流程，把”发”这一步留给自己。每天机器固定产出一篇草稿，我只做审核。这样更新频率的问题解决了，内容准确性的责任也没有被交出去。 这篇记录一下具体怎么做的，重点是为什么用 Hexo 自带的东西就够，而不是另搭一套系统。 问题不在”写”，在”发”一开始的想法很直接：写个脚本，接上模型 API，每天生成一篇文章，丢进 source/_posts，然后部署。 想了两分钟就发现这条路走不通。问题不在模型能不能写出一千字，而在于它写出来的东西没人看过就直接上线了。对一个写法律内容的博客来说，这不是效率问题，是风险问题。一个条号写错、一个案例张冠李戴、”涉嫌”被写成”构成”，读者不会因为你更新勤快就原谅你。 所以我真正要设计的不是”生成流程”，而是”谁敢按下发布按钮“。 答案很简单：机器负责产出候选，人负责按下按钮。 Hexo 本来就留了这个位置这是我最开始...</div></div></div></a></div></div></div><div class="aside-content" id="aside-content"><div class="card-widget card-info text-center"><div class="avatar-img"><img src="/img/avatar-192.png" onerror="this.onerror=null;this.src='/img/friend_404.gif'" alt="avatar"/></div><div class="author-info-name">Tedoverlearn</div><div class="author-info-description"></div><div class="site-data"><a href="/archives/"><div class="headline">文章</div><div class="length-num">15</div></a><a href="/tags/"><div class="headline">标签</div><div class="length-num">51</div></a><a href="/categories/"><div class="headline">分类</div><div class="length-num">3</div></a></div><a id="card-info-btn" target="_blank" rel="noopener" href="https://github.com/tedoverlearn"><i class="fab fa-github"></i><span>Follow Me</span></a></div><div class="card-widget card-announcement"><div class="item-headline"><i class="fas fa-bullhorn fa-shake"></i><span>公告</span></div><div class="announcement_content">This is my Blog</div></div><div class="sticky_layout"><div class="card-widget" id="card-toc"><div class="item-headline"><i class="fas fa-stream"></i><span>目录</span><span class="toc-percentage"></span></div><div class="toc-content"><ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%B8%80%E3%80%81%E5%85%88%E6%8A%8A%E2%80%9C%E8%AE%A1%E5%88%92%E6%97%B6%E9%97%B4%E2%80%9D%E5%92%8C%E2%80%9C%E5%AE%9E%E9%99%85%E6%97%B6%E9%97%B4%E2%80%9D%E5%88%86%E5%BC%80%E8%AE%B0"><span class="toc-number">1.</span> <span class="toc-text">一、先把“计划时间”和“实际时间”分开记</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%BA%8C%E3%80%81%E6%99%9A%E4%BA%86%E5%B0%B1%E5%88%AB%E8%A1%A5"><span class="toc-number">2.</span> <span class="toc-text">二、晚了就别补</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%B8%89%E3%80%81%E6%97%A5%E5%BF%97%E8%A6%81%E8%83%BD%E5%8C%BA%E5%88%86%E4%B8%89%E7%A7%8D%E7%BB%93%E5%B1%80"><span class="toc-number">3.</span> <span class="toc-text">三、日志要能区分三种结局</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%9B%9B%E3%80%81%E8%BF%99%E6%AC%A1%E6%B2%A1%E6%9C%89%E6%94%B9%E4%BB%A3%E7%A0%81%EF%BC%8C%E6%94%B9%E7%9A%84%E6%98%AF%E8%AE%B0%E8%B4%A6"><span class="toc-number">4.</span> <span class="toc-text">四、这次没有改代码，改的是记账</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%BA%94%E3%80%81%E8%BF%98%E5%89%A9%E4%B8%A4%E4%B8%AA%E6%9B%B4%E7%B2%97%E7%9A%84%E9%97%AE%E9%A2%98"><span class="toc-number">5.</span> <span class="toc-text">五、还剩两个更粗的问题</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%9C%80%E5%90%8E"><span class="toc-number">6.</span> <span class="toc-text">最后</span></a></li></ol></div></div><div class="card-widget card-recent-post"><div class="item-headline"><i class="fas fa-history"></i><span>最新文章</span></div><div class="aside-list"><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/2026/11/05/late-reminder/" title="提醒迟到了 82 分钟：定时任务的三种失败">提醒迟到了 82 分钟：定时任务的三种失败</a><time datetime="2026-11-05T15:30:00.000Z" title="发表于 2026-11-05 23:30:00">2026-11-05</time></div></div><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/2026/11/04/voluntary-social-insurance-waiver/" title="「自愿放弃社保」的承诺书，为什么写了也白写">「自愿放弃社保」的承诺书，为什么写了也白写</a><time datetime="2026-11-04T14:41:00.000Z" title="发表于 2026-11-04 22:41:00">2026-11-04</time></div></div><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/2026/11/03/sitemap-robots-canonical/" title="上次标着“还没动”的三处，今天补上了">上次标着“还没动”的三处，今天补上了</a><time datetime="2026-11-03T14:37:00.000Z" title="发表于 2026-11-03 22:37:00">2026-11-03</time></div></div><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/2026/11/02/prison-law-procedure/" title="监狱法三十年首修：改的不是轻重，是“谁说了算”">监狱法三十年首修：改的不是轻重，是“谁说了算”</a><time datetime="2026-11-02T14:59:00.000Z" title="发表于 2026-11-02 22:59:00">2026-11-02</time></div></div><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/2026/11/01/ai-labeling-law/" title="AI 写的文章，法律要求我标注吗——读《人工智能生成合成内容标识办法》">AI 写的文章，法律要求我标注吗——读《人工智能生成合成内容标识办法》</a><time datetime="2026-11-01T14:33:00.000Z" title="发表于 2026-11-01 22:33:00">2026-11-01</time></div></div></div></div></div></div></main><footer id="footer"><div class="footer-other"><div class="footer-copyright"><span class="copyright">&copy;&nbsp;2025 - 2026 By Tedoverlearn</span><span class="framework-info"><span>框架 </span><a target="_blank" rel="noopener" href="https://hexo.io">Hexo 7.3.0</a><span class="footer-separator">|</span><span>主题 </span><a target="_blank" rel="noopener" href="https://github.com/jerryc127/hexo-theme-butterfly">Butterfly 5.7.0</a></span></div></div></footer></div><div id="rightside"><div id="rightside-config-hide"><button id="readmode" type="button" title="阅读模式"><i class="fas fa-book-open"></i></button><button id="darkmode" type="button" title="日间和夜间模式切换"><i class="fas fa-adjust"></i></button><button id="hide-aside-btn" type="button" title="单栏和双栏切换"><i class="fas fa-arrows-alt-h"></i></button></div><div id="rightside-config-show"><button id="rightside-config" type="button" title="设置"><i class="fas fa-cog fa-spin"></i></button><button class="close" id="mobile-toc-button" type="button" title="目录"><i class="fas fa-list-ul"></i></button><button id="go-up" type="button" title="回到顶部"><span class="scroll-percent"></span><i class="fas fa-arrow-up"></i></button></div></div><div><script src="/js/utils.js?v=5.7.0"></script><script src="/js/main.js?v=5.7.0"></script><div class="js-pjax"></div><script async data-pjax src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script></div></body></html>
