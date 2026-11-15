@@ -1,0 +1,223 @@
+<!DOCTYPE html><html lang="zh-CN" data-theme="light"><head><meta charset="UTF-8"><meta http-equiv="X-UA-Compatible" content="IE=edge"><meta name="viewport" content="width=device-width, initial-scale=1.0,viewport-fit=cover"><title>我给自己做了个口头训练室，第一道题是替代采购 | Ted'sworld</title><meta name="author" content="Tedoverlearn"><meta name="copyright" content="Tedoverlearn"><meta name="format-detection" content="telephone=no"><meta name="theme-color" content="#ffffff"><meta name="description" content="我把 Legal Orator 的第一阶段压到一道模拟法官题，做通了计时、录音、回听和草稿恢复。后来想让手机也能打开网页，又补上了跨网址备份和恢复，这篇记下已经做完的部分和下一步要验收的场景。">
+<meta property="og:type" content="article">
+<meta property="og:title" content="我给自己做了个口头训练室，第一道题是替代采购">
+<meta property="og:url" content="https://tedoverlearn.github.io/2026/11/15/legal-orator-first-room/">
+<meta property="og:site_name" content="Ted&#39;sworld">
+<meta property="og:description" content="我把 Legal Orator 的第一阶段压到一道模拟法官题，做通了计时、录音、回听和草稿恢复。后来想让手机也能打开网页，又补上了跨网址备份和恢复，这篇记下已经做完的部分和下一步要验收的场景。">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://tedoverlearn.github.io/img/avatar-192.png">
+<meta property="article:published_time" content="2026-11-15T14:18:00.000Z">
+<meta property="article:modified_time" content="2026-11-15T14:18:12.565Z">
+<meta property="article:author" content="Tedoverlearn">
+<meta property="article:tag" content="IndexedDB">
+<meta property="article:tag" content="Legal-Orator">
+<meta property="article:tag" content="口头表达">
+<meta property="article:tag" content="法学生">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://tedoverlearn.github.io/img/avatar-192.png"><script type="application/ld+json">{
+  "@context": "https://schema.org",
+  "@type": "BlogPosting",
+  "headline": "我给自己做了个口头训练室，第一道题是替代采购",
+  "url": "https://tedoverlearn.github.io/2026/11/15/legal-orator-first-room/",
+  "image": "https://tedoverlearn.github.io/img/avatar-192.png",
+  "datePublished": "2026-11-15T14:18:00.000Z",
+  "dateModified": "2026-11-15T14:18:12.565Z",
+  "author": [
+    {
+      "@type": "Person",
+      "name": "Tedoverlearn",
+      "url": "https://tedoverlearn.github.io"
+    }
+  ]
+}</script><link rel="shortcut icon" href="/img/favicon.png"><link rel="canonical" href="https://tedoverlearn.github.io/2026/11/15/legal-orator-first-room/"><link rel="preconnect" href="//cdn.jsdelivr.net"/><link rel="preconnect" href="//busuanzi.ibruce.info"/><link rel="stylesheet" href="/css/index.css?v=5.7.0"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@7.3.1/css/all.min.css"><script>
+    (() => {
+      
+    const saveToLocal = {
+      set: (key, value, ttl) => {
+        const data = { value }
+
+        if (ttl != null) {
+          data.expiry = Date.now() + ttl * 86400000
+        }
+
+        localStorage.setItem(key, JSON.stringify(data))
+      },
+      get: key => {
+        const itemStr = localStorage.getItem(key)
+        if (!itemStr) return
+
+        try {
+          const data = JSON.parse(itemStr)
+
+          if (data.expiry && Date.now() > data.expiry) {
+            localStorage.removeItem(key)
+            return
+          }
+
+          return data.value
+        } catch {
+          localStorage.removeItem(key)
+        }
+      }
+    }
+
+    const scriptCache = new Map()
+    const cssCache = new Map()
+    window.btf = {
+      saveToLocal,
+      getScript: (url, attr = {}) => {
+        if (scriptCache.has(url)) {
+          return scriptCache.get(url)
+        }
+
+        const promise = new Promise((resolve, reject) => {
+          const script = document.createElement('script')
+
+          script.src = url
+          script.async = true
+
+          for (const key in attr) {
+            script.setAttribute(key, attr[key])
+          }
+
+          script.onload = resolve
+          script.onerror = reject
+
+          document.head.appendChild(script)
+        })
+
+        scriptCache.set(url, promise)
+
+        return promise
+      },
+      getCSS: (url, id) => {
+        if (cssCache.has(url)) {
+          return cssCache.get(url)
+        }
+
+        const promise = new Promise((resolve, reject) => {
+          const link = document.createElement('link')
+
+          link.rel = 'stylesheet'
+          link.href = url
+
+          if (id) {
+            link.id = id
+          }
+
+          link.onload = resolve
+          link.onerror = reject
+
+          document.head.appendChild(link)
+        })
+
+        cssCache.set(url, promise)
+
+        return promise
+      },
+      addGlobalFn: (key, fn, name = false, parent = window) => {
+        if (!false && key.startsWith('pjax')) return
+        const globalFn = parent.globalFn || {}
+        globalFn[key] = globalFn[key] || {}
+        globalFn[key][name || Object.keys(globalFn[key]).length] = fn
+        parent.globalFn = globalFn
+      }
+    }
+  
+      
+      const metaThemeColor = document.querySelector('meta[name="theme-color"]')
+      const activateDarkMode = () => {
+        document.documentElement.dataset.theme = 'dark'
+        if (metaThemeColor !== null) {
+          metaThemeColor.setAttribute('content', '#0d0d0d')
+        }
+      }
+      const activateLightMode = () => {
+        document.documentElement.dataset.theme = 'light'
+        if (metaThemeColor !== null) {
+          metaThemeColor.setAttribute('content', '#ffffff')
+        }
+      }
+
+      btf.activateDarkMode = activateDarkMode
+      btf.activateLightMode = activateLightMode
+
+      const theme = saveToLocal.get('theme')
+    
+          theme === 'dark' ? activateDarkMode() : theme === 'light' ? activateLightMode() : null
+        
+      
+      const asideStatus = saveToLocal.get('aside-status')
+      if (asideStatus !== undefined) {
+        document.documentElement.classList.toggle('hide-aside', asideStatus === 'hide')
+      }
+    
+      
+    const detectApple = () => {
+      if (/iPad|iPhone|iPod|Macintosh/.test(navigator.userAgent)) {
+        document.documentElement.classList.add('apple')
+      }
+    }
+    detectApple()
+  
+    })()
+  </script><script>const GLOBAL_CONFIG = {
+  root: '/',
+  algolia: undefined,
+  localSearch: undefined,
+  translate: undefined,
+  highlight: {"plugin":"highlight.js","highlightCopy":true,"highlightLang":true,"highlightHeightLimit":false,"highlightFullpage":false,"highlightMacStyle":false},
+  copy: {
+    success: '复制成功',
+    error: '复制失败',
+    noSupport: '浏览器不支持'
+  },
+  relativeDate: {
+    homepage: false,
+    post: false
+  },
+  runtime: '',
+  dateSuffix: {
+    just: '刚刚',
+    min: '分钟前',
+    hour: '小时前',
+    day: '天前',
+    month: '个月前'
+  },
+  copyright: undefined,
+  lightbox: 'null',
+  Snackbar: undefined,
+  infinitegrid: {
+    js: 'https://cdn.jsdelivr.net/npm/@egjs/infinitegrid@4.13.0/dist/infinitegrid.min.js',
+    buttonText: '加载更多'
+  },
+  isPhotoFigcaption: false,
+  islazyloadPlugin: false,
+  isAnchor: false,
+  percent: {
+    toc: true,
+    rightside: false,
+  },
+  autoDarkmode: false
+}</script><script id="config-diff">var GLOBAL_CONFIG_SITE = {
+  title: '我给自己做了个口头训练室，第一道题是替代采购',
+  isHighlightShrink: false,
+  isToc: true,
+  pageType: 'post'
+}</script><meta name="generator" content="Hexo 7.3.0"></head><body><div class="post" id="body-wrap"><header class="post-bg" id="page-header"><nav id="nav"><span id="blog-info"><a class="nav-site-title" href="/"><span class="site-name">Ted'sworld</span></a><a class="nav-page-title" href="/"><span class="site-name">我给自己做了个口头训练室，第一道题是替代采购</span><span class="site-name"><i class="fa-solid fa-circle-arrow-left"></i><span>  返回首页</span></span></a></span><div id="menus"></div></nav><div id="post-info"><h1 class="post-title">我给自己做了个口头训练室，第一道题是替代采购</h1><div id="post-meta"><div class="meta-firstline"><span class="post-meta-date"><i class="far fa-calendar-alt fa-fw post-meta-icon"></i><span class="post-meta-label">发表于</span><time class="post-meta-date-created" datetime="2026-11-15T14:18:00.000Z" title="发表于 2026-11-15 22:18:00">2026-11-15</time><span class="post-meta-separator">|</span><i class="fas fa-history fa-fw post-meta-icon"></i><span class="post-meta-label">更新于</span><time class="post-meta-date-updated" datetime="2026-11-15T14:18:12.565Z" title="更新于 2026-11-15 22:18:12">2026-11-15</time></span><span class="post-meta-categories"><span class="post-meta-separator">|</span><i class="fas fa-inbox fa-fw post-meta-icon"></i><a class="post-meta-categories" href="/categories/AI-%E5%AE%9E%E8%B7%B5/">AI 实践</a></span></div><div class="meta-secondline"><span class="post-meta-separator">|</span><span class="post-meta-pv-cv" id="" data-flag-title=""><i class="far fa-eye fa-fw post-meta-icon"></i><span class="post-meta-label">浏览量:</span><span id="busuanzi_value_page_pv"><i class="fa-solid fa-spinner fa-spin"></i></span></span></div></div></div></header><main class="layout" id="content-inner"><div id="post"><article class="container post-content" id="article-container"><h2 id="写在前面"><a href="#写在前面" class="headerlink" title="写在前面"></a>写在前面</h2><p>我想练两种说话。一种是在法庭上把案情和主张讲清楚，被追问时能接着答。另一种是在见客户、请教律师或者和同事交换意见时，把话说到对方听得懂的地方。我给这个自己用的训练平台起了个名字，叫 Legal Orator。</p>
+<p>最初列需求时，首页、法律实战、职业社交、训练室和成长档案都在清单上。后来把开发拆成几段，第一段只做一道题。我得先有个地方可以读题、开口、回听，下次打开还能找到自己说过的话。做完这一段，才有东西可拿来判断接下来的题库和反馈该怎么设计。</p>
+<h2 id="先把一道题做完整"><a href="#先把一道题做完整" class="headerlink" title="先把一道题做完整"></a>先把一道题做完整</h2><p>第一道题叫「迟延交付后的替代采购」。题目是虚构的。我在里面扮演买方代理人：供货方周二说可能迟延，买方当天另找了一家下单，订单价格比原合同高 8,000 元。到了周五，原供应商送货，买方拒收并主张差价。</p>
+<p>这道题给两分钟准备、三分钟表达。第一轮先把买方的主张说清楚，接着页面会逐条显示固定的法官追问。其中一条问得很具体：周二只收到可能迟延的通知，为什么当天就有必要向第三方采购？手上的替代采购订单可以交代下单时间和订购价格。要核实实际支出，还得找付款凭证，再把交付情况和展会的时间对上。</p>
+<p>我用 React、TypeScript 和 Vite 搭训练室。桌面上可以一边看材料，一边操作计时和录音，窄屏上改成单列。准备计时用预先算好的截止时间，每次刷新显示都重新拿截止时间减当前时间。切到别的标签页再回来时，计时器能按实际经过的时间更新。</p>
+<h2 id="重录失败时，上一段还在吗"><a href="#重录失败时，上一段还在吗" class="headerlink" title="重录失败时，上一段还在吗"></a>重录失败时，上一段还在吗</h2><p>录完可以回听，也可以重录。做到这一步，我想检查一个很实际的场景：刚才那段已经存了，现在点重录，浏览器却拒绝了麦克风权限。原来的录音和文字能不能继续用？</p>
+<p>在 Chrome 的这轮验收里，权限被拒后，原录音仍能播放，已有草稿和正在编辑的文字也都保留。刷新页面，再从首页打开草稿，已保存的文字和音频都能恢复。重录成功之后，点一次保存，新录音才会替换数据库里的旧录音。碰到麦克风不可用的时候，照样可以自己开口练，再手填文字保存。这轮验收用的是浏览器测试环境。要核对实机录出来的声音，还得用自己的麦克风录一遍，在扬声器或耳机上回听。</p>
+<h2 id="手机可以打开网页以后，草稿放在哪"><a href="#手机可以打开网页以后，草稿放在哪" class="headerlink" title="手机可以打开网页以后，草稿放在哪"></a>手机可以打开网页以后，草稿放在哪</h2><p>第一次发现网页打不开，原因很简单，当时开发服务没开。服务启动后，电脑能打开 <code>localhost:5173</code>。我接着问了个问题：是不是只能在这台电脑上打开？手机输入同一个地址，访问的是手机自己。从那时起，固定网址和原来保存的录音就成了两件需要分别处理的事。</p>
+<p>目前的部署方案是用私有 GitHub 仓库放源码，让 Cloudflare Pages 构建并提供固定的 HTTPS 网址。录音和文字还是写进打开页面的浏览器，用 IndexedDB 保存。浏览器按来源隔离数据。从本机地址换到正式域名，旧草稿还在原地址对应的库里，需要先从那里导出，再到新地址恢复。</p>
+<p>备份做成了一个 JSON 文件，里面有题目快照、文字和录音。导入时，程序先核对格式版本、内容摘要和题目记录对应的音频，再用一个事务写入空库。在两个隔离的本机网址之间做迁移验收时，恢复后的文字能看到，音频逐字节一致，也能在 Chrome 里播放。当前已经完成这一步的部署准备。接下来要在正式 HTTPS 地址上，用实际手机走一遍授权、录音、保存和刷新恢复。</p>
+<p>第二阶段会补法律和职业社交两类题。我想用同一间训练室试试客户沟通，再看看目前的录音和回听流程哪里需要改。我自己需要的反馈也很具体：回听时记下一处说绕了的地方，下次做同一道题，再听听那句话有没有讲清楚。</p>
+<h2 id="参考资料"><a href="#参考资料" class="headerlink" title="参考资料"></a>参考资料</h2><ul>
+<li><a target="_blank" rel="noopener" href="https://developer.mozilla.org/en-US/docs/Web/API/IndexedDB_API/Using_IndexedDB">MDN：使用 IndexedDB</a></li>
+<li><a target="_blank" rel="noopener" href="https://developer.mozilla.org/en-US/docs/Web/API/MediaDevices/getUserMedia">MDN：浏览器请求麦克风权限</a></li>
+<li><a target="_blank" rel="noopener" href="https://developers.cloudflare.com/pages/get-started/git-integration/">Cloudflare Pages：连接 Git 仓库</a></li>
+</ul>
+</article><div class="post-copyright"><div class="post-copyright__author"><span class="post-copyright-meta"><i class="fas fa-circle-user fa-fw"></i>文章作者: </span><span class="post-copyright-info"><a href="https://tedoverlearn.github.io">Tedoverlearn</a></span></div><div class="post-copyright__type"><span class="post-copyright-meta"><i class="fas fa-square-arrow-up-right fa-fw"></i>文章链接: </span><span class="post-copyright-info"><a href="https://tedoverlearn.github.io/2026/11/15/legal-orator-first-room/">https://tedoverlearn.github.io/2026/11/15/legal-orator-first-room/</a></span></div><div class="post-copyright__notice"><span class="post-copyright-meta"><i class="fas fa-circle-exclamation fa-fw"></i>版权声明: </span><span class="post-copyright-info">本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" target="_blank">CC BY-NC-SA 4.0</a> 许可协议。转载请注明来源 <a href="https://tedoverlearn.github.io" target="_blank">Ted'sworld</a>！</span></div></div><div class="tag_share"><div class="post-meta__tag-list"><a class="post-meta__tags" href="/tags/%E5%8F%A3%E5%A4%B4%E8%A1%A8%E8%BE%BE/">口头表达</a><a class="post-meta__tags" href="/tags/%E6%B3%95%E5%AD%A6%E7%94%9F/">法学生</a><a class="post-meta__tags" href="/tags/IndexedDB/">IndexedDB</a><a class="post-meta__tags" href="/tags/Legal-Orator/">Legal-Orator</a></div><div class="post-share"><div class="social-share" data-image="/img/avatar-192.png" data-sites="facebook,x,wechat,weibo,qq"></div><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1.1.6/sharejs/dist/css/share.min.css" media="print" onload="this.media='all'"><script src="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1.1.6/sharejs/dist/js/social-share.min.js" defer></script></div></div><nav class="pagination-post" id="pagination"><a class="pagination-related full-width" href="/2026/11/14/ai-cultural-content-and-historical-evidence/" title="AI 让文物动起来之后，谁来解释画面里的历史"><div class="cover" style="background: var(--default-bg-color)"></div><div class="info text-right"><div class="info-1"><div class="info-item-1">下一篇</div><div class="info-item-2">AI 让文物动起来之后，谁来解释画面里的历史</div></div><div class="info-2"><div class="info-item-1">写在前面文物开口讲故事，古画中的人物走出画框，这类文化表达很容易让人愿意多看几分钟。但画面越完整，一个问题就越值得追问：我们看到的细节，哪些来自已经发现的材料，哪些来自创作者的补充？ 11月8日至10日，2026文化科技产业发展论坛在长沙举行。新华社报道，论坛发布的文化科技融合创新案例涉及大模型活化地域文脉、非遗数字化保护、文物智能修复等领域。这提供了一个观察入口：人工智能进入文化传播之后，生成能力之外，还需要怎样的解释能力？新华社报道 以下讨论的是文化传播中的编辑判断，不对具体展品或项目的准确性作评价。 从展示技术，到交代依据这次论坛并非只围绕生成内容展开。湖南省政府门户网站刊载的会前报道显示，交流主题还包括智能视听、文旅融合与AIGC影像创作。论坛预告人民日报的会后报道则提到，论坛关注产业落地、技术创新、业态培育与生态构建。人民日报报道 这些信息能说明文化与技术融合的讨论范围，却不能直接证明某种生成方式已经适合所有文化场景。在我看来，评价一个文化产品，可以把观看体验与知识依据分别问清楚。 第一，它是否让原本难以接近的材料变得容易理解？第二，它是否让观众知道，这种理解建立在什么...</div></div></div></a></nav><div class="relatedPosts"><div class="headline"><i class="fas fa-thumbs-up fa-fw"></i><span>相关推荐</span></div><div class="relatedPosts-list"><a class="pagination-related" href="/2026/11/13/law-career-choice/" title="还没试过体制外我不甘心，但真要放弃安稳，我也得先算清楚账"><div class="cover" style="background: var(--default-bg-color)"></div><div class="info text-center"><div class="info-1"><div class="info-item-1"><i class="far fa-calendar-alt fa-fw"></i> 2026-11-13</div><div class="info-item-2">还没试过体制外我不甘心，但真要放弃安稳，我也得先算清楚账</div></div><div class="info-2"><div class="info-item-1">进了大三之后，人明显比前两年焦虑多了。毕业好像还远，又总觉得没剩多少时间，想起来心里就不踏实。今天干脆写点东西理理思路，以后估计也会经常记录这些乱七八糟的职业考量。 读了法学之后，耳朵里听得最多的毕业出路，无非就那几个词：法考、考研、考公、当律师。以前总用一句“到时候再说”往后拖，现在真拖不动了。时间就这么多，不可能每条路都充分准备，总得挑个方向走。 我原本主要在两条路之间摇摆：要么考个好点的法学院，以后当律师；要么过了法考去考公，争取进基层法院或者检察院，早点安顿下来。 家里条件比较一般，父母愿意支持我继续读书。但他们说愿意供，我不能就真的不算账。读研要花多少钱，这几年暂时不工作的成本有多大，毕业后的机会能不能配得上这笔投入，都得想明白。 说实话，我对体制内没有非去不可的执念，对律师也没有强烈到能不计代价的热爱。接触过一点法律实务，感受挺复杂，算不上特别喜欢，但也不排斥。至少目前，我还没遇到过什么瞬间，让我觉得“这辈子就干这个了”。 真让我犯愁的，还是收入、家庭负担，以及自己究竟更能接受哪种生活。我想多挣点钱，也不太甘心还没在体制外试过，就直接决定考公。可真要承担收入不稳定的风...</div></div></div></a></div></div></div><div class="aside-content" id="aside-content"><div class="card-widget card-info text-center"><div class="avatar-img"><img src="/img/avatar-192.png" onerror="this.onerror=null;this.src='/img/friend_404.gif'" alt="avatar"/></div><div class="author-info-name">Tedoverlearn</div><div class="author-info-description"></div><div class="site-data"><a href="/archives/"><div class="headline">文章</div><div class="length-num">25</div></a><a href="/tags/"><div class="headline">标签</div><div class="length-num">82</div></a><a href="/categories/"><div class="headline">分类</div><div class="length-num">3</div></a></div><a id="card-info-btn" target="_blank" rel="noopener" href="https://github.com/tedoverlearn"><i class="fab fa-github"></i><span>Follow Me</span></a></div><div class="card-widget card-announcement"><div class="item-headline"><i class="fas fa-bullhorn fa-shake"></i><span>公告</span></div><div class="announcement_content">This is my Blog</div></div><div class="sticky_layout"><div class="card-widget" id="card-toc"><div class="item-headline"><i class="fas fa-stream"></i><span>目录</span><span class="toc-percentage"></span></div><div class="toc-content"><ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%86%99%E5%9C%A8%E5%89%8D%E9%9D%A2"><span class="toc-number">1.</span> <span class="toc-text">写在前面</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%85%88%E6%8A%8A%E4%B8%80%E9%81%93%E9%A2%98%E5%81%9A%E5%AE%8C%E6%95%B4"><span class="toc-number">2.</span> <span class="toc-text">先把一道题做完整</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E9%87%8D%E5%BD%95%E5%A4%B1%E8%B4%A5%E6%97%B6%EF%BC%8C%E4%B8%8A%E4%B8%80%E6%AE%B5%E8%BF%98%E5%9C%A8%E5%90%97"><span class="toc-number">3.</span> <span class="toc-text">重录失败时，上一段还在吗</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%89%8B%E6%9C%BA%E5%8F%AF%E4%BB%A5%E6%89%93%E5%BC%80%E7%BD%91%E9%A1%B5%E4%BB%A5%E5%90%8E%EF%BC%8C%E8%8D%89%E7%A8%BF%E6%94%BE%E5%9C%A8%E5%93%AA"><span class="toc-number">4.</span> <span class="toc-text">手机可以打开网页以后，草稿放在哪</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%8F%82%E8%80%83%E8%B5%84%E6%96%99"><span class="toc-number">5.</span> <span class="toc-text">参考资料</span></a></li></ol></div></div><div class="card-widget card-recent-post"><div class="item-headline"><i class="fas fa-history"></i><span>最新文章</span></div><div class="aside-list"><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/2026/11/15/legal-orator-first-room/" title="我给自己做了个口头训练室，第一道题是替代采购">我给自己做了个口头训练室，第一道题是替代采购</a><time datetime="2026-11-15T14:18:00.000Z" title="发表于 2026-11-15 22:18:00">2026-11-15</time></div></div><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/2026/11/14/ai-cultural-content-and-historical-evidence/" title="AI 让文物动起来之后，谁来解释画面里的历史">AI 让文物动起来之后，谁来解释画面里的历史</a><time datetime="2026-11-14T14:04:49.000Z" title="发表于 2026-11-14 22:04:49">2026-11-14</time></div></div><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/2026/11/13/law-career-choice/" title="还没试过体制外我不甘心，但真要放弃安稳，我也得先算清楚账">还没试过体制外我不甘心，但真要放弃安稳，我也得先算清楚账</a><time datetime="2026-11-13T14:34:39.000Z" title="发表于 2026-11-13 22:34:39">2026-11-13</time></div></div><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/2026/11/13/github-issue-fields/" title="个人仓库的 GitHub Issue，哪些信息值得单独设字段">个人仓库的 GitHub Issue，哪些信息值得单独设字段</a><time datetime="2026-11-13T14:18:00.000Z" title="发表于 2026-11-13 22:18:00">2026-11-13</time></div></div><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/2026/11/11/inheritance-interpretation-2/" title="签了放弃继承，为什么还可能被判还债">签了放弃继承，为什么还可能被判还债</a><time datetime="2026-11-11T14:32:00.000Z" title="发表于 2026-11-11 22:32:00">2026-11-11</time></div></div></div></div></div></div></main><footer id="footer"><div class="footer-other"><div class="footer-copyright"><span class="copyright">&copy;&nbsp;2025 - 2026 By Tedoverlearn</span><span class="framework-info"><span>框架 </span><a target="_blank" rel="noopener" href="https://hexo.io">Hexo 7.3.0</a><span class="footer-separator">|</span><span>主题 </span><a target="_blank" rel="noopener" href="https://github.com/jerryc127/hexo-theme-butterfly">Butterfly 5.7.0</a></span></div></div></footer></div><div id="rightside"><div id="rightside-config-hide"><button id="readmode" type="button" title="阅读模式"><i class="fas fa-book-open"></i></button><button id="darkmode" type="button" title="日间和夜间模式切换"><i class="fas fa-adjust"></i></button><button id="hide-aside-btn" type="button" title="单栏和双栏切换"><i class="fas fa-arrows-alt-h"></i></button></div><div id="rightside-config-show"><button id="rightside-config" type="button" title="设置"><i class="fas fa-cog fa-spin"></i></button><button class="close" id="mobile-toc-button" type="button" title="目录"><i class="fas fa-list-ul"></i></button><button id="go-up" type="button" title="回到顶部"><span class="scroll-percent"></span><i class="fas fa-arrow-up"></i></button></div></div><div><script src="/js/utils.js?v=5.7.0"></script><script src="/js/main.js?v=5.7.0"></script><div class="js-pjax"></div><script async data-pjax src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script></div></body></html>
