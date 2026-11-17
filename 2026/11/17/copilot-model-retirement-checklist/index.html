@@ -1,0 +1,233 @@
+<!DOCTYPE html><html lang="zh-CN" data-theme="light"><head><meta charset="UTF-8"><meta http-equiv="X-UA-Compatible" content="IE=edge"><meta name="viewport" content="width=device-width, initial-scale=1.0,viewport-fit=cover"><title>换了模型，旧提示词还能用吗？先准备一份验收材料 | Ted'sworld</title><meta name="author" content="Tedoverlearn"><meta name="copyright" content="Tedoverlearn"><meta name="format-detection" content="telephone=no"><meta name="theme-color" content="#ffffff"><meta name="description" content="博客迁移到新平台以后，原来的写作要求也跟着搬了过来。看到 Copilot 退役旧模型的公告，我想把提示词验收做得具体些：固定输入材料，提前写下应保留的事实和条件，再逐项检查输出。这篇用一份虚构的产品记录示范，后续可以拿它做迁移测试。">
+<meta property="og:type" content="article">
+<meta property="og:title" content="换了模型，旧提示词还能用吗？先准备一份验收材料">
+<meta property="og:url" content="https://tedoverlearn.github.io/2026/11/17/copilot-model-retirement-checklist/">
+<meta property="og:site_name" content="Ted&#39;sworld">
+<meta property="og:description" content="博客迁移到新平台以后，原来的写作要求也跟着搬了过来。看到 Copilot 退役旧模型的公告，我想把提示词验收做得具体些：固定输入材料，提前写下应保留的事实和条件，再逐项检查输出。这篇用一份虚构的产品记录示范，后续可以拿它做迁移测试。">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://tedoverlearn.github.io/img/avatar-192.png">
+<meta property="article:published_time" content="2026-11-17T14:19:58.000Z">
+<meta property="article:modified_time" content="2026-11-17T14:28:27.664Z">
+<meta property="article:author" content="Tedoverlearn">
+<meta property="article:tag" content="AI实践">
+<meta property="article:tag" content="GitHubCopilot">
+<meta property="article:tag" content="工作流">
+<meta property="article:tag" content="提示词">
+<meta property="article:tag" content="模型迁移">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://tedoverlearn.github.io/img/avatar-192.png"><script type="application/ld+json">{
+  "@context": "https://schema.org",
+  "@type": "BlogPosting",
+  "headline": "换了模型，旧提示词还能用吗？先准备一份验收材料",
+  "url": "https://tedoverlearn.github.io/2026/11/17/copilot-model-retirement-checklist/",
+  "image": "https://tedoverlearn.github.io/img/avatar-192.png",
+  "datePublished": "2026-11-17T14:19:58.000Z",
+  "dateModified": "2026-11-17T14:28:27.664Z",
+  "author": [
+    {
+      "@type": "Person",
+      "name": "Tedoverlearn",
+      "url": "https://tedoverlearn.github.io"
+    }
+  ]
+}</script><link rel="shortcut icon" href="/img/favicon.png"><link rel="canonical" href="https://tedoverlearn.github.io/2026/11/17/copilot-model-retirement-checklist/"><link rel="preconnect" href="//cdn.jsdelivr.net"/><link rel="preconnect" href="//busuanzi.ibruce.info"/><link rel="stylesheet" href="/css/index.css?v=5.7.0"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@7.3.1/css/all.min.css"><script>
+    (() => {
+      
+    const saveToLocal = {
+      set: (key, value, ttl) => {
+        const data = { value }
+
+        if (ttl != null) {
+          data.expiry = Date.now() + ttl * 86400000
+        }
+
+        localStorage.setItem(key, JSON.stringify(data))
+      },
+      get: key => {
+        const itemStr = localStorage.getItem(key)
+        if (!itemStr) return
+
+        try {
+          const data = JSON.parse(itemStr)
+
+          if (data.expiry && Date.now() > data.expiry) {
+            localStorage.removeItem(key)
+            return
+          }
+
+          return data.value
+        } catch {
+          localStorage.removeItem(key)
+        }
+      }
+    }
+
+    const scriptCache = new Map()
+    const cssCache = new Map()
+    window.btf = {
+      saveToLocal,
+      getScript: (url, attr = {}) => {
+        if (scriptCache.has(url)) {
+          return scriptCache.get(url)
+        }
+
+        const promise = new Promise((resolve, reject) => {
+          const script = document.createElement('script')
+
+          script.src = url
+          script.async = true
+
+          for (const key in attr) {
+            script.setAttribute(key, attr[key])
+          }
+
+          script.onload = resolve
+          script.onerror = reject
+
+          document.head.appendChild(script)
+        })
+
+        scriptCache.set(url, promise)
+
+        return promise
+      },
+      getCSS: (url, id) => {
+        if (cssCache.has(url)) {
+          return cssCache.get(url)
+        }
+
+        const promise = new Promise((resolve, reject) => {
+          const link = document.createElement('link')
+
+          link.rel = 'stylesheet'
+          link.href = url
+
+          if (id) {
+            link.id = id
+          }
+
+          link.onload = resolve
+          link.onerror = reject
+
+          document.head.appendChild(link)
+        })
+
+        cssCache.set(url, promise)
+
+        return promise
+      },
+      addGlobalFn: (key, fn, name = false, parent = window) => {
+        if (!false && key.startsWith('pjax')) return
+        const globalFn = parent.globalFn || {}
+        globalFn[key] = globalFn[key] || {}
+        globalFn[key][name || Object.keys(globalFn[key]).length] = fn
+        parent.globalFn = globalFn
+      }
+    }
+  
+      
+      const metaThemeColor = document.querySelector('meta[name="theme-color"]')
+      const activateDarkMode = () => {
+        document.documentElement.dataset.theme = 'dark'
+        if (metaThemeColor !== null) {
+          metaThemeColor.setAttribute('content', '#0d0d0d')
+        }
+      }
+      const activateLightMode = () => {
+        document.documentElement.dataset.theme = 'light'
+        if (metaThemeColor !== null) {
+          metaThemeColor.setAttribute('content', '#ffffff')
+        }
+      }
+
+      btf.activateDarkMode = activateDarkMode
+      btf.activateLightMode = activateLightMode
+
+      const theme = saveToLocal.get('theme')
+    
+          theme === 'dark' ? activateDarkMode() : theme === 'light' ? activateLightMode() : null
+        
+      
+      const asideStatus = saveToLocal.get('aside-status')
+      if (asideStatus !== undefined) {
+        document.documentElement.classList.toggle('hide-aside', asideStatus === 'hide')
+      }
+    
+      
+    const detectApple = () => {
+      if (/iPad|iPhone|iPod|Macintosh/.test(navigator.userAgent)) {
+        document.documentElement.classList.add('apple')
+      }
+    }
+    detectApple()
+  
+    })()
+  </script><script>const GLOBAL_CONFIG = {
+  root: '/',
+  algolia: undefined,
+  localSearch: undefined,
+  translate: undefined,
+  highlight: {"plugin":"highlight.js","highlightCopy":true,"highlightLang":true,"highlightHeightLimit":false,"highlightFullpage":false,"highlightMacStyle":false},
+  copy: {
+    success: '复制成功',
+    error: '复制失败',
+    noSupport: '浏览器不支持'
+  },
+  relativeDate: {
+    homepage: false,
+    post: false
+  },
+  runtime: '',
+  dateSuffix: {
+    just: '刚刚',
+    min: '分钟前',
+    hour: '小时前',
+    day: '天前',
+    month: '个月前'
+  },
+  copyright: undefined,
+  lightbox: 'null',
+  Snackbar: undefined,
+  infinitegrid: {
+    js: 'https://cdn.jsdelivr.net/npm/@egjs/infinitegrid@4.13.0/dist/infinitegrid.min.js',
+    buttonText: '加载更多'
+  },
+  isPhotoFigcaption: false,
+  islazyloadPlugin: false,
+  isAnchor: false,
+  percent: {
+    toc: true,
+    rightside: false,
+  },
+  autoDarkmode: false
+}</script><script id="config-diff">var GLOBAL_CONFIG_SITE = {
+  title: '换了模型，旧提示词还能用吗？先准备一份验收材料',
+  isHighlightShrink: false,
+  isToc: true,
+  pageType: 'post'
+}</script><meta name="generator" content="Hexo 7.3.0"></head><body><div class="post" id="body-wrap"><header class="post-bg" id="page-header"><nav id="nav"><span id="blog-info"><a class="nav-site-title" href="/"><span class="site-name">Ted'sworld</span></a><a class="nav-page-title" href="/"><span class="site-name">换了模型，旧提示词还能用吗？先准备一份验收材料</span><span class="site-name"><i class="fa-solid fa-circle-arrow-left"></i><span>  返回首页</span></span></a></span><div id="menus"></div></nav><div id="post-info"><h1 class="post-title">换了模型，旧提示词还能用吗？先准备一份验收材料</h1><div id="post-meta"><div class="meta-firstline"><span class="post-meta-date"><i class="far fa-calendar-alt fa-fw post-meta-icon"></i><span class="post-meta-label">发表于</span><time class="post-meta-date-created" datetime="2026-11-17T14:19:58.000Z" title="发表于 2026-11-17 22:19:58">2026-11-17</time><span class="post-meta-separator">|</span><i class="fas fa-history fa-fw post-meta-icon"></i><span class="post-meta-label">更新于</span><time class="post-meta-date-updated" datetime="2026-11-17T14:28:27.664Z" title="更新于 2026-11-17 22:28:27">2026-11-17</time></span><span class="post-meta-categories"><span class="post-meta-separator">|</span><i class="fas fa-inbox fa-fw post-meta-icon"></i><a class="post-meta-categories" href="/categories/AI-%E5%AE%9E%E8%B7%B5/">AI 实践</a></span></div><div class="meta-secondline"><span class="post-meta-separator">|</span><span class="post-meta-pv-cv" id="" data-flag-title=""><i class="far fa-eye fa-fw post-meta-icon"></i><span class="post-meta-label">浏览量:</span><span id="busuanzi_value_page_pv"><i class="fa-solid fa-spinner fa-spin"></i></span></span></div></div></div></header><main class="layout" id="content-inner"><div id="post"><article class="container post-content" id="article-container"><h2 id="写在前面"><a href="#写在前面" class="headerlink" title="写在前面"></a>写在前面</h2><p>这几天把博客自动化搬到新平台，原来的写作要求也一起搬了过来。字数、分类、资料来源、发布前检查，每条都有文档。现在回头看，要求写下来以后，还有一件事值得做：留几份固定材料，看看换了模型，哪些要求还能被稳定执行。</p>
+<p>11 月 16 日，GitHub 公告退役 Copilot 大多数使用场景里的 Claude Opus 4.8、Claude Opus 5 和 GPT-5.6 Terra，并列出了替代模型。其中，个人年付订阅者仍能使用 Claude Opus 4.8，Claude Opus 5 也保留了既有授权下的运行时拒绝回退用途。具体到自己的账号，要按公告中的订阅条件和使用入口处理。<a target="_blank" rel="noopener" href="https://github.blog/changelog/2026-11-16-github-copilot-models-deprecated-on-november-16-2026/">退役公告</a></p>
+<p>这条消息让我想到两个很实际的问题。模型换了，旧提示词该从哪里检查？遇到一次输出不错，又该怎样决定能否继续用？下面写的是我准备采用的测试办法，先把材料和验收条件整理出来，实际的模型对照测试还待执行。</p>
+<h2 id="先把测试条件记下来"><a href="#先把测试条件记下来" class="headerlink" title="先把测试条件记下来"></a>先把测试条件记下来</h2><p>我会先记录使用的客户端、模型名称和提示词版本。GitHub 的支持列表按客户端和订阅方案列出可用模型，部分模型还有客户端最低版本要求。找不到想用的模型时，可以沿着这些条件排查，再看组织管理员是否开放了相应权限。<a target="_blank" rel="noopener" href="https://docs.github.com/en/copilot/reference/ai-models/supported-models">支持模型文档</a></p>
+<p>会话也得重新开。Copilot app 文档写明，切换模型会在空闲时立即生效，或在当前轮结束后生效。新选择成为未来会话的默认模型，其他已有会话继续使用原来的选择。因此，每次测试都新建会话，确认模型，再放入相同的材料和提示词；涉及联网或读取文件的任务，也把工具权限和文件版本记下来。<a target="_blank" rel="noopener" href="https://docs.github.com/en/copilot/how-tos/github-copilot-app/choose-a-model">模型选择说明</a></p>
+<p>这样留下记录，之后发现结果变化，才有条件往回找原因。材料、提示词和模型一起换，很容易越调越糊涂。</p>
+<h2 id="用一份短材料，把问题露出来"><a href="#用一份短材料，把问题露出来" class="headerlink" title="用一份短材料，把问题露出来"></a>用一份短材料，把问题露出来</h2><p>我想先从自己经常用到的材料整理入手。与其找一篇很长的文章，不如先放几段短记录，把时间变化和前置条件写清楚。比如下面这份虚构的产品记录，专门用来测试摘要能力。</p>
+<blockquote>
+<p>材料一：项目组原计划 12 月 1 日开放录音导出，前提是完成手机端回听测试。</p>
+<p>材料二：11 月 10 日的内部记录显示，桌面端已能下载录音，手机端回听待测。</p>
+<p>材料三：11 月 12 日的修改记录将开放日期调整为待定。</p>
+</blockquote>
+<p>给模型的要求也短一点：整理当前开放时间、已完成的功能和待办事项，每项标明材料编号；时间有更新时采用最新记录，材料缺失时写清缺哪项信息。</p>
+<p>在发出提示词之前，我先写好预期。开放时间应当是待定，依据材料三；桌面端可下载，依据材料二；手机端回听仍需测试，依据材料二。材料一里的 12 月 1 日属于旧计划，整理时要交代它已被后来的记录调整。</p>
+<p>再做一个很小的变动：拿掉材料三。此时，开放安排应恢复为附有测试条件的 12 月 1 日计划。只写日期、漏掉手机端测试这个条件，就能直接定位到具体错误。还可以把材料一的日期改为「尚待确定」，检查输出能否保留这个缺口。</p>
+<p>这几份材料可以一直留着。以后换模型或改提示词，都用同一份输入重新检查，阅读量很小，也方便自己逐句核对。</p>
+<h2 id="出错以后，先保存那一句"><a href="#出错以后，先保存那一句" class="headerlink" title="出错以后，先保存那一句"></a>出错以后，先保存那一句</h2><p>假如输出把「计划开放」写成了「已经上线」，我会把原句、输出句和对应材料放在一起。接着只改提示词中有关完成状态的要求，重跑同一份材料。看到它修正以后，再回头跑另外两个版本，检查新指令有没有影响原来能处理的部分。</p>
+<p>每个版本可以先独立跑两次，保留全部结果。有时同样的材料，前一次保住了条件，后一次又漏掉。把这些波动留在记录里，才知道日常使用时哪些地方需要自己盯着。次数只是这轮小测试的安排，记录里还要写明样本数量和具体失败项，方便以后补测。</p>
+<p>旧模型已经退役时，可以直接按事先写好的预期检查替代模型。手里若有旧输出，就一并存下来；选模型时仍逐条对照原材料。旧答案本身也可能漏过条件。</p>
+<p>做博客和小项目，时间总是有限的。我愿意先花一点工夫，把最在意的几条要求变成短样本，比如日期更新有没有处理、出处能不能找到、计划和完成有没有分清。以后提示词再变长，至少还留着一份自己能看懂、能逐项检查的验收材料。</p>
+<h2 id="参考资料"><a href="#参考资料" class="headerlink" title="参考资料"></a>参考资料</h2><ol>
+<li><a target="_blank" rel="noopener" href="https://github.blog/changelog/2026-11-16-github-copilot-models-deprecated-on-november-16-2026/">GitHub：2026 年 11 月 16 日 Copilot 模型退役公告</a></li>
+<li><a target="_blank" rel="noopener" href="https://docs.github.com/en/copilot/reference/ai-models/supported-models">GitHub Docs：Copilot 支持的 AI 模型</a></li>
+<li><a target="_blank" rel="noopener" href="https://docs.github.com/en/copilot/how-tos/github-copilot-app/choose-a-model">GitHub Docs：在 Copilot app 中选择模型</a></li>
+</ol>
+</article><div class="post-copyright"><div class="post-copyright__author"><span class="post-copyright-meta"><i class="fas fa-circle-user fa-fw"></i>文章作者: </span><span class="post-copyright-info"><a href="https://tedoverlearn.github.io">Tedoverlearn</a></span></div><div class="post-copyright__type"><span class="post-copyright-meta"><i class="fas fa-square-arrow-up-right fa-fw"></i>文章链接: </span><span class="post-copyright-info"><a href="https://tedoverlearn.github.io/2026/11/17/copilot-model-retirement-checklist/">https://tedoverlearn.github.io/2026/11/17/copilot-model-retirement-checklist/</a></span></div><div class="post-copyright__notice"><span class="post-copyright-meta"><i class="fas fa-circle-exclamation fa-fw"></i>版权声明: </span><span class="post-copyright-info">本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" target="_blank">CC BY-NC-SA 4.0</a> 许可协议。转载请注明来源 <a href="https://tedoverlearn.github.io" target="_blank">Ted'sworld</a>！</span></div></div><div class="tag_share"><div class="post-meta__tag-list"><a class="post-meta__tags" href="/tags/%E5%B7%A5%E4%BD%9C%E6%B5%81/">工作流</a><a class="post-meta__tags" href="/tags/%E6%8F%90%E7%A4%BA%E8%AF%8D/">提示词</a><a class="post-meta__tags" href="/tags/%E6%A8%A1%E5%9E%8B%E8%BF%81%E7%A7%BB/">模型迁移</a><a class="post-meta__tags" href="/tags/AI%E5%AE%9E%E8%B7%B5/">AI实践</a><a class="post-meta__tags" href="/tags/GitHubCopilot/">GitHubCopilot</a></div><div class="post-share"><div class="social-share" data-image="/img/avatar-192.png" data-sites="facebook,x,wechat,weibo,qq"></div><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1.1.6/sharejs/dist/css/share.min.css" media="print" onload="this.media='all'"><script src="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1.1.6/sharejs/dist/js/social-share.min.js" defer></script></div></div><nav class="pagination-post" id="pagination"><a class="pagination-related full-width" href="/2026/11/16/traffic-service-chat-to-action/" title="交管小安将试点「边问边办」，我更关心对话之后的那一步"><div class="cover" style="background: var(--default-bg-color)"></div><div class="info text-right"><div class="info-1"><div class="info-item-1">下一篇</div><div class="info-item-2">交管小安将试点「边问边办」，我更关心对话之后的那一步</div></div><div class="info-2"><div class="info-item-1">写在前面看到交管业务也要推出「边问边办」，我最想知道的是：问完以后，下一步究竟由谁完成？ 11月9日，公安部公布五项交管便民利企改革新措施，计划自12月1日起推行。其中一项是在直辖市、省会市、自治区首府市及计划单列市，试点上线「交管12123」App智能客服交管小安。公告明确了试点范围和服务方向，具体能办理哪些事项、怎样衔接提交环节，还要看上线后的业务说明和实际流程。公安部交管局发布内容 问完之后，还要自己找多少次入口？比如，刚买了进口小客车的人可能会直接问「我想给新车上牌」。他用的是平时说话的方式。到了办理页面，系统要把这句话对应到具体事项，接下来还得根据车辆的情况给出这笔业务的入口。 如果客服回答完材料要求，能接着带他进入对应页面，前面的对话就有了用处。假如进入页面后还得重新选择事项、重新描述需求，那段解释带来的便利便会打折。 我会把这件事拆开观察：客服能否识别具体事项，能否根据必要条件缩小范围，最后能否把人带到可继续操作的位置。遇到条件不足时，补问也应该有明确目的。例如，需要知道车辆类型才能选择流程，就说明为什么要问，别让用户猜系统到底缺什么。 试点上线后，我会拿同一句问题...</div></div></div></a></nav><div class="relatedPosts"><div class="headline"><i class="fas fa-thumbs-up fa-fw"></i><span>相关推荐</span></div><div class="relatedPosts-list"><a class="pagination-related" href="/2026/10/28/deploy-bat-five-fixes/" title="每天 23:00 自动部署：一个批处理脚本里被改掉的五处"><div class="cover" style="background: var(--default-bg-color)"></div><div class="info text-center"><div class="info-1"><div class="info-item-1"><i class="far fa-calendar-alt fa-fw"></i> 2026-10-28</div><div class="info-item-2">每天 23:00 自动部署：一个批处理脚本里被改掉的五处</div></div><div class="info-2"><div class="info-item-1">一条链，两段博客现在的更新链路分成两段：22:00–23:00 之间生成文章并落进 source/_posts、本地 hexo g 构建；23:00 由 Windows 计划任务跑 deploy.bat，把 public 推到 GitHub Pages。生成那段依赖会话在线，推送那段不依赖——人不用守着。 deploy.bat 最初只有三行： 123@echo offcd /d C:\Users\zxc\my-bloghexo clean &amp;&amp; hexo g &amp;&amp; hexo d  前台跑没问题。丢进计划任务，第一次只打印了几行 Usage: hexo &lt;command&gt;，构建和推送都没发生，而任务的 Last Result 是 0。 一、npm 装的 hexo，在计划任务里会丢参数hexo 不是 exe，是 npm 装的命令行包。cmd 里敲 hexo，命中的是 npm 生成的 hexo.cmd 包装脚本，最后一行大概长这样： 1&quot;%~dp0\node.exe&quot; &quot;%~dp0\node_modules\he...</div></div></div></a><a class="pagination-related" href="/2026/10/24/hexo-drafts-gate/" title="给博客加一道审核闸门：用 Hexo 的 _drafts 把「自动写」和「自动发」拆开"><div class="cover" style="background: var(--default-bg-color)"></div><div class="info text-center"><div class="info-1"><div class="info-item-1"><i class="far fa-calendar-alt fa-fw"></i> 2026-10-24</div><div class="info-item-2">给博客加一道审核闸门：用 Hexo 的 _drafts 把「自动写」和「自动发」拆开</div></div><div class="info-2"><div class="info-item-1">写在前面这个博客从搭好到现在，更新一直不稳定。不是因为没东西写，而是因为写东西这件事被”要写得好”卡住了：法条要核对、案例要查证、技术细节要自己跑过才敢写。结果就是想法攒了一堆，发布记录停在几个月前。 后来我想换一个思路：把”写”这一步交给流程，把”发”这一步留给自己。每天机器固定产出一篇草稿，我只做审核。这样更新频率的问题解决了，内容准确性的责任也没有被交出去。 这篇记录一下具体怎么做的，重点是为什么用 Hexo 自带的东西就够，而不是另搭一套系统。 问题不在”写”，在”发”一开始的想法很直接：写个脚本，接上模型 API，每天生成一篇文章，丢进 source/_posts，然后部署。 想了两分钟就发现这条路走不通。问题不在模型能不能写出一千字，而在于它写出来的东西没人看过就直接上线了。对一个写法律内容的博客来说，这不是效率问题，是风险问题。一个条号写错、一个案例张冠李戴、”涉嫌”被写成”构成”，读者不会因为你更新勤快就原谅你。 所以我真正要设计的不是”生成流程”，而是”谁敢按下发布按钮“。 答案很简单：机器负责产出候选，人负责按下按钮。 Hexo 本来就留了这个位置这是我最开始...</div></div></div></a></div></div></div><div class="aside-content" id="aside-content"><div class="card-widget card-info text-center"><div class="avatar-img"><img src="/img/avatar-192.png" onerror="this.onerror=null;this.src='/img/friend_404.gif'" alt="avatar"/></div><div class="author-info-name">Tedoverlearn</div><div class="author-info-description"></div><div class="site-data"><a href="/archives/"><div class="headline">文章</div><div class="length-num">27</div></a><a href="/tags/"><div class="headline">标签</div><div class="length-num">90</div></a><a href="/categories/"><div class="headline">分类</div><div class="length-num">3</div></a></div><a id="card-info-btn" target="_blank" rel="noopener" href="https://github.com/tedoverlearn"><i class="fab fa-github"></i><span>Follow Me</span></a></div><div class="card-widget card-announcement"><div class="item-headline"><i class="fas fa-bullhorn fa-shake"></i><span>公告</span></div><div class="announcement_content">This is my Blog</div></div><div class="sticky_layout"><div class="card-widget" id="card-toc"><div class="item-headline"><i class="fas fa-stream"></i><span>目录</span><span class="toc-percentage"></span></div><div class="toc-content"><ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%86%99%E5%9C%A8%E5%89%8D%E9%9D%A2"><span class="toc-number">1.</span> <span class="toc-text">写在前面</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%85%88%E6%8A%8A%E6%B5%8B%E8%AF%95%E6%9D%A1%E4%BB%B6%E8%AE%B0%E4%B8%8B%E6%9D%A5"><span class="toc-number">2.</span> <span class="toc-text">先把测试条件记下来</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E7%94%A8%E4%B8%80%E4%BB%BD%E7%9F%AD%E6%9D%90%E6%96%99%EF%BC%8C%E6%8A%8A%E9%97%AE%E9%A2%98%E9%9C%B2%E5%87%BA%E6%9D%A5"><span class="toc-number">3.</span> <span class="toc-text">用一份短材料，把问题露出来</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%87%BA%E9%94%99%E4%BB%A5%E5%90%8E%EF%BC%8C%E5%85%88%E4%BF%9D%E5%AD%98%E9%82%A3%E4%B8%80%E5%8F%A5"><span class="toc-number">4.</span> <span class="toc-text">出错以后，先保存那一句</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%8F%82%E8%80%83%E8%B5%84%E6%96%99"><span class="toc-number">5.</span> <span class="toc-text">参考资料</span></a></li></ol></div></div><div class="card-widget card-recent-post"><div class="item-headline"><i class="fas fa-history"></i><span>最新文章</span></div><div class="aside-list"><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/2026/11/17/copilot-model-retirement-checklist/" title="换了模型，旧提示词还能用吗？先准备一份验收材料">换了模型，旧提示词还能用吗？先准备一份验收材料</a><time datetime="2026-11-17T14:19:58.000Z" title="发表于 2026-11-17 22:19:58">2026-11-17</time></div></div><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/2026/11/16/traffic-service-chat-to-action/" title="交管小安将试点「边问边办」，我更关心对话之后的那一步">交管小安将试点「边问边办」，我更关心对话之后的那一步</a><time datetime="2026-11-16T14:15:49.000Z" title="发表于 2026-11-16 22:15:49">2026-11-16</time></div></div><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/2026/11/15/legal-orator-first-room/" title="我给自己做了个口头训练室，第一道题是替代采购">我给自己做了个口头训练室，第一道题是替代采购</a><time datetime="2026-11-15T14:18:00.000Z" title="发表于 2026-11-15 22:18:00">2026-11-15</time></div></div><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/2026/11/14/ai-cultural-content-and-historical-evidence/" title="AI 让文物动起来之后，谁来解释画面里的历史">AI 让文物动起来之后，谁来解释画面里的历史</a><time datetime="2026-11-14T14:04:49.000Z" title="发表于 2026-11-14 22:04:49">2026-11-14</time></div></div><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/2026/11/13/law-career-choice/" title="还没试过体制外我不甘心，但真要放弃安稳，我也得先算清楚账">还没试过体制外我不甘心，但真要放弃安稳，我也得先算清楚账</a><time datetime="2026-11-13T14:34:39.000Z" title="发表于 2026-11-13 22:34:39">2026-11-13</time></div></div></div></div></div></div></main><footer id="footer"><div class="footer-other"><div class="footer-copyright"><span class="copyright">&copy;&nbsp;2025 - 2026 By Tedoverlearn</span><span class="framework-info"><span>框架 </span><a target="_blank" rel="noopener" href="https://hexo.io">Hexo 7.3.0</a><span class="footer-separator">|</span><span>主题 </span><a target="_blank" rel="noopener" href="https://github.com/jerryc127/hexo-theme-butterfly">Butterfly 5.7.0</a></span></div></div></footer></div><div id="rightside"><div id="rightside-config-hide"><button id="readmode" type="button" title="阅读模式"><i class="fas fa-book-open"></i></button><button id="darkmode" type="button" title="日间和夜间模式切换"><i class="fas fa-adjust"></i></button><button id="hide-aside-btn" type="button" title="单栏和双栏切换"><i class="fas fa-arrows-alt-h"></i></button></div><div id="rightside-config-show"><button id="rightside-config" type="button" title="设置"><i class="fas fa-cog fa-spin"></i></button><button class="close" id="mobile-toc-button" type="button" title="目录"><i class="fas fa-list-ul"></i></button><button id="go-up" type="button" title="回到顶部"><span class="scroll-percent"></span><i class="fas fa-arrow-up"></i></button></div></div><div><script src="/js/utils.js?v=5.7.0"></script><script src="/js/main.js?v=5.7.0"></script><div class="js-pjax"></div><script async data-pjax src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script></div></body></html>
